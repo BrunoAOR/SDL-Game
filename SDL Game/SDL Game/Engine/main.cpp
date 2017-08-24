@@ -3,19 +3,22 @@
 #include <stdio.h>
 #include <string>
 
+#include "BehavioursManager.h"
+#include "RenderManager.h"
 #include "constants.h"
 #include "Input.h"
 #include "GameObject.h"
 #include "Texture.h"
-#include "Crosshair.h"
+
+#include "../Crosshair.h"
+#include "../Crosshair2.h"
 
 // Global variables
 SDL_Window* gWindow = nullptr;
 SDL_Renderer* gRenderer = nullptr;
 GameObject* crosshairGO = nullptr;
+GameObject* crosshair2GO = nullptr;
 GameObject* targetGO = nullptr;
-Texture* crosshairTexture = nullptr;
-Texture* targetTexture = nullptr;
 
 // Function declarations
 bool init();
@@ -132,25 +135,8 @@ void render()
 
 	// Render Texture to screen
 	
-	crosshairGO->texture->render((int)crosshairGO->transform.position.x,(int)crosshairGO->transform.position.y);
-
-	int clipWidth = targetTexture->getWidth() / 2;
-	int clipHeight = targetTexture->getHeight() / 2;
-	SDL_Rect targetClips[4];
-
-	targetClips[0] = { 0, 0, clipWidth, clipHeight };
-	targetClips[1] = { clipWidth, 0, clipWidth, clipHeight };
-	targetClips[2] = { 0, clipHeight, clipWidth, clipHeight };
-	targetClips[3] = { clipWidth, clipHeight, clipWidth, clipHeight };
+	RenderManager::update();
 	
-	int screenWidth = constants::SCREEN_WIDTH;
-	int screenHeight = constants::SCREEN_HEIGHT;
-	targetTexture->render(0, 0, &targetClips[0]);
-	targetTexture->render(screenWidth - clipWidth, 0, &targetClips[1]);
-	targetTexture->render(0, screenHeight - clipHeight, &targetClips[2]);
-	targetTexture->render(screenWidth - clipWidth, screenHeight - clipHeight, &targetClips[3]);
-
-
 	// Update screen
 	SDL_RenderPresent(gRenderer);
 }
@@ -164,7 +150,10 @@ void loop()
 	while (!quit)
 	{
 		handleEvents(quit);
-		crosshairGO->behaviour->update();
+
+		//crosshairGO->behaviour->update();
+		BehavioursManager::update();
+		
 		render();
 	}
 
@@ -194,6 +183,8 @@ bool loadScene()
 	bool success = true;
 
 	// Load gameobjects
+
+	// Crosshair1
 	crosshairGO = new GameObject(gRenderer);
 	crosshairGO->transform.position = { 200, 200 };
 	crosshairGO->behaviour = new Crosshair(crosshairGO);
@@ -207,12 +198,20 @@ bool loadScene()
 		crosshairGO->texture->setColor(0, 255, 255);
 	}
 
-	targetTexture = new Texture(gRenderer);
-	if (!targetTexture->loadFromFile("assets/Target.png"))
+	// Crosshair2
+	crosshair2GO = new GameObject(gRenderer);
+	crosshair2GO->transform.position = { constants::SCREEN_WIDTH - 200, 200 };
+	crosshair2GO->behaviour = new Crosshair2(crosshair2GO);
+	if (!crosshair2GO->addTexture("assets/Crosshair.png"))
 	{
-		printf("Error: Failed to load target texture image!\n");
+		printf("Error: Failed to load crosshair texture image!\n");
 		success = false;
 	}
+	else
+	{
+		crosshair2GO->texture->setColor(255, 0, 255);
+	}
+
 	return success;
 }
 
@@ -221,9 +220,6 @@ void unloadScene()
 	// Free loaded GameObjects
 	delete crosshairGO;
 	crosshairGO = nullptr;
-
-	// Free loaded texture	
-	targetTexture->free();
-	delete targetTexture;
-	targetTexture = nullptr;
+	delete crosshair2GO;
+	crosshair2GO = nullptr;
 }

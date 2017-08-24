@@ -1,8 +1,8 @@
 #include "Crosshair.h"
 
-#include "GameObject.h"
-#include "Input.h"
-#include "Texture.h"
+#include "Engine/GameObject.h"
+#include "Engine/Input.h"
+#include "Engine/Texture.h"
 
 
 Crosshair::Crosshair(GameObject* parentGameObject) : Behaviour(parentGameObject)

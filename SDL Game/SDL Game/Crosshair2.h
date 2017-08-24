@@ -5,17 +5,16 @@
 class GameObject;
 
 
-class Crosshair :
+class Crosshair2 :
 	public Behaviour
 {
 public:
-	Crosshair(GameObject* parentGameObject);
-	~Crosshair();
-
+	Crosshair2(GameObject* parentGameObject);
+	~Crosshair2();
+	
 	// Inherited via Behaviour
 	virtual void update() override;
 
-private:
-	int alpha;
+	const int stepSize = 10;
 };
 

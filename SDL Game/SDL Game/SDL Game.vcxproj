@@ -19,23 +19,30 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Behaviour.cpp" />
+    <ClCompile Include="Engine\EngineUtils.cpp" />
+    <ClCompile Include="Engine\Behaviour.cpp" />
+    <ClCompile Include="Engine\BehavioursManager.cpp" />
     <ClCompile Include="Crosshair.cpp" />
-    <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="Input.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="Vector2.cpp" />
+    <ClCompile Include="Crosshair2.cpp" />
+    <ClCompile Include="Engine\GameObject.cpp" />
+    <ClCompile Include="Engine\Input.cpp" />
+    <ClCompile Include="Engine\main.cpp" />
+    <ClCompile Include="Engine\Texture.cpp" />
+    <ClCompile Include="Engine\Vector2.cpp" />
+    <ClCompile Include="Engine\RenderManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Behaviour.h" />
-    <ClInclude Include="constants.h" />
+    <ClInclude Include="Engine\Behaviour.h" />
+    <ClInclude Include="Engine\BehavioursManager.h" />
+    <ClInclude Include="Engine\constants.h" />
     <ClInclude Include="Crosshair.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="Input.h" />
-    <ClInclude Include="Texture.h" />
-    <ClInclude Include="Transform.h" />
-    <ClInclude Include="Vector2.h" />
+    <ClInclude Include="Crosshair2.h" />
+    <ClInclude Include="Engine\GameObject.h" />
+    <ClInclude Include="Engine\Input.h" />
+    <ClInclude Include="Engine\Texture.h" />
+    <ClInclude Include="Engine\Transform.h" />
+    <ClInclude Include="Engine\Vector2.h" />
+    <ClInclude Include="Engine\RenderManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\Crosshair.png" />

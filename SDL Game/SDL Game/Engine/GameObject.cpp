@@ -1,7 +1,7 @@
 #include "GameObject.h"
-#include "Crosshair.h"
-#include "Texture.h"
 
+#include "Texture.h"
+#include "RenderManager.h"
 
 GameObject::GameObject(SDL_Renderer* renderer)
 {
@@ -19,17 +19,19 @@ GameObject::~GameObject()
 
 bool GameObject::addTexture(std::string path)
 {
-	// Success flag
-	bool success = true;
-
 	removeTexture();
 	texture = new Texture(m_renderer);
 	if (!texture->loadFromFile(path))
 	{
 		printf("Error: Unable to add texture from path %s!", path.c_str());
-		success = false;
+		delete texture;
+		texture = nullptr;
 	}
-	return success;
+
+	if (texture != nullptr) {
+		RenderManager::subscribeGameObject(this);
+	}
+	return texture != nullptr;
 }
 
 void GameObject::removeTexture()
@@ -39,5 +41,6 @@ void GameObject::removeTexture()
 		texture->free();
 		delete texture;
 		texture = nullptr;
+		RenderManager::unsubscribeGameObject(this);
 	}
 }
