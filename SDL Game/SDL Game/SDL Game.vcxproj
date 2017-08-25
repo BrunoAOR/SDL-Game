@@ -30,6 +30,7 @@
     <ClCompile Include="Engine\Texture.cpp" />
     <ClCompile Include="Engine\Vector2.cpp" />
     <ClCompile Include="Engine\RenderManager.cpp" />
+    <ClCompile Include="Spawner.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Behaviour.h" />
@@ -43,6 +44,7 @@
     <ClInclude Include="Engine\Transform.h" />
     <ClInclude Include="Engine\Vector2.h" />
     <ClInclude Include="Engine\RenderManager.h" />
+    <ClInclude Include="Spawner.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\Crosshair.png" />

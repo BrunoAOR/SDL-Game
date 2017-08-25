@@ -2,6 +2,7 @@
 
 #include "BehavioursManager.h"
 
+
 Behaviour::Behaviour(GameObject* parentGameObject)
 {
 	gameObject = parentGameObject;

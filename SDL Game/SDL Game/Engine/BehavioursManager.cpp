@@ -3,6 +3,7 @@
 #include "EngineUtils.cpp"
 #include "Behaviour.h"
 
+
 std::vector<Behaviour*> BehavioursManager::behaviours;
 
 BehavioursManager::BehavioursManager()
@@ -18,6 +19,7 @@ void BehavioursManager::update()
 	}
 }
 
+
 void BehavioursManager::subscribeBehaviour(Behaviour * behaviour)
 {
 	if (indexOf(behaviours, behaviour) == -1) {
@@ -25,6 +27,7 @@ void BehavioursManager::subscribeBehaviour(Behaviour * behaviour)
 		behaviours.push_back(behaviour);
 	}
 }
+
 
 void BehavioursManager::unsubscribeBehaviour(Behaviour * behaviour)
 {
@@ -34,4 +37,3 @@ void BehavioursManager::unsubscribeBehaviour(Behaviour * behaviour)
 		behaviours.erase(behaviours.begin() + index);
 	}
 }
-

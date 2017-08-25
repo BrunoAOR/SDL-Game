@@ -3,15 +3,12 @@
 #include "Engine/GameObject.h"
 #include "Engine/Input.h"
 
+
 Crosshair2::Crosshair2(GameObject* parentGameObject) : Behaviour(parentGameObject)
 {
 
 }
 
-
-Crosshair2::~Crosshair2()
-{
-}
 
 void Crosshair2::update()
 {

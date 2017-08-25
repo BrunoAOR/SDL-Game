@@ -10,9 +10,6 @@ Crosshair::Crosshair(GameObject* parentGameObject) : Behaviour(parentGameObject)
 	alpha = 255;
 }
 
-Crosshair::~Crosshair()
-{
-}
 
 void Crosshair::update()
 {

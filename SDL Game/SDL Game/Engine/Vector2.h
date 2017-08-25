@@ -10,4 +10,3 @@ public:
 	float getLength();
 	float getLengthSquared();
 };
-

@@ -12,13 +12,15 @@
 
 #include "../Crosshair.h"
 #include "../Crosshair2.h"
+#include "../Spawner.h"
+
 
 // Global variables
 SDL_Window* gWindow = nullptr;
-SDL_Renderer* gRenderer = nullptr;
 GameObject* crosshairGO = nullptr;
 GameObject* crosshair2GO = nullptr;
-GameObject* targetGO = nullptr;
+GameObject* spawnerGO = nullptr;
+
 
 // Function declarations
 bool init();
@@ -26,6 +28,7 @@ bool loadScene();
 void loop();
 void unloadScene();
 void close();
+
 
 int main(int argc, char* args[])
 {
@@ -49,6 +52,7 @@ int main(int argc, char* args[])
 
 	return 0;
 }
+
 
 bool init()
 {
@@ -78,13 +82,7 @@ bool init()
 		else
 		{
 			// Create Renderer for window (used for texture rendering)
-			gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
-			if (gRenderer == nullptr)
-			{
-				printf("Error: Renderer could not be created! SDL Error: %s\n", SDL_GetError());
-				success = false;
-			}
-			else
+			if (RenderManager::createRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED))
 			{
 				// Initialize PNG loading
 				int imgFlags = IMG_INIT_PNG;
@@ -98,6 +96,7 @@ bool init()
 	}
 	return success;
 }
+
 
 void handleEvents(bool& shouldQuit)
 {
@@ -125,21 +124,6 @@ void handleEvents(bool& shouldQuit)
 	}
 }
 
-void render()
-{
-	// Set Render Color to white
-	SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 0xFF);
-	
-	// Clear screen
-	SDL_RenderClear(gRenderer);
-
-	// Render Texture to screen
-	
-	RenderManager::update();
-	
-	// Update screen
-	SDL_RenderPresent(gRenderer);
-}
 
 void loop()
 {
@@ -151,14 +135,12 @@ void loop()
 	{
 		handleEvents(quit);
 
-		//crosshairGO->behaviour->update();
 		BehavioursManager::update();
 		
-		render();
+		RenderManager::update();
 	}
 
 }
-
 
 
 void close()
@@ -167,15 +149,15 @@ void close()
 	unloadScene();
 
 	// Destroy window and its renderer
-	SDL_DestroyRenderer(gRenderer);
+	RenderManager::close();
 	SDL_DestroyWindow(gWindow);
-	gRenderer = nullptr;
 	gWindow = nullptr;
 
 	// Quit SDL subsystems
 	IMG_Quit();
 	SDL_Quit();
 }
+
 
 bool loadScene()
 {
@@ -184,10 +166,16 @@ bool loadScene()
 
 	// Load gameobjects
 
+	// Spawner
+	spawnerGO = new GameObject();
+	spawnerGO->addBehaviour(new Spawner(spawnerGO));
+
 	// Crosshair1
-	crosshairGO = new GameObject(gRenderer);
+	crosshairGO = new GameObject();
 	crosshairGO->transform.position = { 200, 200 };
-	crosshairGO->behaviour = new Crosshair(crosshairGO);
+	success &= crosshairGO->addBehaviour<Crosshair>();
+	success &= crosshairGO->addBehaviour<Crosshair2>();
+	//crosshairGO->addBehaviour(new Crosshair2(crosshairGO));
 	if (!crosshairGO->addTexture("assets/Crosshair.png"))
 	{
 		printf("Error: Failed to load crosshair texture image!\n");
@@ -199,9 +187,9 @@ bool loadScene()
 	}
 
 	// Crosshair2
-	crosshair2GO = new GameObject(gRenderer);
+	crosshair2GO = new GameObject();
 	crosshair2GO->transform.position = { constants::SCREEN_WIDTH - 200, 200 };
-	crosshair2GO->behaviour = new Crosshair2(crosshair2GO);
+	success &= crosshair2GO->addBehaviour<Crosshair2>();
 	if (!crosshair2GO->addTexture("assets/Crosshair.png"))
 	{
 		printf("Error: Failed to load crosshair texture image!\n");
@@ -215,6 +203,7 @@ bool loadScene()
 	return success;
 }
 
+
 void unloadScene()
 {
 	// Free loaded GameObjects
@@ -222,4 +211,6 @@ void unloadScene()
 	crosshairGO = nullptr;
 	delete crosshair2GO;
 	crosshair2GO = nullptr;
+	delete spawnerGO;
+	spawnerGO = nullptr;
 }

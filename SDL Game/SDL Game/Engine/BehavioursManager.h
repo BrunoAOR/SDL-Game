@@ -4,6 +4,7 @@
 
 class Behaviour;
 
+
 class BehavioursManager
 {
 public:
@@ -15,4 +16,3 @@ private:
 	BehavioursManager();
 	static std::vector<Behaviour*> behaviours;
 };
-

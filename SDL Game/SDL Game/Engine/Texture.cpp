@@ -12,7 +12,6 @@ Texture::Texture(SDL_Renderer* renderer)
 
 	// Store renderer reference
 	m_renderer = renderer;
-
 }
 
 
@@ -22,15 +21,18 @@ Texture::~Texture()
 	free();
 }
 
+
 bool Texture::loadFromFile(std::string path)
 {
 	return loadFromFile(path, false, 0);
 }
 
+
 bool Texture::loadFromFile(std::string path, Uint32 colorKey)
 {
 	return loadFromFile(path, true, colorKey);
 }
+
 
 bool Texture::loadFromFile(std::string path, bool shouldColorKey, Uint32 colorKey)
 {
@@ -74,6 +76,7 @@ bool Texture::loadFromFile(std::string path, bool shouldColorKey, Uint32 colorKe
 	return m_texture != nullptr;
 }
 
+
 void Texture::free()
 {
 	// Free texture if it exists
@@ -86,11 +89,13 @@ void Texture::free()
 	}
 }
 
+
 void Texture::setColor(Uint8 r, Uint8 g, Uint8 b)
 {
 	// Modulate texture color
 	SDL_SetTextureColorMod(m_texture, r, g, b);
 }
+
 
 void Texture::setBlendMode(SDL_BlendMode blendMode)
 {
@@ -98,11 +103,13 @@ void Texture::setBlendMode(SDL_BlendMode blendMode)
 	SDL_SetTextureBlendMode(m_texture, blendMode);
 }
 
+
 void Texture::setAlpha(Uint8 alpha)
 {
 	// Modulate texture alpha
 	SDL_SetTextureAlphaMod(m_texture, alpha);
 }
+
 
 void Texture::render(int x, int y, SDL_Rect* clip)
 {
@@ -116,10 +123,12 @@ void Texture::render(int x, int y, SDL_Rect* clip)
 	SDL_RenderCopy(m_renderer, m_texture, clip, &renderQuad);
 }
 
+
 int Texture::getWidth()
 {
 	return m_width;
 }
+
 
 int Texture::getHeight()
 {

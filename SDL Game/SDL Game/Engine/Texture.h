@@ -47,4 +47,3 @@ private:
 	// Help functions
 	bool loadFromFile(std::string path, bool shouldColorKey, Uint32 colorKey);
 };
-

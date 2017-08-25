@@ -51,6 +51,9 @@
     <ClCompile Include="Engine\EngineUtils.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Spawner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Crosshair.h">
@@ -85,6 +88,9 @@
     </ClInclude>
     <ClInclude Include="Engine\RenderManager.h">
       <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Spawner.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

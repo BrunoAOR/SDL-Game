@@ -10,7 +10,6 @@ class Crosshair :
 {
 public:
 	Crosshair(GameObject* parentGameObject);
-	~Crosshair();
 
 	// Inherited via Behaviour
 	virtual void update() override;
@@ -18,4 +17,3 @@ public:
 private:
 	int alpha;
 };
-
