@@ -1,26 +1,19 @@
 #include <SDL.h>
 #include <SDL_image.h>
-#include <stdio.h>
-#include <string>
 
-#include "BehavioursManager.h"
-#include "RenderManager.h"
 #include "constants.h"
 #include "Input.h"
-#include "GameObject.h"
-#include "Texture.h"
+#include "BehavioursManager.h"
+#include "RenderManager.h"
+#include "SceneManager.h"
 
-#include "../Crosshair.h"
-#include "../Crosshair2.h"
-#include "../Spawner.h"
+#include "../TestScene.h"
 
 
 // Global variables
 SDL_Window* gWindow = nullptr;
-GameObject* crosshairGO = nullptr;
-GameObject* crosshair2GO = nullptr;
-GameObject* spawnerGO = nullptr;
 
+TestScene* testScene = nullptr;
 
 // Function declarations
 bool init();
@@ -161,56 +154,13 @@ void close()
 
 bool loadScene()
 {
-	// Loading success flag
-	bool success = true;
-
-	// Load gameobjects
-
-	// Spawner
-	spawnerGO = new GameObject();
-	spawnerGO->addBehaviour(new Spawner(spawnerGO));
-
-	// Crosshair1
-	crosshairGO = new GameObject();
-	crosshairGO->transform.position = { 200, 200 };
-	success &= crosshairGO->addBehaviour<Crosshair>();
-	success &= crosshairGO->addBehaviour<Crosshair2>();
-	//crosshairGO->addBehaviour(new Crosshair2(crosshairGO));
-	if (!crosshairGO->addTexture("assets/Crosshair.png"))
-	{
-		printf("Error: Failed to load crosshair texture image!\n");
-		success = false;
-	}
-	else
-	{
-		crosshairGO->texture->setColor(0, 255, 255);
-	}
-
-	// Crosshair2
-	crosshair2GO = new GameObject();
-	crosshair2GO->transform.position = { constants::SCREEN_WIDTH - 200, 200 };
-	success &= crosshair2GO->addBehaviour<Crosshair2>();
-	if (!crosshair2GO->addTexture("assets/Crosshair.png"))
-	{
-		printf("Error: Failed to load crosshair texture image!\n");
-		success = false;
-	}
-	else
-	{
-		crosshair2GO->texture->setColor(255, 0, 255);
-	}
-
-	return success;
+	SceneManager::addScene<TestScene>();
+	return SceneManager::loadScene(0);
 }
 
 
 void unloadScene()
 {
-	// Free loaded GameObjects
-	delete crosshairGO;
-	crosshairGO = nullptr;
-	delete crosshair2GO;
-	crosshair2GO = nullptr;
-	delete spawnerGO;
-	spawnerGO = nullptr;
+	SceneManager::close();
+	return;
 }

@@ -46,15 +46,6 @@ void GameObject::removeTexture()
 }
 
 
-void GameObject::addBehaviour(Behaviour * behaviour)
-{
-	if (indexOf(behaviours, behaviour) == -1) {
-		// So, the behaviour hasn't been previously added
-		behaviours.push_back(behaviour);
-	}
-}
-
-
 void GameObject::removeBehaviour(Behaviour * behaviour)
 {
 	int index = indexOf(behaviours, behaviour);

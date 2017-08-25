@@ -22,7 +22,6 @@ public:
 	bool addTexture(std::string path);
 	void removeTexture();
 
-	void addBehaviour(Behaviour* behaviour);
 	void removeBehaviour(Behaviour* behaviour);
 
 	template<typename T>
