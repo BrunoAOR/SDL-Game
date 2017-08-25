@@ -9,7 +9,7 @@ class Texture;
 class Behaviour;
 
 
-class GameObject
+class GameObject final
 {
 public:
 	Transform transform;

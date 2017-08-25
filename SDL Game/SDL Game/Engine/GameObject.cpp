@@ -17,7 +17,7 @@ GameObject::~GameObject()
 {
 	removeTexture();
 	for (Behaviour* b : behaviours) {
-		removeBehaviour(b);
+		delete b;
 	}
 }
 
