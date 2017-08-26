@@ -11,10 +11,6 @@
 
 TestScene::TestScene()
 {
-	m_crosshairGO = nullptr;
-	m_crosshair2GO = nullptr;
-	m_spawnerGO = nullptr;
-	m_coloredGO = nullptr;
 }
 
 
@@ -29,13 +25,17 @@ bool TestScene::load()
 	bool success = true;
 
 	// Load gameobjects
+	GameObject* m_crosshairGO;
+	GameObject* m_crosshair2GO;
+	GameObject* m_spawnerGO;
+	GameObject* m_coloredGO;
 
 	// Spawner
-	m_spawnerGO = new GameObject();
+	m_spawnerGO = GameObject::createNew();
 	m_spawnerGO->addBehaviour<Spawner>();
 
 	// Crosshair1
-	m_crosshairGO = new GameObject();
+	m_crosshairGO = GameObject::createNew();
 	m_crosshairGO->transform.position = { 200, 200 };
 	success &= m_crosshairGO->addBehaviour<Crosshair>();
 	success &= m_crosshairGO->addBehaviour<Crosshair2>();
@@ -51,7 +51,7 @@ bool TestScene::load()
 	}
 
 	// Crosshair2
-	m_crosshair2GO = new GameObject();
+	m_crosshair2GO = GameObject::createNew();
 	m_crosshair2GO->transform.position = { constants::SCREEN_WIDTH - 200, 200 };
 	success &= m_crosshair2GO->addBehaviour<Crosshair2>();
 	if (!m_crosshair2GO->addTexture("assets/Crosshair.png"))
@@ -65,7 +65,7 @@ bool TestScene::load()
 	}
 
 	// Colored
-	m_coloredGO = new GameObject();
+	m_coloredGO = GameObject::createNew();
 	if (!m_coloredGO->addTexture("assets/Crosshair.png"))
 	{
 		printf("Error: Failed to load crosshair texture image!\n");
@@ -79,13 +79,5 @@ bool TestScene::load()
 
 void TestScene::unload()
 {
-	// Free loaded GameObjects
-	delete m_crosshairGO;
-	m_crosshairGO = nullptr;
-	delete m_crosshair2GO;
-	m_crosshair2GO = nullptr;
-	delete m_spawnerGO;
-	m_spawnerGO = nullptr;
-	delete m_coloredGO;
-	m_coloredGO = nullptr;
+	// Nothing extra to unload
 }

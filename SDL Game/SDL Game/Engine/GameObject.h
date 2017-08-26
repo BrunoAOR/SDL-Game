@@ -16,33 +16,44 @@ public:
 	Texture* texture;
 	//Behaviour* behaviour;
 	
-	GameObject();
 	~GameObject();
 
 	bool addTexture(std::string path);
 	void removeTexture();
 
-	void removeBehaviour(Behaviour* behaviour);
-
 	template<typename T>
 	bool addBehaviour();
+	void removeBehaviour(Behaviour* behaviour);
+
+	void setActive(bool activeState);
+	bool isActive();
+
+	static GameObject* createNew();
+	static bool destroy(GameObject* gameObject);
 
 private:
 	// The renderer associated with this texture
-	std::vector<Behaviour *> behaviours;
+	std::vector<Behaviour *> m_behaviours;
+
+	GameObject();
+	// Whether Behaviour and Rendering should happen for this GameObject
+	bool m_isActive;
 };
 
 
 template<typename T>
-bool GameObject::addBehaviour() {
+bool GameObject::addBehaviour()
+{
 	// Success flag
 	bool success = true;
 
-	if (std::is_base_of<Behaviour, T>::value) {
+	if (std::is_base_of<Behaviour, T>::value)
+	{
 		T* behaviour = new T(this);
-		behaviours.push_back(behaviour);
+		m_behaviours.push_back(behaviour);
 	}
-	else {
+	else
+	{
 		success = false;
 		printf("Error, can't attach selected class as a behaviour!");
 	}

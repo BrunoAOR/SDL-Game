@@ -3,6 +3,7 @@
 #include <vector>
 
 class Scene;
+class GameObject;
 
 class SceneManager
 {
@@ -12,11 +13,14 @@ public:
 
 	template <typename T>
 	static bool addScene();
+	static bool hasActiveScene();
+	static bool addGameObject(GameObject* gameObject);
+	static bool removeGameObject(GameObject* gameObject);
 
 private:
 	SceneManager();
 	static std::vector<Scene*> m_scenes;
-	static Scene* m_currentScene;
+	static Scene* m_activeScene;
 
 	static void unloadScene(Scene* sceneToUnload);
 };
@@ -27,11 +31,13 @@ bool SceneManager::addScene()
 	// Success flag
 	bool success = true;
 
-	if (std::is_base_of<Scene, T>::value) {
+	if (std::is_base_of<Scene, T>::value)
+	{
 		T* scene = new T();
 		m_scenes.push_back(scene);
 	}
-	else {
+	else
+	{
 		success = false;
 		printf("Error, can't attach selected class as a scene!");
 	}

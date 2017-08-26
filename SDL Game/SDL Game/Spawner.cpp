@@ -29,7 +29,7 @@ void Spawner::update()
 
 void Spawner::createCrosshair()
 {
-	GameObject* crosshairGO = new GameObject();
+	GameObject* crosshairGO = GameObject::createNew();
 	crosshairGO->transform.position = { (float)xPos, 80 };
 	xPos += spawnOffset;
 	crosshairGO->addTexture("assets/Crosshair.png");
@@ -44,6 +44,6 @@ void Spawner::removeCrosshair(GameObject* gameObject)
 	{
 		GameObject* go = spawned.at(index);
 		spawned.erase(spawned.begin() + index);
-		delete go;
+		GameObject::destroy(go);
 	}
 }
