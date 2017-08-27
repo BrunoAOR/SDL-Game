@@ -3,9 +3,10 @@
 #include "BehavioursManager.h"
 
 
-Behaviour::Behaviour(GameObject* parentGameObject)
+Behaviour::Behaviour()
 {
-	gameObject = parentGameObject;
+	m_gameObject = nullptr;
+	m_started = false;
 	BehavioursManager::subscribeBehaviour(this);
 }
 
@@ -13,4 +14,10 @@ Behaviour::Behaviour(GameObject* parentGameObject)
 Behaviour::~Behaviour()
 {
 	BehavioursManager::unsubscribeBehaviour(this);
+}
+
+
+GameObject * Behaviour::gameObject()
+{
+	return m_gameObject;
 }

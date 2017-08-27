@@ -8,9 +8,9 @@ class GameObject;
 class Crosshair2 :
 	public Behaviour
 {
-public:
-	Crosshair2(GameObject* parentGameObject);
-	
+public:	
+	// Inherited via Behaviour
+	virtual void start() override;
 	// Inherited via Behaviour
 	virtual void update() override;
 

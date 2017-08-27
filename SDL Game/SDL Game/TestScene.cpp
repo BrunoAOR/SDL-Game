@@ -25,9 +25,9 @@ bool TestScene::load()
 	bool success = true;
 
 	// Load gameobjects
+	GameObject* m_spawnerGO;
 	GameObject* m_crosshairGO;
 	GameObject* m_crosshair2GO;
-	GameObject* m_spawnerGO;
 	GameObject* m_coloredGO;
 
 	// Spawner

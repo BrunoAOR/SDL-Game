@@ -25,7 +25,10 @@ void RenderManager::update()
 
 	for (GameObject* go : m_gameObjects)
 	{
-		go->texture->render((int)go->transform.position.x, (int)go->transform.position.y);
+		if (go->isActive())
+		{
+			go->texture->render((int)go->transform.position.x, (int)go->transform.position.y);
+		}
 	}
 
 	// Update screen

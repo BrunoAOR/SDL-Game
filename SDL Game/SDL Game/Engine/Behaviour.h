@@ -1,15 +1,25 @@
 #pragma once
 
+class BehavioursManager;
 class GameObject;
 
 
 class Behaviour
 {
 public:
-	GameObject* gameObject;
+	friend class BehavioursManager;
+	friend class GameObject;
 
-	Behaviour(GameObject* parentGameObject);
 	virtual ~Behaviour();
 
+	GameObject * gameObject();
+	virtual void start() = 0;
 	virtual void update() = 0;
+
+protected:
+	Behaviour();
+
+private:
+	GameObject * m_gameObject;
+	bool m_started;
 };

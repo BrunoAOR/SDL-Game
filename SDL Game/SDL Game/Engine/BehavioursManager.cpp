@@ -2,6 +2,7 @@
 
 #include "EngineUtils.cpp"
 #include "Behaviour.h"
+#include "GameObject.h"
 
 
 std::vector<Behaviour*> BehavioursManager::behaviours;
@@ -15,7 +16,17 @@ void BehavioursManager::update()
 {
 	for (Behaviour* b : behaviours)
 	{
-		b->update();
+		if (b->gameObject()->isActive())
+		{
+			if (!b->m_started) {
+				b->start();
+				b->m_started = true;
+			}
+			else
+			{
+				b->update();
+			}
+		}
 	}
 }
 

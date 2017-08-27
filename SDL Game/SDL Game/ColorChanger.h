@@ -11,9 +11,8 @@ public:
 	int color2[3];
 	bool color1active;
 
-	ColorChanger(GameObject* parentGameObject);
-	~ColorChanger();
-
+	// Inherited via Behaviour
+	virtual void start() override;
 	// Inherited via Behaviour
 	virtual void update() override;
 };

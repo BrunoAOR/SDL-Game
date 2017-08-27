@@ -5,9 +5,9 @@
 #include "Engine/Texture.h"
 
 
-Crosshair::Crosshair(GameObject* parentGameObject) : Behaviour(parentGameObject)
+void Crosshair::start()
 {
-	alpha = 255;
+	m_alpha = 255;
 }
 
 
@@ -15,20 +15,20 @@ void Crosshair::update()
 {
 	if (Input::getKeyDown(SDL_SCANCODE_UP))
 	{
-		alpha += 16;
-		if (alpha > 255)
+		m_alpha += 16;
+		if (m_alpha > 255)
 		{
-			alpha = 255;
+			m_alpha = 255;
 		}
 	}
 	if (Input::getKeyDown(SDL_SCANCODE_DOWN))
 	{
-		alpha -= 16;
-		if (alpha < 0)
+		m_alpha -= 16;
+		if (m_alpha < 0)
 		{
-			alpha = 0;
+			m_alpha = 0;
 		}
 	}
 	
-	gameObject->texture->setAlpha(alpha);
+	gameObject()->texture->setAlpha(m_alpha);
 }

@@ -49,7 +49,8 @@ bool GameObject::addBehaviour()
 
 	if (std::is_base_of<Behaviour, T>::value)
 	{
-		T* behaviour = new T(this);
+		T* behaviour = new T();
+		behaviour->m_gameObject = this;
 		m_behaviours.push_back(behaviour);
 	}
 	else

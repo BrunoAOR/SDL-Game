@@ -11,6 +11,8 @@ GameObject::GameObject()
 {
 	// Initialize texture empty
 	texture = nullptr;
+
+	m_isActive = true;
 }
 
 

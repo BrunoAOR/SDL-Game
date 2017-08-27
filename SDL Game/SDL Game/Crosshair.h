@@ -9,11 +9,11 @@ class Crosshair :
 	public Behaviour
 {
 public:
-	Crosshair(GameObject* parentGameObject);
-
+	// Inherited via Behaviour
+	virtual void start() override;
 	// Inherited via Behaviour
 	virtual void update() override;
 
 private:
-	int alpha;
+	int m_alpha;
 };
