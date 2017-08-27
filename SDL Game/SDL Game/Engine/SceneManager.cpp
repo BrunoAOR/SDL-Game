@@ -2,6 +2,7 @@
 
 #include "EngineUtils.cpp"
 #include "Scene.h"
+#include "GameObjectsManager.h"
 
 std::vector<Scene*> SceneManager::m_scenes;
 Scene* SceneManager::m_activeScene = nullptr;
@@ -17,33 +18,6 @@ bool SceneManager::hasActiveScene()
 {
 	return m_activeScene != nullptr;
 }
-
-bool SceneManager::addGameObject(GameObject * gameObject)
-{
-	if (m_activeScene == nullptr)
-	{
-		printf("No active scene in SceneManager\n");
-		return false;
-	}
-	else
-	{
-		return m_activeScene->addGameObject(gameObject);
-	}
-}
-
-bool SceneManager::removeGameObject(GameObject * gameObject)
-{
-	if (m_activeScene == nullptr)
-	{
-		return false;
-	}
-	else
-	{
-		return m_activeScene->removeGameObject(gameObject);
-	}
-}
-
-
 
 
 bool SceneManager::loadScene(unsigned int index)
@@ -63,6 +37,7 @@ bool SceneManager::loadScene(unsigned int index)
 	return false;
 }
 
+
 void SceneManager::close()
 {
 	if (m_activeScene != nullptr)
@@ -75,6 +50,6 @@ void SceneManager::close()
 void SceneManager::unloadScene(Scene * sceneToUnload)
 {
 	m_activeScene->unload();
-	m_activeScene->unloadGameObjects();
+	GameObjectsManager::destroyAllGameObjects();
 	m_activeScene = nullptr;
 }

@@ -1,13 +1,12 @@
 #pragma once
 
-class BehavioursManager;
 class GameObject;
 
 
 class Behaviour
 {
 public:
-	friend class BehavioursManager;
+	friend class GameObjectsManager;
 	friend class GameObject;
 
 	virtual ~Behaviour();

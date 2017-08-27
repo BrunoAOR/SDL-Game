@@ -19,10 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BehaviourToRemove.cpp" />
     <ClCompile Include="ColorChanger.cpp" />
     <ClCompile Include="Engine\EngineUtils.cpp" />
     <ClCompile Include="Engine\Behaviour.cpp" />
-    <ClCompile Include="Engine\BehavioursManager.cpp" />
     <ClCompile Include="Crosshair.cpp" />
     <ClCompile Include="Crosshair2.cpp" />
     <ClCompile Include="Engine\GameObject.cpp" />
@@ -33,13 +33,15 @@
     <ClCompile Include="Engine\RenderManager.cpp" />
     <ClCompile Include="Engine\Scene.cpp" />
     <ClCompile Include="Engine\SceneManager.cpp" />
+    <ClCompile Include="Engine\GameObjectsManager.cpp" />
+    <ClCompile Include="SpawnedCrosshair.cpp" />
     <ClCompile Include="Spawner.cpp" />
     <ClCompile Include="TestScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BehaviourToRemove.h" />
     <ClInclude Include="ColorChanger.h" />
     <ClInclude Include="Engine\Behaviour.h" />
-    <ClInclude Include="Engine\BehavioursManager.h" />
     <ClInclude Include="Engine\constants.h" />
     <ClInclude Include="Crosshair.h" />
     <ClInclude Include="Crosshair2.h" />
@@ -51,6 +53,8 @@
     <ClInclude Include="Engine\RenderManager.h" />
     <ClInclude Include="Engine\Scene.h" />
     <ClInclude Include="Engine\SceneManager.h" />
+    <ClInclude Include="Engine\GameObjectsManager.h" />
+    <ClInclude Include="SpawnedCrosshair.h" />
     <ClInclude Include="Spawner.h" />
     <ClInclude Include="TestScene.h" />
   </ItemGroup>

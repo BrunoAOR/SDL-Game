@@ -27,9 +27,6 @@
     <ClCompile Include="Engine\Behaviour.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\BehavioursManager.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\GameObject.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
@@ -66,6 +63,15 @@
     <ClCompile Include="ColorChanger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SpawnedCrosshair.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GameObjectsManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BehaviourToRemove.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Crosshair.h">
@@ -75,9 +81,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Behaviour.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\BehavioursManager.h">
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Engine\constants.h">
@@ -114,6 +117,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ColorChanger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SpawnedCrosshair.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GameObjectsManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BehaviourToRemove.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

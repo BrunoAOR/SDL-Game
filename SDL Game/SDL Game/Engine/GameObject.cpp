@@ -5,6 +5,7 @@
 #include "Behaviour.h"
 #include "RenderManager.h"
 #include "SceneManager.h"
+#include "GameObjectsManager.h"
 
 
 GameObject::GameObject()
@@ -13,6 +14,7 @@ GameObject::GameObject()
 	texture = nullptr;
 
 	m_isActive = true;
+	m_isUpdating = false;
 }
 
 
@@ -52,17 +54,48 @@ void GameObject::removeTexture()
 }
 
 
+void GameObject::refreshBehaviours()
+{
+	for (Behaviour* b : m_behavioursToAdd)
+	{
+		doAddBehaviour(b);
+	}
+	m_behavioursToAdd.clear();
+	for (Behaviour* b : m_behavioursToRemove)
+	{
+		doRemoveBehaviour(b);
+	}
+}
+
 void GameObject::removeBehaviour(Behaviour * behaviour)
 {
 	int index = indexOf(m_behaviours, behaviour);
-	if (index != -1)
+	int willBeRemovedIndex = indexOf(m_behavioursToRemove, behaviour);
+	if (index != -1 && willBeRemovedIndex == -1)
 	{
-		// So the behaviour is contained in the list of behaviours
-		// Remove from the vector and delete
-		Behaviour * b = m_behaviours.at(index);
-		m_behaviours.erase(m_behaviours.begin() + index);
-		delete b;
+		// So the behaviour is contained in the list of behaviours and not in the list of the behaviours that WILL be deleted
+		if (m_isUpdating) {
+			m_behavioursToRemove.push_back(behaviour);
+		}
+		else
+		{
+			doRemoveBehaviour(behaviour);
+		}
+		
 	}
+}
+
+void GameObject::doAddBehaviour(Behaviour * behaviour)
+{
+	m_behaviours.push_back(behaviour);
+}
+
+void GameObject::doRemoveBehaviour(Behaviour * behaviour)
+{
+	// Remove from the vector and delete
+	int index = indexOf(m_behaviours, behaviour);
+	m_behaviours.erase(m_behaviours.begin() + index);
+	delete behaviour;
 }
 
 void GameObject::setActive(bool activeState)
@@ -81,27 +114,13 @@ GameObject * GameObject::createNew()
 	if (SceneManager::hasActiveScene())
 	{
 		go = new GameObject();
-		if (!SceneManager::addGameObject(go))
-		{
-			delete go;
-			go = nullptr;
-		}
+		GameObjectsManager::addGameObject(go);
 	}
 	return go;
 }
 
-bool GameObject::destroy(GameObject * gameObject)
+void GameObject::destroy(GameObject * gameObject)
 {
-	// Success flag
-	bool success = false;
-	if (SceneManager::hasActiveScene())
-	{
-		if (SceneManager::removeGameObject(gameObject))
-		{
-			delete gameObject;
-			success = true;
-		}
-	}
-	return success;
+	GameObjectsManager::destroyGameObject(gameObject);
 }
 

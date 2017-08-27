@@ -3,7 +3,7 @@
 
 #include "constants.h"
 #include "Input.h"
-#include "BehavioursManager.h"
+#include "GameObjectsManager.h"
 #include "RenderManager.h"
 #include "SceneManager.h"
 
@@ -17,7 +17,7 @@ TestScene* testScene = nullptr;
 
 // Function declarations
 bool init();
-bool loadScene();
+bool setupScenes();
 void loop();
 void unloadScene();
 void close();
@@ -31,7 +31,7 @@ int main(int argc, char* args[])
 	}
 	else
 	{
-		if (!loadScene())
+		if (!setupScenes())
 		{
 			printf("Failed to load scene!\n");
 		}
@@ -128,7 +128,7 @@ void loop()
 	{
 		handleEvents(quit);
 
-		BehavioursManager::update();
+		GameObjectsManager::updateBehaviours();
 		
 		RenderManager::update();
 	}
@@ -139,7 +139,7 @@ void loop()
 void close()
 {
 	// Unload scene
-	unloadScene();
+	SceneManager::close();
 
 	// Destroy window and its renderer
 	RenderManager::close();
@@ -152,15 +152,8 @@ void close()
 }
 
 
-bool loadScene()
+bool setupScenes()
 {
 	SceneManager::addScene<TestScene>();
 	return SceneManager::loadScene(0);
-}
-
-
-void unloadScene()
-{
-	SceneManager::close();
-	return;
 }

@@ -33,6 +33,7 @@ void Spawner::createCrosshair()
 {
 	GameObject* crosshairGO = GameObject::createNew();
 	crosshairGO->transform.position = { (float)m_xPos, 80 };
+	crosshairGO->addBehaviour<SpawnedCrosshair>();
 	m_xPos += m_spawnOffset;
 	crosshairGO->addTexture("assets/Crosshair.png");
 	m_spawned.push_back(crosshairGO);

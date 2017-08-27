@@ -11,6 +11,7 @@ class Behaviour;
 
 class GameObject final
 {
+	friend class GameObjectsManager;
 public:
 	Transform transform;
 	Texture* texture;
@@ -29,35 +30,44 @@ public:
 	bool isActive();
 
 	static GameObject* createNew();
-	static bool destroy(GameObject* gameObject);
+	static void destroy(GameObject* gameObject);
 
 private:
 	// The renderer associated with this texture
 	std::vector<Behaviour *> m_behaviours;
+	std::vector<Behaviour *> m_behavioursToAdd;
+	std::vector<Behaviour *> m_behavioursToRemove;
+	bool m_isActive;
+	bool m_isUpdating;
 
 	GameObject();
-	// Whether Behaviour and Rendering should happen for this GameObject
-	bool m_isActive;
+
+	void doAddBehaviour(Behaviour* behaviour);
+	void doRemoveBehaviour(Behaviour* behaviour);
+	void refreshBehaviours();
 };
 
 
 template<typename T>
-bool GameObject::addBehaviour()
+inline bool GameObject::addBehaviour()
 {
-	// Success flag
-	bool success = true;
-
 	if (std::is_base_of<Behaviour, T>::value)
 	{
 		T* behaviour = new T();
 		behaviour->m_gameObject = this;
-		m_behaviours.push_back(behaviour);
+		if (m_isUpdating)
+		{
+			m_behavioursToAdd.push_back(behaviour);
+		}
+		else
+		{
+			doAddBehaviour(behaviour);
+		}
+		return true;
 	}
 	else
 	{
-		success = false;
 		printf("Error, can't attach selected class as a behaviour!");
+		return false;
 	}
-
-	return success;
 }

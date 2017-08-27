@@ -7,6 +7,7 @@
 #include "Crosshair2.h"
 #include "Spawner.h"
 #include "ColorChanger.h"
+#include "BehaviourToRemove.h"
 
 
 TestScene::TestScene()
@@ -39,6 +40,7 @@ bool TestScene::load()
 	m_crosshairGO->transform.position = { 200, 200 };
 	success &= m_crosshairGO->addBehaviour<Crosshair>();
 	success &= m_crosshairGO->addBehaviour<Crosshair2>();
+	success &= m_crosshairGO->addBehaviour<BehaviourToRemove>();
 	//crosshairGO->addBehaviour(new Crosshair2(crosshairGO));
 	if (!m_crosshairGO->addTexture("assets/Crosshair.png"))
 	{

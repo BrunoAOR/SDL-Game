@@ -13,6 +13,11 @@ void Crosshair::start()
 
 void Crosshair::update()
 {
+	if (Input::getKeyDown(SDL_SCANCODE_L))
+	{
+		// TODO: Get the component of type BehaviourToRemove and call gameObject()->removeBehaviour(Behaviour *) on it to test
+	}
+
 	if (Input::getKeyDown(SDL_SCANCODE_UP))
 	{
 		m_alpha += 16;

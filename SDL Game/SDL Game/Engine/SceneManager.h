@@ -14,8 +14,6 @@ public:
 	template <typename T>
 	static bool addScene();
 	static bool hasActiveScene();
-	static bool addGameObject(GameObject* gameObject);
-	static bool removeGameObject(GameObject* gameObject);
 
 private:
 	SceneManager();
