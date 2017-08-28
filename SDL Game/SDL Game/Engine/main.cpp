@@ -19,7 +19,6 @@ TestScene* testScene = nullptr;
 bool init();
 bool setupScenes();
 void loop();
-void unloadScene();
 void close();
 
 
@@ -91,6 +90,13 @@ bool init()
 }
 
 
+bool setupScenes()
+{
+	SceneManager::addScene<TestScene>();
+	return SceneManager::loadScene(0);
+}
+
+
 void handleEvents(bool& shouldQuit)
 {
 	// Event handler
@@ -149,11 +155,4 @@ void close()
 	// Quit SDL subsystems
 	IMG_Quit();
 	SDL_Quit();
-}
-
-
-bool setupScenes()
-{
-	SceneManager::addScene<TestScene>();
-	return SceneManager::loadScene(0);
 }

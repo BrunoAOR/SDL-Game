@@ -1,10 +1,14 @@
 #include "Spawner.h"
 
-#include "Engine/EngineUtils.cpp"
+#include "Engine/EngineUtils.h"
 #include "Engine/Input.h"
 #include "Engine/GameObject.h"
 #include "SpawnedCrosshair.h"
 
+
+void Spawner::awake()
+{
+}
 
 void Spawner::start()
 {
@@ -33,7 +37,7 @@ void Spawner::createCrosshair()
 {
 	GameObject* crosshairGO = GameObject::createNew();
 	crosshairGO->transform.position = { (float)m_xPos, 80 };
-	crosshairGO->addBehaviour<SpawnedCrosshair>();
+	crosshairGO->addComponent<SpawnedCrosshair>();
 	m_xPos += m_spawnOffset;
 	crosshairGO->addTexture("assets/Crosshair.png");
 	m_spawned.push_back(crosshairGO);

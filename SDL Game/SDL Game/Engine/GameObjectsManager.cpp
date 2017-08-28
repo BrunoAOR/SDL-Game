@@ -1,6 +1,6 @@
 #include "GameObjectsManager.h"
 
-#include "EngineUtils.cpp"
+#include "EngineUtils.h"
 #include "GameObject.h"
 #include "Behaviour.h"
 
@@ -20,12 +20,11 @@ void GameObjectsManager::updateBehaviours()
 {
 	refreshGameObjects();
 	m_isUpdating = true;
+
 	for (GameObject* go : m_gameObjects)
 	{
-		go->refreshBehaviours();
 		if (go->isActive())
 		{
-			go->m_isUpdating = true;
 			for (Behaviour* b : go->m_behaviours)
 			{
 				if (!b->m_started) {
@@ -37,7 +36,6 @@ void GameObjectsManager::updateBehaviours()
 					b->update();
 				}
 			}
-			go->m_isUpdating = false;
 		}
 	}
 	m_isUpdating = false;
@@ -87,8 +85,9 @@ void GameObjectsManager::refreshGameObjects()
 {
 	for (GameObject* go : m_gameObjects)
 	{
-		go->refreshBehaviours();
+		go->refreshComponents();
 	}
+
 	for (GameObject* go : m_gosToAdd)
 	{
 		doAddGameObject(go);

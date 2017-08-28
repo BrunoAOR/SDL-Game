@@ -1,6 +1,6 @@
 #include "RenderManager.h"
 
-#include "EngineUtils.cpp"
+#include "EngineUtils.h"
 #include "GameObject.h"
 #include "Texture.h"
 

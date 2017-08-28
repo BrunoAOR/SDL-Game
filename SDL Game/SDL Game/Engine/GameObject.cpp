@@ -1,6 +1,6 @@
 #include "GameObject.h"
 
-#include "EngineUtils.cpp"
+#include "EngineUtils.h"
 #include "Texture.h"
 #include "Behaviour.h"
 #include "RenderManager.h"
@@ -14,17 +14,17 @@ GameObject::GameObject()
 	texture = nullptr;
 
 	m_isActive = true;
-	m_isUpdating = false;
 }
 
 
 GameObject::~GameObject()
 {
 	removeTexture();
-	for (Behaviour* b : m_behaviours)
+	for (Component* c : m_components)
 	{
-		delete b;
+		delete c;
 	}
+	m_components.clear();
 	m_behaviours.clear();
 }
 
@@ -54,48 +54,58 @@ void GameObject::removeTexture()
 }
 
 
-void GameObject::refreshBehaviours()
+void GameObject::refreshComponents()
 {
-	for (Behaviour* b : m_behavioursToAdd)
+	for (Component* c : m_componentsToAdd)
 	{
-		doAddBehaviour(b);
+		doAddComponent(c);
 	}
-	m_behavioursToAdd.clear();
-	for (Behaviour* b : m_behavioursToRemove)
+	m_componentsToAdd.clear();
+
+	for (Component* c : m_componentsToRemove)
 	{
-		doRemoveBehaviour(b);
+		doRemoveComponent(c);
 	}
+	m_componentsToRemove.clear();
 }
 
-void GameObject::removeBehaviour(Behaviour * behaviour)
+void GameObject::removeComponent(Component * component)
 {
-	int index = indexOf(m_behaviours, behaviour);
-	int willBeRemovedIndex = indexOf(m_behavioursToRemove, behaviour);
-	if (index != -1 && willBeRemovedIndex == -1)
+	int componentIndex = indexOf(m_components, component);
+	int willBeRemovedIndex = indexOf(m_componentsToRemove, component);
+	if (componentIndex != -1 && willBeRemovedIndex == -1)
 	{
-		// So the behaviour is contained in the list of behaviours and not in the list of the behaviours that WILL be deleted
-		if (m_isUpdating) {
-			m_behavioursToRemove.push_back(behaviour);
-		}
-		else
-		{
-			doRemoveBehaviour(behaviour);
-		}
-		
+		// So the component is contained in the list of components and not in the list of the components that WILL be deleted
+		m_componentsToRemove.push_back(component);
 	}
 }
 
-void GameObject::doAddBehaviour(Behaviour * behaviour)
+void GameObject::doAddComponent(Component * component)
 {
-	m_behaviours.push_back(behaviour);
+	m_components.push_back(component);
+	if (Behaviour* behaviour = dynamic_cast<Behaviour*>(component))
+	{
+		m_behaviours.push_back(behaviour);
+	}
 }
 
-void GameObject::doRemoveBehaviour(Behaviour * behaviour)
+void GameObject::doRemoveComponent(Component * component)
 {
 	// Remove from the vector and delete
-	int index = indexOf(m_behaviours, behaviour);
-	m_behaviours.erase(m_behaviours.begin() + index);
-	delete behaviour;
+	int componentIndex = indexOf(m_components, component);
+	if (componentIndex != -1)
+	{
+		m_components.erase(m_components.begin() + componentIndex);
+		if (Behaviour* behaviour = dynamic_cast<Behaviour*>(component))
+		{
+			int behaviourIndex = indexOf(m_behaviours, behaviour);
+			if (behaviourIndex != -1)
+			{
+				m_behaviours.erase(m_behaviours.begin() + behaviourIndex);
+			}
+		}
+		delete component;
+	}
 }
 
 void GameObject::setActive(bool activeState)

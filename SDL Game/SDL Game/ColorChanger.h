@@ -12,8 +12,8 @@ public:
 	bool color1active;
 
 	// Inherited via Behaviour
+	virtual void awake() override;
 	virtual void start() override;
-	// Inherited via Behaviour
 	virtual void update() override;
 };
 

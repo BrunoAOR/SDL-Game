@@ -4,6 +4,11 @@
 #include "Engine/Input.h"
 #include "Engine/Texture.h"
 
+#include "BehaviourToRemove.h"
+
+void Crosshair::awake()
+{
+}
 
 void Crosshair::start()
 {
@@ -15,6 +20,11 @@ void Crosshair::update()
 {
 	if (Input::getKeyDown(SDL_SCANCODE_L))
 	{
+		BehaviourToRemove* btr = gameObject()->getComponent<BehaviourToRemove>();
+		if (btr != nullptr)
+		{
+			gameObject()->removeComponent(btr);
+		}
 		// TODO: Get the component of type BehaviourToRemove and call gameObject()->removeBehaviour(Behaviour *) on it to test
 	}
 

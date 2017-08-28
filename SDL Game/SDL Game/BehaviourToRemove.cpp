@@ -2,6 +2,10 @@
 #include <stdio.h>
 
 
+void BehaviourToRemove::awake()
+{
+}
+
 void BehaviourToRemove::start()
 {
 	printf("BTR STARTED");
@@ -9,4 +13,5 @@ void BehaviourToRemove::start()
 
 void BehaviourToRemove::update()
 {
+	printf("BTR UPDATED");
 }

@@ -2,6 +2,10 @@
 
 #include "Engine/GameObject.h"
 
+void SpawnedCrosshair::awake()
+{
+}
+
 void SpawnedCrosshair::start()
 {
 	m_wentRight = false;

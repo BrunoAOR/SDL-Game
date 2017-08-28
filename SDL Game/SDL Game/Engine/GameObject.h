@@ -4,8 +4,10 @@
 #include <vector>
 
 #include "Transform.h"
+#include "EngineUtils.h"
 
 class Texture;
+class Component;
 class Behaviour;
 
 
@@ -15,7 +17,6 @@ class GameObject final
 public:
 	Transform transform;
 	Texture* texture;
-	//Behaviour* behaviour;
 	
 	~GameObject();
 
@@ -23,8 +24,10 @@ public:
 	void removeTexture();
 
 	template<typename T>
-	bool addBehaviour();
-	void removeBehaviour(Behaviour* behaviour);
+	bool addComponent();
+	void removeComponent(Component* component);
+	template<typename T>
+	T* getComponent();
 
 	void setActive(bool activeState);
 	bool isActive();
@@ -33,41 +36,54 @@ public:
 	static void destroy(GameObject* gameObject);
 
 private:
-	// The renderer associated with this texture
+	std::vector<Component *> m_components;
 	std::vector<Behaviour *> m_behaviours;
-	std::vector<Behaviour *> m_behavioursToAdd;
-	std::vector<Behaviour *> m_behavioursToRemove;
+	std::vector<Component *> m_componentsToAdd;
+	std::vector<Component *> m_componentsToRemove;
 	bool m_isActive;
-	bool m_isUpdating;
 
 	GameObject();
 
-	void doAddBehaviour(Behaviour* behaviour);
-	void doRemoveBehaviour(Behaviour* behaviour);
-	void refreshBehaviours();
+	void doAddComponent(Component* component);
+	void doRemoveComponent(Component* component);
+	void refreshComponents();
 };
 
 
 template<typename T>
-inline bool GameObject::addBehaviour()
+inline bool GameObject::addComponent()
 {
-	if (std::is_base_of<Behaviour, T>::value)
+	if (!std::is_base_of<Component, T>::value || std::is_same<Component, T>::value || std::is_same<Behaviour, T>::value)
 	{
-		T* behaviour = new T();
-		behaviour->m_gameObject = this;
-		if (m_isUpdating)
-		{
-			m_behavioursToAdd.push_back(behaviour);
-		}
-		else
-		{
-			doAddBehaviour(behaviour);
-		}
-		return true;
+		printf("Error, can't attach selected class as a component!");
+		return false;
 	}
 	else
 	{
-		printf("Error, can't attach selected class as a behaviour!");
-		return false;
+		// So T inherits from Component and is NOT a Component or a Behaviour as such
+		T* behaviour = new T();
+		behaviour->m_gameObject = this;
+		m_componentsToAdd.push_back(behaviour);
+		return true;
 	}
+}
+
+template<typename T>
+inline T * GameObject::getComponent()
+{
+	if (!std::is_base_of<Component, T>::value || std::is_same<Component, T>::value || std::is_same<Behaviour, T>::value)
+	{
+		printf("Error, selected class is not allowed!");
+	}
+	else
+	{
+		for (Component* component : m_components)
+		{
+			if (T* castedComponent = dynamic_cast<T*>(component))
+			{
+				return castedComponent;
+			}
+		}
+	}
+	return nullptr;
 }

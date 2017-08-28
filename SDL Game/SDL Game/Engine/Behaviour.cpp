@@ -3,18 +3,22 @@
 
 Behaviour::Behaviour()
 {
-	m_gameObject = nullptr;
+	m_isActive = true;
 	m_started = false;
 }
 
 
+void Behaviour::setActive(bool activeState)
+{
+	m_isActive = activeState;
+}
+
+bool Behaviour::isActive()
+{
+	return m_isActive;
+}
+
 Behaviour::~Behaviour()
 {
 
-}
-
-
-GameObject * Behaviour::gameObject()
-{
-	return m_gameObject;
 }

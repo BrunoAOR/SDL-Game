@@ -45,9 +45,6 @@
     <ClCompile Include="Engine\RenderManager.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\EngineUtils.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
     <ClCompile Include="Spawner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -66,11 +63,17 @@
     <ClCompile Include="SpawnedCrosshair.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\GameObjectsManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="BehaviourToRemove.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GameObjectsManager.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Component.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\EngineUtils.h">
+      <Filter>Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -122,11 +125,14 @@
     <ClInclude Include="SpawnedCrosshair.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\GameObjectsManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="BehaviourToRemove.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GameObjectsManager.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Component.h">
+      <Filter>Engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

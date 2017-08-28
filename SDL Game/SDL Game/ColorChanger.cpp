@@ -5,6 +5,10 @@
 #include "Engine/Texture.h"
 
 
+void ColorChanger::awake()
+{
+}
+
 void ColorChanger::start()
 {
 	color1[0] = 0;
@@ -16,7 +20,7 @@ void ColorChanger::start()
 	color2[0] = 255;
 
 	color1active = true;
-
+	
 	gameObject()->texture->setColor(color1[0], color1[1], color1[2]);
 }
 

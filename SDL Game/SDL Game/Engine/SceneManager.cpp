@@ -1,6 +1,6 @@
 #include "SceneManager.h"
 
-#include "EngineUtils.cpp"
+#include "EngineUtils.h"
 #include "Scene.h"
 #include "GameObjectsManager.h"
 

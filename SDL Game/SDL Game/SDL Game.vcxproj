@@ -21,7 +21,8 @@
   <ItemGroup>
     <ClCompile Include="BehaviourToRemove.cpp" />
     <ClCompile Include="ColorChanger.cpp" />
-    <ClCompile Include="Engine\EngineUtils.cpp" />
+    <ClCompile Include="Engine\Component.cpp" />
+    <ClCompile Include="Engine\EngineUtils.h" />
     <ClCompile Include="Engine\Behaviour.cpp" />
     <ClCompile Include="Crosshair.cpp" />
     <ClCompile Include="Crosshair2.cpp" />
@@ -41,6 +42,7 @@
   <ItemGroup>
     <ClInclude Include="BehaviourToRemove.h" />
     <ClInclude Include="ColorChanger.h" />
+    <ClInclude Include="Engine\Component.h" />
     <ClInclude Include="Engine\Behaviour.h" />
     <ClInclude Include="Engine\constants.h" />
     <ClInclude Include="Crosshair.h" />

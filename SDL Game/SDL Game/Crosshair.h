@@ -10,8 +10,8 @@ class Crosshair :
 {
 public:
 	// Inherited via Behaviour
+	virtual void awake() override;
 	virtual void start() override;
-	// Inherited via Behaviour
 	virtual void update() override;
 
 private:

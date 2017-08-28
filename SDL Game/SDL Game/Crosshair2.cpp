@@ -4,6 +4,10 @@
 #include "Engine/Input.h"
 
 
+void Crosshair2::awake()
+{
+}
+
 void Crosshair2::start()
 {
 
