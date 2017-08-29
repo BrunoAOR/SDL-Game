@@ -8,7 +8,6 @@
 std::vector<GameObject *> GameObjectsManager::m_gameObjects;
 std::vector<GameObject *> GameObjectsManager::m_gosToAdd;
 std::vector<GameObject *> GameObjectsManager::m_gosToDestroy;
-bool GameObjectsManager::m_isUpdating = false;
 
 
 GameObjectsManager::GameObjectsManager()
@@ -16,10 +15,9 @@ GameObjectsManager::GameObjectsManager()
 }
 
 
-void GameObjectsManager::updateBehaviours()
+void GameObjectsManager::updateGameObjectsAndBehaviours()
 {
 	refreshGameObjects();
-	m_isUpdating = true;
 
 	for (GameObject* go : m_gameObjects)
 	{
@@ -38,36 +36,24 @@ void GameObjectsManager::updateBehaviours()
 			}
 		}
 	}
-	m_isUpdating = false;
 }
 
 
 void GameObjectsManager::addGameObject(GameObject * gameObject)
 {
-	if (m_isUpdating)
-	{
-		if (indexOf(m_gosToAdd, gameObject) == -1) {
-			m_gosToAdd.push_back(gameObject);
-		}
+	// Check if the gameObject hasn't already been added to the list
+	if (indexOf(m_gosToAdd, gameObject) == -1) {
+		m_gosToAdd.push_back(gameObject);
 	}
-	else
-	{
-		doAddGameObject(gameObject);
-	}
+	
 }
 
 
 void GameObjectsManager::destroyGameObject(GameObject * gameObject)
 {
-	if (m_isUpdating)
-	{
-		if (indexOf(m_gosToDestroy, gameObject) == -1) {
-			m_gosToDestroy.push_back(gameObject);
-		}
-	}
-	else
-	{
-		doDestroyGameObject(gameObject);
+	// Check if the gameObject hasn't already been added to the list
+	if (indexOf(m_gosToDestroy, gameObject) == -1) {
+		m_gosToDestroy.push_back(gameObject);
 	}
 }
 

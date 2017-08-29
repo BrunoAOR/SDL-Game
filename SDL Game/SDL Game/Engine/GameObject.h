@@ -36,6 +36,9 @@ public:
 	static void destroy(GameObject* gameObject);
 
 private:
+	static int m_nextId;
+	int m_id;
+
 	std::vector<Component *> m_components;
 	std::vector<Behaviour *> m_behaviours;
 	std::vector<Component *> m_componentsToAdd;

@@ -8,10 +8,10 @@ void BehaviourToRemove::awake()
 
 void BehaviourToRemove::start()
 {
-	printf("BTR STARTED");
+	printf("BTR STARTED!\n");
 }
 
 void BehaviourToRemove::update()
 {
-	printf("BTR UPDATED");
+	//printf("BTR UPDATED! ");
 }

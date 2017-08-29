@@ -9,7 +9,7 @@ class Behaviour;
 class GameObjectsManager
 {
 public:
-	static void updateBehaviours();
+	static void updateGameObjectsAndBehaviours();
 	static void addGameObject(GameObject* gameObject);
 	static void destroyGameObject(GameObject* gameObject);
 	static void destroyAllGameObjects();
@@ -19,7 +19,6 @@ private:
 	static std::vector<GameObject *> m_gameObjects;
 	static std::vector<GameObject *> m_gosToAdd;
 	static std::vector<GameObject *> m_gosToDestroy;
-	static bool m_isUpdating;
 
 	static void refreshGameObjects();
 	static void doAddGameObject(GameObject* gameObject);

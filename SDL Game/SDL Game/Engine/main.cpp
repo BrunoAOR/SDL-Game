@@ -134,7 +134,7 @@ void loop()
 	{
 		handleEvents(quit);
 
-		GameObjectsManager::updateBehaviours();
+		GameObjectsManager::updateGameObjectsAndBehaviours();
 		
 		RenderManager::update();
 	}

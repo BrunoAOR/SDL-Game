@@ -8,8 +8,12 @@
 #include "GameObjectsManager.h"
 
 
+int GameObject::m_nextId = 0;
+
 GameObject::GameObject()
 {
+	m_id = m_nextId++;
+	printf("GO constructed: %i\n", m_id);
 	// Initialize texture empty
 	texture = nullptr;
 
@@ -26,6 +30,7 @@ GameObject::~GameObject()
 	}
 	m_components.clear();
 	m_behaviours.clear();
+	printf("GO destructed: %i\n", m_id);
 }
 
 
