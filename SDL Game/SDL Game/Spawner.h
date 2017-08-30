@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <vector>
 #include "Engine\Behaviour.h"
 
@@ -16,10 +17,10 @@ public:
 	virtual void update() override;
 
 private:
-	std::vector<GameObject*> m_spawned;
+	std::vector<std::weak_ptr<GameObject>> m_spawned;
 	int m_xPos;
 	int m_spawnOffset;
 
 	void createCrosshair();
-	void removeCrosshair(GameObject* gameObject);
+	void removeCrosshair(std::weak_ptr<GameObject> gameObject);
 };

@@ -2,6 +2,11 @@
 #include <stdio.h>
 
 
+BehaviourToRemove::~BehaviourToRemove()
+{
+	printf("BTR DESTROYED!\n");
+}
+
 void BehaviourToRemove::awake()
 {
 }

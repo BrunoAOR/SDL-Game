@@ -5,7 +5,6 @@
 
 Component::Component()
 {
-	m_gameObject = nullptr;
 }
 
 
@@ -13,7 +12,7 @@ Component::~Component()
 {
 }
 
-GameObject * Component::gameObject()
+std::shared_ptr<GameObject> Component::gameObject()
 {
-	return m_gameObject;
+	return m_gameObject.lock();
 }

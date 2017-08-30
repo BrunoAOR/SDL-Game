@@ -35,21 +35,26 @@ void Spawner::update()
 
 void Spawner::createCrosshair()
 {
-	GameObject* crosshairGO = GameObject::createNew();
-	crosshairGO->transform.position = { (float)m_xPos, 80 };
-	crosshairGO->addComponent<SpawnedCrosshair>();
-	m_xPos += m_spawnOffset;
-	crosshairGO->addTexture("assets/Crosshair.png");
-	m_spawned.push_back(crosshairGO);
+	auto weakCrosshairGO = GameObject::createNew();
+	auto crosshairGO = weakCrosshairGO.lock();
+	if (crosshairGO)
+	{
+		crosshairGO->transform.position = { (float)m_xPos, 80 };
+		crosshairGO->addComponent<SpawnedCrosshair>();
+		m_xPos += m_spawnOffset;
+		crosshairGO->addTexture("assets/Crosshair.png");
+		m_spawned.push_back(crosshairGO);
+	}
+	
 }
 
 
-void Spawner::removeCrosshair(GameObject* gameObject)
+void Spawner::removeCrosshair(std::weak_ptr<GameObject> gameObject)
 {
 	int index = indexOf(m_spawned, gameObject);
 	if (index != -1)
 	{
-		GameObject* go = m_spawned.at(index);
+		auto go = m_spawned.at(index);
 		m_spawned.erase(m_spawned.begin() + index);
 		GameObject::destroy(go);
 	}

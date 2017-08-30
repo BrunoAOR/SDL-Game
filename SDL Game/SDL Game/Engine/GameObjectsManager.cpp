@@ -4,10 +4,9 @@
 #include "GameObject.h"
 #include "Behaviour.h"
 
-
-std::vector<GameObject *> GameObjectsManager::m_gameObjects;
-std::vector<GameObject *> GameObjectsManager::m_gosToAdd;
-std::vector<GameObject *> GameObjectsManager::m_gosToDestroy;
+std::vector<std::shared_ptr<GameObject>> GameObjectsManager::m_gameObjects;
+std::vector<std::shared_ptr<GameObject>> GameObjectsManager::m_gosToAdd;
+std::vector<std::weak_ptr<GameObject>> GameObjectsManager::m_gosToDestroy;
 
 
 GameObjectsManager::GameObjectsManager()
@@ -19,11 +18,11 @@ void GameObjectsManager::updateGameObjectsAndBehaviours()
 {
 	refreshGameObjects();
 
-	for (GameObject* go : m_gameObjects)
+	for (auto go : m_gameObjects)
 	{
 		if (go->isActive())
 		{
-			for (Behaviour* b : go->m_behaviours)
+			for (auto b : go->m_behaviours)
 			{
 				if (!b->m_started) {
 					b->start();
@@ -39,7 +38,7 @@ void GameObjectsManager::updateGameObjectsAndBehaviours()
 }
 
 
-void GameObjectsManager::addGameObject(GameObject * gameObject)
+void GameObjectsManager::addGameObject(std::shared_ptr<GameObject> gameObject)
 {
 	// Check if the gameObject hasn't already been added to the list
 	if (indexOf(m_gosToAdd, gameObject) == -1) {
@@ -49,7 +48,7 @@ void GameObjectsManager::addGameObject(GameObject * gameObject)
 }
 
 
-void GameObjectsManager::destroyGameObject(GameObject * gameObject)
+void GameObjectsManager::destroyGameObject(std::weak_ptr<GameObject> gameObject)
 {
 	// Check if the gameObject hasn't already been added to the list
 	if (indexOf(m_gosToDestroy, gameObject) == -1) {
@@ -59,28 +58,24 @@ void GameObjectsManager::destroyGameObject(GameObject * gameObject)
 
 void GameObjectsManager::destroyAllGameObjects()
 {
-	for (GameObject* go : m_gameObjects)
-	{
-		delete go;
-	}
 	m_gameObjects.clear();
 }
 
 
 void GameObjectsManager::refreshGameObjects()
 {
-	for (GameObject* go : m_gameObjects)
+	for (auto go : m_gameObjects)
 	{
 		go->refreshComponents();
 	}
 
-	for (GameObject* go : m_gosToAdd)
+	for (auto go : m_gosToAdd)
 	{
 		doAddGameObject(go);
 	}
 	m_gosToAdd.clear();
 
-	for (GameObject* go : m_gosToDestroy)
+	for (auto go : m_gosToDestroy)
 	{
 		doDestroyGameObject(go);
 	}
@@ -88,7 +83,7 @@ void GameObjectsManager::refreshGameObjects()
 }
 
 
-void GameObjectsManager::doAddGameObject(GameObject * gameObject)
+void GameObjectsManager::doAddGameObject(std::shared_ptr<GameObject> gameObject)
 {
 	if (indexOf(m_gameObjects, gameObject) == -1) {
 		// So the gameObject hasn't previously been added
@@ -97,12 +92,11 @@ void GameObjectsManager::doAddGameObject(GameObject * gameObject)
 }
 
 
-void GameObjectsManager::doDestroyGameObject(GameObject * gameObject)
+void GameObjectsManager::doDestroyGameObject(std::weak_ptr<GameObject> gameObject)
 {
-	int index = indexOf(m_gameObjects, gameObject);
+	int index = indexOf(m_gameObjects, gameObject.lock());
 	if (index != -1) {
 		// So, the behaviour is in the behaviours vector
 		m_gameObjects.erase(m_gameObjects.begin() + index);
-		delete gameObject;
 	}
 }

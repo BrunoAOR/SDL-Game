@@ -24,10 +24,6 @@ GameObject::GameObject()
 GameObject::~GameObject()
 {
 	removeTexture();
-	for (Component* c : m_components)
-	{
-		delete c;
-	}
 	m_components.clear();
 	m_behaviours.clear();
 	printf("GO destructed: %i\n", m_id);
@@ -61,22 +57,22 @@ void GameObject::removeTexture()
 
 void GameObject::refreshComponents()
 {
-	for (Component* c : m_componentsToAdd)
+	for (auto c : m_componentsToAdd)
 	{
 		doAddComponent(c);
 	}
 	m_componentsToAdd.clear();
 
-	for (Component* c : m_componentsToRemove)
+	for (auto c : m_componentsToRemove)
 	{
 		doRemoveComponent(c);
 	}
 	m_componentsToRemove.clear();
 }
 
-void GameObject::removeComponent(Component * component)
+void GameObject::removeComponent(std::weak_ptr<Component> component)
 {
-	int componentIndex = indexOf(m_components, component);
+	int componentIndex = indexOf(m_components, component.lock());
 	int willBeRemovedIndex = indexOf(m_componentsToRemove, component);
 	if (componentIndex != -1 && willBeRemovedIndex == -1)
 	{
@@ -85,23 +81,23 @@ void GameObject::removeComponent(Component * component)
 	}
 }
 
-void GameObject::doAddComponent(Component * component)
+void GameObject::doAddComponent(std::shared_ptr<Component> component)
 {
+	// No need to check for components's presence in m_components since this funciton gets called with newly instantiated components only
 	m_components.push_back(component);
-	if (Behaviour* behaviour = dynamic_cast<Behaviour*>(component))
+	if (std::shared_ptr<Behaviour> behaviour = std::dynamic_pointer_cast<Behaviour>(component))
 	{
 		m_behaviours.push_back(behaviour);
 	}
 }
 
-void GameObject::doRemoveComponent(Component * component)
+void GameObject::doRemoveComponent(std::weak_ptr<Component> component)
 {
 	// Remove from the vector and delete
-	int componentIndex = indexOf(m_components, component);
+	int componentIndex = indexOf(m_components, component.lock());
 	if (componentIndex != -1)
 	{
-		m_components.erase(m_components.begin() + componentIndex);
-		if (Behaviour* behaviour = dynamic_cast<Behaviour*>(component))
+		if (std::shared_ptr<Behaviour> behaviour = std::dynamic_pointer_cast<Behaviour>(component.lock()))
 		{
 			int behaviourIndex = indexOf(m_behaviours, behaviour);
 			if (behaviourIndex != -1)
@@ -109,7 +105,7 @@ void GameObject::doRemoveComponent(Component * component)
 				m_behaviours.erase(m_behaviours.begin() + behaviourIndex);
 			}
 		}
-		delete component;
+		m_components.erase(m_components.begin() + componentIndex);
 	}
 }
 
@@ -123,18 +119,20 @@ bool GameObject::isActive()
 	return m_isActive;
 }
 
-GameObject * GameObject::createNew()
+std::weak_ptr<GameObject> GameObject::createNew()
 {
-	GameObject* go = nullptr;
+	std::weak_ptr<GameObject> weakGo;
 	if (SceneManager::hasActiveScene())
 	{
-		go = new GameObject();
+		auto go = std::make_shared<GameObject>();
+		go->self = go;
 		GameObjectsManager::addGameObject(go);
+		weakGo = go;
 	}
-	return go;
+	return weakGo;
 }
 
-void GameObject::destroy(GameObject * gameObject)
+void GameObject::destroy(std::weak_ptr<GameObject> gameObject)
 {
 	GameObjectsManager::destroyGameObject(gameObject);
 }

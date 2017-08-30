@@ -4,6 +4,7 @@
 #include "Engine/GameObject.h"
 #include "Engine/Texture.h"
 
+#include "Crosshair2.h"
 
 void ColorChanger::awake()
 {
@@ -20,6 +21,7 @@ void ColorChanger::start()
 	color2[0] = 255;
 
 	color1active = true;
+	hasCrosshair = false;
 	
 	gameObject()->texture->setColor(color1[0], color1[1], color1[2]);
 }
@@ -27,14 +29,30 @@ void ColorChanger::start()
 
 void ColorChanger::update()
 {
-	if (Input::getKeyDown(SDL_SCANCODE_C)) {
-		if (color1active) {
+	if (Input::getKeyDown(SDL_SCANCODE_C))
+	{
+		if (color1active)
+		{
 			color1active = false;
 			gameObject()->texture->setColor(color2[0], color2[1], color2[2]);
 		}
-		else {
+		else
+		{
 			color1active = true;
 			gameObject()->texture->setColor(color1[0], color1[1], color1[2]);
+		}
+	}
+	if (Input::getKeyDown(SDL_SCANCODE_V))
+	{
+		if (hasCrosshair)
+		{
+			gameObject()->removeComponent(gameObject()->getComponent<Crosshair2>());
+			hasCrosshair = false;
+		}
+		else
+		{
+			gameObject()->addComponent<Crosshair2>();
+			hasCrosshair = true;
 		}
 	}
 }

@@ -1,5 +1,6 @@
 #pragma once
 
+#include<memory>
 
 class Component
 {
@@ -8,14 +9,11 @@ public:
 	friend class GameObject;
 	friend class Behaviour;
 
-	virtual ~Component();
-	GameObject * gameObject();
-
-protected:
-	
-private:
 	Component();
+	virtual ~Component();
+	
+	std::shared_ptr<GameObject> gameObject();
 
-	GameObject * m_gameObject;
+private:
+	std::weak_ptr<GameObject> m_gameObject;
 };
-

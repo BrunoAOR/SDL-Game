@@ -4,6 +4,7 @@ class BehaviourToRemove :
 	public Behaviour
 {
 public:
+	~BehaviourToRemove();
 	// Inherited via Behaviour
 	virtual void awake() override;
 	virtual void start() override;

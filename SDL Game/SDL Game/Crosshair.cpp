@@ -20,12 +20,11 @@ void Crosshair::update()
 {
 	if (Input::getKeyDown(SDL_SCANCODE_L))
 	{
-		BehaviourToRemove* btr = gameObject()->getComponent<BehaviourToRemove>();
-		if (btr != nullptr)
+		std::weak_ptr<BehaviourToRemove> btr = gameObject()->getComponent<BehaviourToRemove>();
+		if (!btr.expired())
 		{
 			gameObject()->removeComponent(btr);
 		}
-		// TODO: Get the component of type BehaviourToRemove and call gameObject()->removeBehaviour(Behaviour *) on it to test
 	}
 
 	if (Input::getKeyDown(SDL_SCANCODE_UP))

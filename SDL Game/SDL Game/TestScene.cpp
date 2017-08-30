@@ -1,5 +1,7 @@
 #include "TestScene.h"
 
+#include <memory>
+
 #include "Engine/GameObject.h"
 #include "Engine/constants.h"
 #include "Engine/Texture.h"
@@ -26,56 +28,74 @@ bool TestScene::load()
 	bool success = true;
 
 	// Load gameobjects
-	GameObject* m_spawnerGO;
-	GameObject* m_crosshairGO;
-	GameObject* m_crosshair2GO;
-	GameObject* m_coloredGO;
+	std::weak_ptr<GameObject> weakSpawnerGO;
+	std::weak_ptr<GameObject> weakCrosshairGO;
+	std::weak_ptr<GameObject> weakCrosshair2GO;
+	std::weak_ptr<GameObject> weakColoredGO;
 
 	// Spawner
-	m_spawnerGO = GameObject::createNew();
-	m_spawnerGO->addComponent<Spawner>();
+	weakSpawnerGO = GameObject::createNew();
+	auto spawnerGO = weakSpawnerGO.lock();
+	if (spawnerGO)
+	{
+		spawnerGO->addComponent<Spawner>();
+	}
 
 	// Crosshair1
-	m_crosshairGO = GameObject::createNew();
-	m_crosshairGO->transform.position = { 200, 200 };
-	success &= m_crosshairGO->addComponent<Crosshair>();
-	success &= m_crosshairGO->addComponent<Crosshair2>();
-	success &= m_crosshairGO->addComponent<BehaviourToRemove>();
-	//crosshairGO->addBehaviour(new Crosshair2(crosshairGO));
-	if (!m_crosshairGO->addTexture("assets/Crosshair.png"))
+	weakCrosshairGO = GameObject::createNew();
+	auto crosshairGO = weakCrosshairGO.lock();
+	if (crosshairGO)
 	{
-		printf("Error: Failed to load crosshair texture image!\n");
-		success = false;
-	}
-	else
-	{
-		m_crosshairGO->texture->setColor(0, 255, 255);
-	}
-
-	// Crosshair2
-	m_crosshair2GO = GameObject::createNew();
-	m_crosshair2GO->transform.position = { constants::SCREEN_WIDTH - 200, 200 };
-	success &= m_crosshair2GO->addComponent<Crosshair2>();
-	if (!m_crosshair2GO->addTexture("assets/Crosshair.png"))
-	{
-		printf("Error: Failed to load crosshair texture image!\n");
-		success = false;
-	}
-	else
-	{
-		m_crosshair2GO->texture->setColor(255, 0, 255);
-	}
-
-	// Colored
-	m_coloredGO = GameObject::createNew();
-	if (!m_coloredGO->addTexture("assets/Crosshair.png"))
-	{
-		printf("Error: Failed to load crosshair texture image!\n");
-		success = false;
+		crosshairGO->transform.position = { 200, 200 };
+		success &= crosshairGO->addComponent<Crosshair>();
+		success &= crosshairGO->addComponent<BehaviourToRemove>();
+		//crosshairGO->addBehaviour(new Crosshair2(crosshairGO));
+		if (!crosshairGO->addTexture("assets/Crosshair.png"))
+		{
+			printf("Error: Failed to load crosshair texture image!\n");
+			success = false;
+		}
+		else
+		{
+			crosshairGO->texture->setColor(0, 255, 255);
+		}
 	}
 	
-	success &= m_coloredGO->addComponent<ColorChanger>();
-	m_coloredGO->transform.position = { (float)(constants::SCREEN_WIDTH - m_coloredGO->texture->getWidth()) / 2, (float)(constants::SCREEN_HEIGHT - m_coloredGO->texture->getHeight())};
+
+	// Crosshair2
+	weakCrosshair2GO = GameObject::createNew();
+	auto crosshair2GO = weakCrosshair2GO.lock();
+	if (crosshair2GO)
+	{
+		crosshair2GO->transform.position = { constants::SCREEN_WIDTH - 200, 200 };
+		success &= crosshair2GO->addComponent<Crosshair2>();
+		if (!crosshair2GO->addTexture("assets/Crosshair.png"))
+		{
+			printf("Error: Failed to load crosshair texture image!\n");
+			success = false;
+		}
+		else
+		{
+			crosshair2GO->texture->setColor(255, 0, 255);
+		}
+	}
+	
+
+	// Colored
+	weakColoredGO = GameObject::createNew();
+	auto coloredGO = weakColoredGO.lock();
+	if (coloredGO)
+	{
+		if (!coloredGO->addTexture("assets/Crosshair.png"))
+		{
+			printf("Error: Failed to load crosshair texture image!\n");
+			success = false;
+		}
+
+		success &= coloredGO->addComponent<ColorChanger>();
+		coloredGO->transform.position = { (float)(constants::SCREEN_WIDTH - coloredGO->texture->getWidth()) / 2, (float)(constants::SCREEN_HEIGHT - coloredGO->texture->getHeight()) };
+	}
+	
 	return success;
 }
 

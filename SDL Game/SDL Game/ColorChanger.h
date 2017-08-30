@@ -10,6 +10,7 @@ public:
 	int color1[3];
 	int color2[3];
 	bool color1active;
+	bool hasCrosshair;
 
 	// Inherited via Behaviour
 	virtual void awake() override;

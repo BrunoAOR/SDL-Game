@@ -15,14 +15,12 @@ public:
 	void setActive(bool activeState);
 	bool isActive();
 
+	Behaviour();
 	virtual ~Behaviour();
 
 	virtual void awake() = 0;
 	virtual void start() = 0;
 	virtual void update() = 0;
-
-protected:
-	Behaviour();
 
 private:
 	bool m_isActive;
