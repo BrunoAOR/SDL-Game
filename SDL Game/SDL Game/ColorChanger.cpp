@@ -6,9 +6,6 @@
 
 #include "Crosshair2.h"
 
-void ColorChanger::awake()
-{
-}
 
 void ColorChanger::start()
 {

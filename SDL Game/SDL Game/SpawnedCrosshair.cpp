@@ -2,9 +2,6 @@
 
 #include "Engine/GameObject.h"
 
-void SpawnedCrosshair::awake()
-{
-}
 
 void SpawnedCrosshair::start()
 {

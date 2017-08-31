@@ -7,10 +7,6 @@ BehaviourToRemove::~BehaviourToRemove()
 	printf("BTR DESTROYED!\n");
 }
 
-void BehaviourToRemove::awake()
-{
-}
-
 void BehaviourToRemove::start()
 {
 	printf("BTR STARTED!\n");

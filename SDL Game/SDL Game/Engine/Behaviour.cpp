@@ -22,3 +22,11 @@ Behaviour::~Behaviour()
 {
 
 }
+
+void Behaviour::awake()
+{
+}
+
+void Behaviour::start()
+{
+}

@@ -5,8 +5,6 @@ class SceneChanger :
 {
 public:	
 	// Inherited via Behaviour
-	virtual void awake() override;
-	virtual void start() override;
 	virtual void update() override;
 };
 

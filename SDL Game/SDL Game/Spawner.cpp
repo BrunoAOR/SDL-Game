@@ -6,10 +6,6 @@
 #include "SpawnedCrosshair.h"
 
 
-void Spawner::awake()
-{
-}
-
 void Spawner::start()
 {
 	m_xPos = 80;

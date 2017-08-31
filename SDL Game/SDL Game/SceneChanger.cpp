@@ -3,13 +3,6 @@
 #include "Engine/Input.h"
 #include "Engine/SceneManager.h"
 
-void SceneChanger::awake()
-{
-}
-
-void SceneChanger::start()
-{
-}
 
 void SceneChanger::update()
 {

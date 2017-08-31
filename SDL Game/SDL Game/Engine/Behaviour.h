@@ -18,8 +18,8 @@ public:
 	Behaviour();
 	virtual ~Behaviour();
 
-	virtual void awake() = 0;
-	virtual void start() = 0;
+	virtual void awake();
+	virtual void start();
 	virtual void update() = 0;
 
 private:

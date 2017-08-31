@@ -4,18 +4,19 @@
 #include "Engine/Input.h"
 
 
-void Crosshair2::awake()
-{
-}
-
 void Crosshair2::start()
 {
-
+	angle = 0;
 }
 
 
 void Crosshair2::update()
 {
+	angle += 0.1;
+	if (angle >= 360) {
+		angle -= 360;
+	}
+	gameObject()->transform.rotation = angle;
 	
 	if (Input::getKeyDown(SDL_SCANCODE_UP))
 	{

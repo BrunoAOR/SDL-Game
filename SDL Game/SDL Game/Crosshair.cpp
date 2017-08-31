@@ -6,10 +6,6 @@
 
 #include "BehaviourToRemove.h"
 
-void Crosshair::awake()
-{
-}
-
 void Crosshair::start()
 {
 	m_alpha = 255;
