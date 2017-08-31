@@ -6,7 +6,7 @@
 
 
 SDL_Renderer* RenderManager::m_renderer = nullptr;
-std::vector<GameObject *> RenderManager::m_gameObjects;
+std::vector<std::weak_ptr<GameObject>> RenderManager::m_gameObjects;
 
 
 RenderManager::RenderManager()
@@ -23,11 +23,14 @@ void RenderManager::update()
 	// Clear screen
 	SDL_RenderClear(m_renderer);
 
-	for (GameObject* go : m_gameObjects)
+	for (auto weakGo : m_gameObjects)
 	{
-		if (go->isActive())
+		if (auto go = weakGo.lock())
 		{
-			go->texture->render((int)go->transform.position.x, (int)go->transform.position.y);
+			if (go->isActive())
+			{
+				go->texture->render((int)go->transform.position.x, (int)go->transform.position.y);
+			}
 		}
 	}
 
@@ -36,7 +39,7 @@ void RenderManager::update()
 }
 
 
-void RenderManager::subscribeGameObject(GameObject * gameObject)
+void RenderManager::subscribeGameObject(std::weak_ptr<GameObject> gameObject)
 {
 	if (indexOf(m_gameObjects, gameObject) == -1) {
 		// So the gameObject hasn't previously been added
@@ -45,7 +48,7 @@ void RenderManager::subscribeGameObject(GameObject * gameObject)
 }
 
 
-void RenderManager::unsubscribeGameObject(GameObject * gameObject)
+void RenderManager::unsubscribeGameObject(std::weak_ptr<GameObject> gameObject)
 {
 	int index = indexOf(m_gameObjects, gameObject);
 	if (index != -1) {
@@ -69,7 +72,7 @@ bool RenderManager::createRenderer(SDL_Window * window, int index, Uint32 flags)
 }
 
 
-Texture * RenderManager::createTexture(std::string imagePath)
+Texture* RenderManager::createTexture(std::string imagePath)
 {
 	if (m_renderer == nullptr) {
 		printf("Error: No renderer has been created!");

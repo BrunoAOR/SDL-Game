@@ -37,7 +37,7 @@ bool GameObject::addTexture(std::string path)
 
 	if (texture != nullptr)
 	{
-		RenderManager::subscribeGameObject(this);
+		RenderManager::subscribeGameObject(self);
 	}
 	return texture != nullptr;
 }
@@ -50,7 +50,7 @@ void GameObject::removeTexture()
 		texture->free();
 		delete texture;
 		texture = nullptr;
-		RenderManager::unsubscribeGameObject(this);
+		RenderManager::unsubscribeGameObject(self);
 	}
 }
 
