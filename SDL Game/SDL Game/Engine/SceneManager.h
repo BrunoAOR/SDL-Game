@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <vector>
 
 class Scene;
@@ -8,7 +9,8 @@ class GameObject;
 class SceneManager
 {
 public:
-	static bool loadScene(unsigned int index);
+	static void refreshScenes();
+	static void loadScene(unsigned int index);
 	static void close();
 
 	template <typename T>
@@ -17,10 +19,12 @@ public:
 
 private:
 	SceneManager();
-	static std::vector<Scene*> m_scenes;
-	static Scene* m_activeScene;
+	static std::vector<std::shared_ptr<Scene>> m_scenes;
+	static std::weak_ptr<Scene> m_activeScene;
+	static std::weak_ptr<Scene> m_sceneToLoad;
 
-	static void unloadScene(Scene* sceneToUnload);
+	static void doLoadScene();
+	static void unloadScene(std::weak_ptr<Scene> sceneToUnload);
 };
 
 template<typename T>
@@ -29,9 +33,9 @@ bool SceneManager::addScene()
 	// Success flag
 	bool success = true;
 
-	if (std::is_base_of<Scene, T>::value)
+	if (std::is_base_of<Scene, T>::value && !std::is_same<Scene, T>::value)
 	{
-		T* scene = new T();
+		auto scene = std::make_shared<T>();
 		m_scenes.push_back(scene);
 	}
 	else

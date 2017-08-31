@@ -10,17 +10,8 @@
 #include "Spawner.h"
 #include "ColorChanger.h"
 #include "BehaviourToRemove.h"
+#include "SceneChanger.h"
 
-
-TestScene::TestScene()
-{
-}
-
-
-TestScene::~TestScene()
-{
-	unload();
-}
 
 bool TestScene::load()
 {
@@ -38,7 +29,8 @@ bool TestScene::load()
 	auto spawnerGO = weakSpawnerGO.lock();
 	if (spawnerGO)
 	{
-		spawnerGO->addComponent<Spawner>();
+		success &= spawnerGO->addComponent<Spawner>();
+		success &= spawnerGO->addComponent<SceneChanger>();
 	}
 
 	// Crosshair1
@@ -53,7 +45,7 @@ bool TestScene::load()
 		if (!crosshairGO->addTexture("assets/Crosshair.png"))
 		{
 			printf("Error: Failed to load crosshair texture image!\n");
-			success = false;
+			success &= false;
 		}
 		else
 		{

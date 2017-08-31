@@ -4,8 +4,9 @@
 #include "Scene.h"
 #include "GameObjectsManager.h"
 
-std::vector<Scene*> SceneManager::m_scenes;
-Scene* SceneManager::m_activeScene = nullptr;
+std::vector<std::shared_ptr<Scene>> SceneManager::m_scenes;
+std::weak_ptr<Scene> SceneManager::m_activeScene;
+std::weak_ptr<Scene> SceneManager::m_sceneToLoad;
 
 
 SceneManager::SceneManager()
@@ -16,40 +17,62 @@ SceneManager::SceneManager()
 
 bool SceneManager::hasActiveScene()
 {
-	return m_activeScene != nullptr;
+	return !m_activeScene.expired();
 }
 
 
-bool SceneManager::loadScene(unsigned int index)
+void SceneManager::refreshScenes()
 {
-	if (m_activeScene != nullptr)
+	if (!m_sceneToLoad.expired())
 	{
-		unloadScene(m_activeScene);
+		doLoadScene();
 	}
+}
 
+void SceneManager::loadScene(unsigned int index)
+{
 	if (index >= 0 && index < m_scenes.size())
 	{
-		// Set scene as active
-		m_activeScene = m_scenes.at(index);
-		// Load scene
-		return m_activeScene->load();
+		m_sceneToLoad = m_scenes.at(index);
 	}
-	return false;
 }
 
 
 void SceneManager::close()
 {
-	if (m_activeScene != nullptr)
+	if (m_activeScene.lock())
 	{
 		unloadScene(m_activeScene);
 	}
+	m_scenes.clear();
 }
 
 
-void SceneManager::unloadScene(Scene * sceneToUnload)
+void SceneManager::doLoadScene()
 {
-	m_activeScene->unload();
-	GameObjectsManager::destroyAllGameObjects();
-	m_activeScene = nullptr;
+	if (m_sceneToLoad.expired())
+	{
+		return;
+	}
+
+	if (!m_activeScene.expired())
+	{
+		unloadScene(m_activeScene);
+		m_activeScene.reset();
+	}
+	// Set scene as active
+	m_activeScene = m_sceneToLoad;
+	// reset m_sceneToLoad
+	m_sceneToLoad.reset();
+	// Load scene
+	m_activeScene.lock()->load();
+}
+
+void SceneManager::unloadScene(std::weak_ptr<Scene> sceneToUnload)
+{
+	if (auto scene = sceneToUnload.lock())
+	{
+		scene->unload();
+		GameObjectsManager::destroyAllGameObjects();
+	}
 }

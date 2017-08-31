@@ -75,6 +75,12 @@
     <ClCompile Include="Engine\EngineUtils.h">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="TestScene2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneChanger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Crosshair.h">
@@ -133,6 +139,12 @@
     </ClInclude>
     <ClInclude Include="Engine\Component.h">
       <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="TestScene2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneChanger.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

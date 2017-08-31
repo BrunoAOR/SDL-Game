@@ -7,13 +7,9 @@
 #include "RenderManager.h"
 #include "SceneManager.h"
 
-#include "../TestScene.h"
-
 
 // Global variables
 SDL_Window* gWindow = nullptr;
-
-TestScene* testScene = nullptr;
 
 // Function declarations
 bool init();
@@ -89,11 +85,20 @@ bool init()
 	return success;
 }
 
+#include "../TestScene.h"
+#include "../TestScene2.h"
+
 
 bool setupScenes()
 {
-	SceneManager::addScene<TestScene>();
-	return SceneManager::loadScene(0);
+	// Success flag
+	bool success = true;
+
+	success &= SceneManager::addScene<TestScene>();
+	success &= SceneManager::addScene<TestScene2>();
+	SceneManager::loadScene(0);
+
+	return success;
 }
 
 
@@ -133,6 +138,8 @@ void loop()
 	while (!quit)
 	{
 		handleEvents(quit);
+
+		SceneManager::refreshScenes();
 
 		GameObjectsManager::updateGameObjectsAndBehaviours();
 		
