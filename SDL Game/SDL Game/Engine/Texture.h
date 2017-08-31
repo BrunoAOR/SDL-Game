@@ -3,6 +3,10 @@
 #include <string>
 #include <SDL.h>
 
+#include "Vector2.h"
+
+struct Transform;
+
 
 class Texture
 {
@@ -27,7 +31,7 @@ public:
 	void setAlpha(Uint8 a);
 
 	// Renders texture at given point
-	void render(int x, int y, SDL_Rect* clip = nullptr);
+	void render(Transform* transform, SDL_Rect* clip = nullptr, SDL_Point* center = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
 	// Gets image dimensions
 	int getWidth();

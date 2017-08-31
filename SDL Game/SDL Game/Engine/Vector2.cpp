@@ -2,13 +2,13 @@
 #include <cmath>
 
 
-float Vector2::getLength()
+double Vector2::getLength()
 {
-	return sqrtf(getLengthSquared());
+	return sqrt(getLengthSquared());
 }
 
 
-float Vector2::getLengthSquared()
+double Vector2::getLengthSquared()
 {
 	return x * x + y * y;
 }

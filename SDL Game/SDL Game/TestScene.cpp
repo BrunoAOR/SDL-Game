@@ -5,6 +5,7 @@
 #include "Engine/GameObject.h"
 #include "Engine/constants.h"
 #include "Engine/Texture.h"
+
 #include "Crosshair.h"
 #include "Crosshair2.h"
 #include "Spawner.h"
@@ -39,6 +40,8 @@ bool TestScene::load()
 	if (crosshairGO)
 	{
 		crosshairGO->transform.position = { 200, 200 };
+		crosshairGO->transform.rotation = 45.0;
+		crosshairGO->transform.scale = { 1.5, 1.5 };
 		success &= crosshairGO->addComponent<Crosshair>();
 		success &= crosshairGO->addComponent<BehaviourToRemove>();
 		//crosshairGO->addBehaviour(new Crosshair2(crosshairGO));

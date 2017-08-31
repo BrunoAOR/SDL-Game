@@ -4,9 +4,9 @@
 struct Vector2
 {
 public:
-	float x;
-	float y;
+	double x;
+	double y;
 
-	float getLength();
-	float getLengthSquared();
+	double getLength();
+	double getLengthSquared();
 };

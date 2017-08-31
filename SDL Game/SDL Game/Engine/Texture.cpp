@@ -1,7 +1,7 @@
 #include "Texture.h"
 
 #include <SDL_image.h>
-
+#include "Transform.h"
 
 Texture::Texture(SDL_Renderer* renderer)
 {
@@ -111,16 +111,23 @@ void Texture::setAlpha(Uint8 alpha)
 }
 
 
-void Texture::render(int x, int y, SDL_Rect* clip)
+void Texture::render(Transform* transform, SDL_Rect* clip, SDL_Point* center, SDL_RendererFlip flip)
 {
 	// Set the rendering space and render to screen
-	SDL_Rect renderQuad = { x, y, m_width, m_height };
+	SDL_Rect renderQuad = { (int)transform->position.x, (int)transform->position.y, m_width, m_height };
+	
+	// Scale the renderQuad based on the clip Rect (if available)
 	if (clip != nullptr)
 	{
 		renderQuad.w = clip->w;
 		renderQuad.h = clip->h;
 	}
-	SDL_RenderCopy(m_renderer, m_texture, clip, &renderQuad);
+
+	// Scale the renderQuad based on the scale in the transform
+	renderQuad.w *= transform->scale.x;
+	renderQuad.h *= transform->scale.y;
+
+	SDL_RenderCopyEx(m_renderer, m_texture, clip, &renderQuad, transform->rotation, center, flip);
 }
 
 
