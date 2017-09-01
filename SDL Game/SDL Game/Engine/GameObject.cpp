@@ -8,12 +8,15 @@
 #include "GameObjectsManager.h"
 
 
-int GameObject::m_nextId = 0;
+int GameObject::s_nextId = 0;
 
 GameObject::GameObject()
 {
-	m_id = m_nextId++;
+	// TESTING START
+	m_id = s_nextId++;
 	printf("GO constructed: %i\n", m_id);
+	// TESTING END
+
 	// Initialize texture empty
 	texture = nullptr;
 
@@ -37,7 +40,7 @@ bool GameObject::addTexture(std::string path)
 
 	if (texture != nullptr)
 	{
-		RenderManager::subscribeGameObject(self);
+		RenderManager::subscribeGameObject(m_self);
 	}
 	return texture != nullptr;
 }
@@ -50,24 +53,26 @@ void GameObject::removeTexture()
 		texture->free();
 		delete texture;
 		texture = nullptr;
-		RenderManager::unsubscribeGameObject(self);
+		RenderManager::unsubscribeGameObject(m_self);
 	}
 }
 
 
 void GameObject::refreshComponents()
 {
-	for (auto c : m_componentsToAdd)
-	{
-		doAddComponent(c);
-	}
-	m_componentsToAdd.clear();
-
+	// Remove components
 	for (auto c : m_componentsToRemove)
 	{
 		doRemoveComponent(c);
 	}
 	m_componentsToRemove.clear();
+
+	// Add new components
+	for (auto c : m_componentsToAdd)
+	{
+		doAddComponent(c);
+	}
+	m_componentsToAdd.clear();
 }
 
 void GameObject::removeComponent(std::weak_ptr<Component> component)
@@ -109,6 +114,81 @@ void GameObject::doRemoveComponent(std::weak_ptr<Component> component)
 	}
 }
 
+bool GameObject::setParent(std::weak_ptr<GameObject> parent)
+{
+	if (parent.expired() || isGameObjectInChildrenHierarchy(parent))
+	{
+		return false;
+	}
+
+	if (!removeParent())
+	{
+		return false;
+	}
+
+	return parent.lock()->addChild(m_self);
+}
+
+
+bool GameObject::isGameObjectInChildrenHierarchy(std::weak_ptr<GameObject> gameObject)
+{
+	for (auto weakChildGO : m_children)
+	{
+		if (auto childGO = weakChildGO.lock())
+		{
+			if (childGO == gameObject.lock())
+			{
+				return true;
+			}
+			if (childGO->isGameObjectInChildrenHierarchy(gameObject))
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+
+bool GameObject::removeParent()
+{
+	if (auto currentParent = m_parent.lock())
+	{
+		if (currentParent->removeChild(m_self))
+		{
+			m_parent.reset();
+		}
+		else
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+bool GameObject::addChild(std::weak_ptr<GameObject> child)
+{
+	int index = indexOf(m_children, child);
+	if (index == -1)
+	{
+		m_children.push_back(child);
+		return true;
+	}
+	return false;
+}
+
+bool GameObject::removeChild(std::weak_ptr<GameObject> child)
+{
+	int index = indexOf(m_children, child);
+	if (index != -1)
+	{
+		m_children.erase(m_children.begin() + index);
+		return true;
+	}
+	return false;
+}
+
+
 void GameObject::setActive(bool activeState)
 {
 	m_isActive = activeState;
@@ -125,7 +205,7 @@ std::weak_ptr<GameObject> GameObject::createNew()
 	if (SceneManager::hasActiveScene())
 	{
 		auto go = std::make_shared<GameObject>();
-		go->self = go;
+		go->m_self = go;
 		GameObjectsManager::addGameObject(go);
 		weakGo = go;
 	}

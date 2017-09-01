@@ -81,6 +81,12 @@
     <ClCompile Include="SceneChanger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TestScene3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GOKiller.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Crosshair.h">
@@ -144,6 +150,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SceneChanger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TestScene3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GOKiller.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

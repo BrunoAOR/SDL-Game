@@ -2,11 +2,9 @@
 
 #include <memory>
 #include <vector>
-#include "GameObject.h"
 
 
-class Behaviour;
-
+class GameObject;
 
 class GameObjectsManager
 {
@@ -25,5 +23,6 @@ private:
 	static void refreshGameObjects();
 	static void doAddGameObject(std::shared_ptr<GameObject> gameObject);
 	static void doDestroyGameObject(std::weak_ptr<GameObject> gameObject);
+	static void doDestroyChildren(std::weak_ptr<GameObject> parentGameObject);
 };
 

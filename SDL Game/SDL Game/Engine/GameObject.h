@@ -22,26 +22,47 @@ public:
 	GameObject();
 	~GameObject();
 
+	// Texture related
 	bool addTexture(std::string path);
 	void removeTexture();
 
+	// Components/Behaviours related
 	template<typename T>
 	bool addComponent();
 	void removeComponent(std::weak_ptr<Component> component);
 	template<typename T>
 	std::weak_ptr<T> getComponent();
 
+	// GameObjects hierarchy (parenting) related
+	bool setParent(std::weak_ptr<GameObject> parent);
+	bool removeParent();
+
+	// On/Off switch
 	void setActive(bool activeState);
 	bool isActive();
 
+	// Creation and destruction related
 	static std::weak_ptr<GameObject> createNew();
 	static void destroy(std::weak_ptr<GameObject> gameObject);
 
 private:
-	static int m_nextId;
+	// TESTING FIELDS START
+	static int s_nextId;
 	int m_id;
+	// TESTING FIELDS END
+
 	bool m_isActive;
-	std::weak_ptr<GameObject> self;
+	std::weak_ptr<GameObject> m_self;
+
+	// GameObjects hierarchy related
+	std::weak_ptr<GameObject> m_parent;
+	std::vector<std::weak_ptr<GameObject>> m_children;
+
+	bool addChild(std::weak_ptr<GameObject> child);
+	bool removeChild(std::weak_ptr<GameObject> child);
+	bool isGameObjectInChildrenHierarchy(std::weak_ptr<GameObject> gameObject);
+
+	// Components/Behaviours related
 	std::vector<std::shared_ptr<Component>> m_components;
 	std::vector<std::shared_ptr<Component>> m_componentsToAdd;
 	std::vector<std::weak_ptr<Component>> m_componentsToRemove;
@@ -65,7 +86,7 @@ inline bool GameObject::addComponent()
 	{
 		// So T inherits from Component and is NOT a Component or a Behaviour as such
 		auto component = std::make_shared<T>();
-		component->m_gameObject = self;
+		component->m_gameObject = m_self;
 		m_componentsToAdd.push_back(component);
 		return true;
 	}

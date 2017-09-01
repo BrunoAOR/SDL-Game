@@ -64,22 +64,25 @@ void GameObjectsManager::destroyAllGameObjects()
 
 void GameObjectsManager::refreshGameObjects()
 {
-	for (auto go : m_gameObjects)
+	// Delete GOs
+	for (auto go : m_gosToDestroy)
 	{
-		go->refreshComponents();
-	}
-
+		doDestroyGameObject(go);
+	}	
+	m_gosToDestroy.clear();
+	
+	// Add new GOs
 	for (auto go : m_gosToAdd)
 	{
 		doAddGameObject(go);
 	}
 	m_gosToAdd.clear();
 
-	for (auto go : m_gosToDestroy)
+	// Refresh all GOs (this will finish initializing the newly added GOs
+	for (auto go : m_gameObjects)
 	{
-		doDestroyGameObject(go);
-	}
-	m_gosToDestroy.clear();
+		go->refreshComponents();
+	}	
 }
 
 
@@ -96,7 +99,28 @@ void GameObjectsManager::doDestroyGameObject(std::weak_ptr<GameObject> gameObjec
 {
 	int index = indexOf(m_gameObjects, gameObject.lock());
 	if (index != -1) {
-		// So, the behaviour is in the behaviours vector
+		// So, the gameObject is in the gameObjects vector
+		// Destroy children first
+		doDestroyChildren(gameObject);
 		m_gameObjects.erase(m_gameObjects.begin() + index);
 	}
 }
+
+void GameObjectsManager::doDestroyChildren(std::weak_ptr<GameObject> parentGameObject)
+{
+	for (auto weakChildGO : parentGameObject.lock()->m_children)
+	{
+		if (auto childGO = weakChildGO.lock())
+		{
+			doDestroyChildren(weakChildGO);
+			int index = indexOf(m_gameObjects, childGO);
+			if (index != -1) {
+				// So, the gameObject is in the gameObjects vector
+				m_gameObjects.erase(m_gameObjects.begin() + index);
+			}
+		}
+
+	}
+}
+
+

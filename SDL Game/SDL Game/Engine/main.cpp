@@ -87,13 +87,14 @@ bool init()
 
 #include "../TestScene.h"
 #include "../TestScene2.h"
-
+#include "../TestScene3.h"
 
 bool setupScenes()
 {
 	// Success flag
 	bool success = true;
 
+	success &= SceneManager::addScene<TestScene3>();
 	success &= SceneManager::addScene<TestScene>();
 	success &= SceneManager::addScene<TestScene2>();
 	SceneManager::loadScene(0);
