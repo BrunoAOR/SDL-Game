@@ -1,7 +1,9 @@
 #include "TestScene3.h"
 
 #include "Engine/GameObject.h"
+#include "Engine/Transform.h"
 #include "GOKiller.h"
+#include "SceneChanger.h"
 
 
 bool TestScene3::load()
@@ -11,6 +13,7 @@ bool TestScene3::load()
 
 	auto parentGO = GameObject::createNew();
 	parentGO.lock()->addComponent<GOKiller>();
+	parentGO.lock()->addComponent<SceneChanger>();
 
 	auto child1 = GameObject::createNew();
 	child1.lock()->setParent(parentGO);

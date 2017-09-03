@@ -14,4 +14,12 @@ void SceneChanger::update()
 	{
 		SceneManager::loadScene(1);
 	}
+	if (Input::getKeyDown(SDL_SCANCODE_3))
+	{
+		SceneManager::loadScene(2);
+	}
+	if (Input::getKeyDown(SDL_SCANCODE_4))
+	{
+		SceneManager::loadScene(3);
+	}
 }

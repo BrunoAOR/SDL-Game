@@ -11,13 +11,16 @@ void SpawnedCrosshair::start()
 
 void SpawnedCrosshair::update()
 {
+	Vector2 currentPos = gameObject()->transform.getLocalPosition();
 	if (!m_wentRight) {
-		gameObject()->transform.position.x -= 16;
+		currentPos.x -= 16;
+		gameObject()->transform.setWorldPosition(currentPos);
 		m_wentRight = true;
 	}
 	else
 	{
-		gameObject()->transform.position.x += 16;
+		currentPos.x += 16;
+		gameObject()->transform.setWorldPosition(currentPos);
 		m_wentRight = false;
 	}
 }

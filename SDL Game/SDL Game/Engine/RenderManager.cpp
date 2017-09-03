@@ -29,7 +29,7 @@ void RenderManager::update()
 		{
 			if (go->isActive())
 			{
-				go->texture->render(&(go->transform), nullptr);
+				go->texture->render(&(go->transform));
 			}
 		}
 	}

@@ -111,23 +111,60 @@ void Texture::setAlpha(Uint8 alpha)
 }
 
 
-void Texture::render(Transform* transform, SDL_Rect* clip, SDL_Point* center, SDL_RendererFlip flip)
+void Texture::render(const Transform* transform, SDL_Rect* clip, SDL_RendererFlip flip)
 {
-	// Set the rendering space and render to screen
-	SDL_Rect renderQuad = { (int)transform->position.x, (int)transform->position.y, m_width, m_height };
-	
-	// Scale the renderQuad based on the clip Rect (if available)
-	if (clip != nullptr)
+	// Note: All transform pivots are transformed to "(1 - pivot) for the y axis so that the zero refers to the bottom of the RenderQuad"
+
+	// Extract info from the transform
+	Vector2 pos = transform->getWorldPosition();
+	double rot = transform->getWorldRotation();
+	Vector2 sca = transform->getWorldScale();
+	Vector2 posPivot = transform->getPositionPivot();
+	Vector2 rotPivot = transform->getRotationPivot();
+	Vector2 scaPivot = transform->getScalePivot();
+
+	// Calculate the texture size, clipped if required
+	Vector2 rawSize;
+	if (clip)
 	{
-		renderQuad.w = clip->w;
-		renderQuad.h = clip->h;
+		rawSize = { (double)clip->w, (double)clip->h };
+	}
+	else
+	{
+		rawSize = { (double)m_width, (double)m_height };
 	}
 
-	// Scale the renderQuad based on the scale in the transform
-	renderQuad.w *= transform->scale.x;
-	renderQuad.h *= transform->scale.y;
+	// Set the rendering space based on the position and positionPivot
+	SDL_Rect renderQuad =
+	{
+		(int)(pos.x - posPivot.x * rawSize.x),
+		(int)(pos.y - (1 - posPivot.y) * rawSize.y),
+		(int)rawSize.x,
+		(int)rawSize.y
+	};
+	
+	// Modify for the scale and scalePivot
+	renderQuad.x = (int)(renderQuad.x - scaPivot.x * (sca.x - 1) * rawSize.x);
+	renderQuad.y = (int)(renderQuad.y - (1 - scaPivot.y) * (sca.y - 1) * rawSize.y);
+	renderQuad.w = (int)(renderQuad.w * sca.x);
+	renderQuad.h = (int)(renderQuad.h * sca.y);
+	
+	// Calculate the center of rotation based on the rotationPivot
+	Vector2 scaledSize = { rawSize.x * sca.x , rawSize.y * sca.y };
+	SDL_Point center =
+	{
+		(int)(rotPivot.x * scaledSize.x),
+		(int)((1 - rotPivot.y) * scaledSize.y)
+	};
 
-	SDL_RenderCopyEx(m_renderer, m_texture, clip, &renderQuad, transform->rotation, center, flip);
+	// Correct issue with texture not being rendered if the renderQuad has negative width or height and there is no rotation
+	// Solution: add a tiny rotation
+	if (rot == 0 && (sca.x < 0 || sca.y<0))
+	{
+		rot = FLT_EPSILON;
+	}
+
+	SDL_RenderCopyEx(m_renderer, m_texture, clip, &renderQuad, rot, &center, flip);
 }
 
 

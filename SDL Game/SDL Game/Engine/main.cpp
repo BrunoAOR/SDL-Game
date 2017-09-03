@@ -88,15 +88,17 @@ bool init()
 #include "../TestScene.h"
 #include "../TestScene2.h"
 #include "../TestScene3.h"
+#include "../TransformPivotScene.h"
 
 bool setupScenes()
 {
 	// Success flag
 	bool success = true;
 
-	success &= SceneManager::addScene<TestScene3>();
 	success &= SceneManager::addScene<TestScene>();
 	success &= SceneManager::addScene<TestScene2>();
+	success &= SceneManager::addScene<TestScene3>();
+	success &= SceneManager::addScene<TransformPivotScene>();
 	SceneManager::loadScene(0);
 
 	return success;

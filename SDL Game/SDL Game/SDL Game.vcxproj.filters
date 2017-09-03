@@ -87,6 +87,15 @@
     <ClCompile Include="GOKiller.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Transform.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="TransformPivotScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Pivotter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Crosshair.h">
@@ -158,12 +167,21 @@
     <ClInclude Include="GOKiller.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TransformPivotScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Pivotter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\Crosshair.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="assets\Target.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\Square.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

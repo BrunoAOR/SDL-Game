@@ -35,7 +35,7 @@ void Spawner::createCrosshair()
 	auto crosshairGO = weakCrosshairGO.lock();
 	if (crosshairGO)
 	{
-		crosshairGO->transform.position = { (float)m_xPos, 80 };
+		crosshairGO->transform.setWorldPosition({(double)m_xPos, 80 });
 		crosshairGO->addComponent<SpawnedCrosshair>();
 		m_xPos += m_spawnOffset;
 		crosshairGO->addTexture("assets/Crosshair.png");

@@ -13,7 +13,7 @@ bool TestScene2::load()
 	auto go = GameObject::createNew().lock();
 
 	if (go) {
-		go->transform.position = { 300, 300 };
+		go->transform.setWorldPosition({ 300, 300 });
 		success &= go->addComponent<Crosshair2>();
 		success &= go->addComponent<ColorChanger>();
 		success &= go->addComponent<SceneChanger>();
