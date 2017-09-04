@@ -126,7 +126,33 @@ bool GameObject::setParent(std::weak_ptr<GameObject> parent)
 		return false;
 	}
 
-	return parent.lock()->addChild(m_self);
+	if (!parent.lock()->addChild(m_self))
+	{
+		return false;
+	}
+	else
+	{
+		m_parent = parent;
+		transform.m_parentTransform = &(parent.lock()->transform);
+		return true;
+	}
+}
+
+
+bool GameObject::removeParent()
+{
+	if (auto currentParent = m_parent.lock())
+	{
+		if (currentParent->removeChild(m_self))
+		{
+			m_parent.reset();
+		}
+		else
+		{
+			return false;
+		}
+	}
+	return true;
 }
 
 
@@ -149,22 +175,6 @@ bool GameObject::isGameObjectInChildrenHierarchy(std::weak_ptr<GameObject> gameO
 	return false;
 }
 
-
-bool GameObject::removeParent()
-{
-	if (auto currentParent = m_parent.lock())
-	{
-		if (currentParent->removeChild(m_self))
-		{
-			m_parent.reset();
-		}
-		else
-		{
-			return false;
-		}
-	}
-	return true;
-}
 
 bool GameObject::addChild(std::weak_ptr<GameObject> child)
 {
@@ -205,8 +215,8 @@ std::weak_ptr<GameObject> GameObject::createNew()
 	if (SceneManager::hasActiveScene())
 	{
 		auto go = std::make_shared<GameObject>();
-		go->m_self = go;
 		GameObjectsManager::addGameObject(go);
+		go->m_self = go;
 		weakGo = go;
 	}
 	return weakGo;

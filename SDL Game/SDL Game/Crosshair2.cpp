@@ -23,11 +23,11 @@ void Crosshair2::update()
 	Vector2 currentPos = gameObject()->transform.getLocalPosition();
 	if (Input::getKeyDown(SDL_SCANCODE_UP))
 	{
-		currentPos.y -= stepSize;
+		currentPos.y += stepSize;
 	}
 	if (Input::getKeyDown(SDL_SCANCODE_DOWN))
 	{
-		currentPos.y += stepSize;
+		currentPos.y -= stepSize;
 	}
 	if (Input::getKeyDown(SDL_SCANCODE_LEFT))
 	{

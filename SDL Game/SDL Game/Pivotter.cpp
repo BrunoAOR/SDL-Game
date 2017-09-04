@@ -9,22 +9,26 @@
 
 void Pivotter::start()
 {
-	step = 0.1;
+	positionStep = 10;
+	pivotStep = 0.1;
 	rotStep = 15;
 	position = { 200, 200 };
 	rotation = 0;
 	scale = { 1, 1 };
-	positionPivot = { 0, 0 };
-	rotationPivot = { 0, 0 };
-	scalePivot = { 0, 0 };
+	positionPivot = { 0.5, 0.5 };
+	rotationPivot = { 0.5, 0.5 };
+	scalePivot = { 0.5, 0.5 };
 
-	mode = MoveMode::POS;
+	mode = MoveMode::POS_PIVOT;
 	printPivotInfo();
-	mode = MoveMode::ROT;
+	mode = MoveMode::ROT_PIVOT;
 	printPivotInfo();
-	mode = MoveMode::SCA;
+	mode = MoveMode::SCA_PIVOT;
 	printPivotInfo();
-	mode = MoveMode::POS;
+
+	selectedStep = positionStep;
+	mode = MoveMode::POSITION;
+	updateGO();
 }
 
 void Pivotter::update()
@@ -32,18 +36,27 @@ void Pivotter::update()
 	// Mode change
 	if (Input::getKeyDown(SDL_SCANCODE_P))
 	{
-		mode = MoveMode::POS;
-		printf("Entered MoveMode POS\n");
+		selectedStep = positionStep;
+		mode = MoveMode::POSITION;
+		printf("Entered MoveMode POSITION\n");
 	}
 	if (Input::getKeyDown(SDL_SCANCODE_O))
 	{
-		mode = MoveMode::ROT;
-		printf("Entered MoveMode ROT\n");
+		selectedStep = pivotStep;
+		mode = MoveMode::POS_PIVOT;
+		printf("Entered MoveMode POS_PIVOT\n");
 	}
 	if (Input::getKeyDown(SDL_SCANCODE_I))
 	{
-		mode = MoveMode::SCA;
-		printf("Entered MoveMode SCA\n");
+		selectedStep = pivotStep;
+		mode = MoveMode::ROT_PIVOT;
+		printf("Entered MoveMode ROT_PIVOT\n");
+	}
+	if (Input::getKeyDown(SDL_SCANCODE_U))
+	{
+		selectedStep = pivotStep;
+		mode = MoveMode::SCA_PIVOT;
+		printf("Entered MoveMode SCA_PIVOT\n");
 	}
 
 	// Pivot moving
@@ -71,34 +84,34 @@ void Pivotter::update()
 	// Rotation
 	if (Input::getKeyDown(SDL_SCANCODE_Q))
 	{
-		rotation -= rotStep;
+		rotation += rotStep;
 		printf("Rotation: %2.0f\n", rotation);
 	}
 	if (Input::getKeyDown(SDL_SCANCODE_E))
 	{
-		rotation += rotStep;
+		rotation -= rotStep;
 		printf("Rotation: %2.0f\n", rotation);
 	}
 
 	// Scaling
 	if (Input::getKeyDown(SDL_SCANCODE_W))
 	{
-		scale.y += step;
+		scale.y += pivotStep;
 		printf("Scale: ( %2.1f , %2.1f )\n", scale.x, scale.y);
 	}
 	if (Input::getKeyDown(SDL_SCANCODE_S))
 	{
-		scale.y -= step;
+		scale.y -= pivotStep;
 		printf("Scale: ( %2.1f , %2.1f )\n", scale.x, scale.y);
 	}
 	if (Input::getKeyDown(SDL_SCANCODE_D))
 	{
-		scale.x += step;
+		scale.x += pivotStep;
 		printf("Scale: ( %2.1f , %2.1f )\n", scale.x, scale.y);
 	}
 	if (Input::getKeyDown(SDL_SCANCODE_A))
 	{
-		scale.x -= step;
+		scale.x -= pivotStep;
 		printf("Scale: ( %2.1f , %2.1f )\n", scale.x, scale.y);
 	}
 
@@ -109,9 +122,9 @@ void Pivotter::updateGO()
 {
 	auto go = gameObject();
 
-	go->transform.setWorldPosition(position);
-	go->transform.setWorldRotation(rotation);
-	go->transform.setWorldScale(scale);
+	go->transform.setLocalPosition(position);
+	go->transform.setLocalRotation(rotation);
+	go->transform.setLocalScale(scale);
 	go->transform.setPositionPivot(positionPivot);
 	go->transform.setRotationPivot(rotationPivot);
 	go->transform.setScalePivot(scalePivot);
@@ -122,13 +135,16 @@ void Pivotter::printPivotInfo()
 	Vector2& pivot = getActivePivot();
 	switch (mode)
 	{
-	case Pivotter::MoveMode::POS:
+	case Pivotter::MoveMode::POSITION:
+		printf("Position at ( %1.1f , %1.1f )\n", pivot.x, pivot.y);
+		break;
+	case Pivotter::MoveMode::POS_PIVOT:
 		printf("POS Pivot at ( %1.1f , %1.1f )\n", pivot.x, pivot.y);
 		break;
-	case Pivotter::MoveMode::ROT:
+	case Pivotter::MoveMode::ROT_PIVOT:
 		printf("ROT Pivot at ( %1.1f , %1.1f )\n", pivot.x, pivot.y);
 		break;
-	case Pivotter::MoveMode::SCA:
+	case Pivotter::MoveMode::SCA_PIVOT:
 		printf("SCA Pivot at ( %1.1f , %1.1f )\n", pivot.x, pivot.y);
 		break;
 	default:
@@ -142,44 +158,34 @@ Vector2 & Pivotter::getActivePivot()
 {
 	switch (mode)
 	{
-	case Pivotter::MoveMode::POS:
+	case Pivotter::MoveMode::POSITION:
+		return position;
+	case Pivotter::MoveMode::POS_PIVOT:
 		return positionPivot;
-	case Pivotter::MoveMode::ROT:
+	case Pivotter::MoveMode::ROT_PIVOT:
 		return rotationPivot;
-	case Pivotter::MoveMode::SCA:
+	case Pivotter::MoveMode::SCA_PIVOT:
 		return scalePivot;
 	default:
 		return positionPivot;
 	}
 }
 
-void Pivotter::movePivot(Vector2 & pivot, const Direction & direction)
+void Pivotter::movePivot(Vector2& pivot, const Direction & direction)
 {
 	switch (direction)
 	{
 	case Direction::UP:
-		pivot.y += step;
-		/*if (pivot.y < 0) {
-			pivot.y = 0;
-		}*/
+		pivot.y += selectedStep;
 		break;
 	case Direction::DOWN:
-		pivot.y -= step;
-		/*if (pivot.y > 1) {
-			pivot.y = 1;
-		}*/
+		pivot.y -= selectedStep;
 		break;
 	case Direction::LEFT:
-		pivot.x -= step;
-		/*if (pivot.x < 0) {
-			pivot.x = 0;
-		}*/
+		pivot.x -= selectedStep;
 		break;
 	case Direction::RIGHT:
-		pivot.x += step;
-		/*if (pivot.x > 1) {
-			pivot.x = 1;
-		}*/
+		pivot.x += selectedStep;
 		break;
 	}
 }

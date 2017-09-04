@@ -8,7 +8,6 @@ std::vector<std::shared_ptr<GameObject>> GameObjectsManager::m_gameObjects;
 std::vector<std::shared_ptr<GameObject>> GameObjectsManager::m_gosToAdd;
 std::vector<std::weak_ptr<GameObject>> GameObjectsManager::m_gosToDestroy;
 
-
 GameObjectsManager::GameObjectsManager()
 {
 }

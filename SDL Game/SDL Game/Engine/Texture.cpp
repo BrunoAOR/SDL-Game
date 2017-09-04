@@ -1,6 +1,7 @@
 #include "Texture.h"
 
 #include <SDL_image.h>
+#include "constants.h"
 #include "Transform.h"
 
 Texture::Texture(SDL_Renderer* renderer)
@@ -122,6 +123,11 @@ void Texture::render(const Transform* transform, SDL_Rect* clip, SDL_RendererFli
 	Vector2 posPivot = transform->getPositionPivot();
 	Vector2 rotPivot = transform->getRotationPivot();
 	Vector2 scaPivot = transform->getScalePivot();
+
+	// Correct the position and rotations to simulate a reference system with 0 in the bottom-left,
+	// x increasing to the right (same as SDL) and Y increasing up (opposite of SDL)
+	pos.y = constants::SCREEN_HEIGHT - pos.y;
+	rot *= -1;
 
 	// Calculate the texture size, clipped if required
 	Vector2 rawSize;

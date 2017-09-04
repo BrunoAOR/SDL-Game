@@ -70,7 +70,12 @@ bool init()
 		else
 		{
 			// Create Renderer for window (used for texture rendering)
-			if (RenderManager::createRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED))
+			if (!RenderManager::createRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED))
+			{
+				// An Error message will be printed by the RenderManager::createRenderer function
+				success = false;
+			}
+			else
 			{
 				// Initialize PNG loading
 				int imgFlags = IMG_INIT_PNG;
@@ -79,6 +84,7 @@ bool init()
 					printf("Error: SDL_Image could not initialize! SDL_image Error: %s\n", IMG_GetError());
 					success = false;
 				}
+				// Initialize the GameObjectsManager (create worldGO)
 			}
 		}
 	}
@@ -99,7 +105,7 @@ bool setupScenes()
 	success &= SceneManager::addScene<TestScene2>();
 	success &= SceneManager::addScene<TestScene3>();
 	success &= SceneManager::addScene<TransformPivotScene>();
-	SceneManager::loadScene(0);
+	SceneManager::loadScene(3);
 
 	return success;
 }

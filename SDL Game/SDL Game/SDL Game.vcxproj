@@ -38,6 +38,7 @@
     <ClCompile Include="Engine\GameObjectsManager.cpp" />
     <ClCompile Include="GOKiller.cpp" />
     <ClCompile Include="Pivotter.cpp" />
+    <ClCompile Include="Rotator.cpp" />
     <ClCompile Include="SceneChanger.cpp" />
     <ClCompile Include="SpawnedCrosshair.cpp" />
     <ClCompile Include="Spawner.cpp" />
@@ -65,6 +66,7 @@
     <ClInclude Include="Engine\GameObjectsManager.h" />
     <ClInclude Include="GOKiller.h" />
     <ClInclude Include="Pivotter.h" />
+    <ClInclude Include="Rotator.h" />
     <ClInclude Include="SceneChanger.h" />
     <ClInclude Include="SpawnedCrosshair.h" />
     <ClInclude Include="Spawner.h" />

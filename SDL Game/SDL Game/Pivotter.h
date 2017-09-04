@@ -21,13 +21,16 @@ public:
 	Vector2 scale;
 
 private:
-	double step;
+	double selectedStep;
+	double positionStep;
+	double pivotStep;
 	double rotStep;
 
 	enum class MoveMode {
-		POS,
-		ROT,
-		SCA
+		POSITION,
+		POS_PIVOT,
+		ROT_PIVOT,
+		SCA_PIVOT
 	};
 
 	enum class Direction {
