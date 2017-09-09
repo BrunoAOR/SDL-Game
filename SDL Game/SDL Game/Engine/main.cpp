@@ -6,6 +6,7 @@
 #include "GameObjectsManager.h"
 #include "RenderManager.h"
 #include "SceneManager.h"
+#include "Time.h"
 
 
 // Global variables
@@ -95,6 +96,7 @@ bool init()
 #include "Scenes/TestScene2.h"
 #include "Scenes/TestScene3.h"
 #include "Scenes/TransformPivotScene.h"
+#include "Scenes/TimeTesterScene.h"
 
 bool setupScenes()
 {
@@ -105,7 +107,8 @@ bool setupScenes()
 	success &= SceneManager::addScene<TestScene2>();
 	success &= SceneManager::addScene<TestScene3>();
 	success &= SceneManager::addScene<TransformPivotScene>();
-	SceneManager::loadScene(0);
+	success &= SceneManager::addScene<TimeTesterScene>();
+	SceneManager::loadScene(4);
 
 	return success;
 }
@@ -146,6 +149,8 @@ void loop()
 	// While application is running
 	while (!quit)
 	{
+		Time::updateTime();
+
 		handleEvents(quit);
 
 		SceneManager::refreshScenes();

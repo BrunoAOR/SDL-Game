@@ -19,6 +19,9 @@
     <Filter Include="Scenes">
       <UniqueIdentifier>{4c1177d7-6691-47e6-92b9-38f5b13303f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Behaviours">
+      <UniqueIdentifier>{e8ec87fa-7a6c-4b4d-9497-f3f328eba87c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Behaviour.cpp">
@@ -76,33 +79,39 @@
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="Behaviours\BehaviourToRemove.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Behaviours</Filter>
     </ClCompile>
     <ClCompile Include="Behaviours\ColorChanger.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Behaviours</Filter>
     </ClCompile>
     <ClCompile Include="Behaviours\Crosshair.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Behaviours</Filter>
     </ClCompile>
     <ClCompile Include="Behaviours\Crosshair2.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Behaviours</Filter>
     </ClCompile>
     <ClCompile Include="Behaviours\GOKiller.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Behaviours</Filter>
     </ClCompile>
     <ClCompile Include="Behaviours\Pivotter.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Behaviours</Filter>
     </ClCompile>
     <ClCompile Include="Behaviours\Rotator.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Behaviours</Filter>
     </ClCompile>
     <ClCompile Include="Behaviours\SceneChanger.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Behaviours</Filter>
     </ClCompile>
     <ClCompile Include="Behaviours\SpawnedCrosshair.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Behaviours</Filter>
     </ClCompile>
     <ClCompile Include="Behaviours\Spawner.cpp">
+      <Filter>Behaviours</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\TimeTesterScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Behaviours\Mover.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -159,36 +168,42 @@
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Behaviours\BehaviourToRemove.h">
-      <Filter>Header Files</Filter>
+      <Filter>Behaviours</Filter>
     </ClInclude>
     <ClInclude Include="Behaviours\ColorChanger.h">
-      <Filter>Header Files</Filter>
+      <Filter>Behaviours</Filter>
     </ClInclude>
     <ClInclude Include="Behaviours\Crosshair.h">
-      <Filter>Header Files</Filter>
+      <Filter>Behaviours</Filter>
     </ClInclude>
     <ClInclude Include="Behaviours\Crosshair2.h">
-      <Filter>Header Files</Filter>
+      <Filter>Behaviours</Filter>
     </ClInclude>
     <ClInclude Include="Behaviours\GOKiller.h">
-      <Filter>Header Files</Filter>
+      <Filter>Behaviours</Filter>
     </ClInclude>
     <ClInclude Include="Behaviours\Pivotter.h">
-      <Filter>Header Files</Filter>
+      <Filter>Behaviours</Filter>
     </ClInclude>
     <ClInclude Include="Behaviours\resource.h">
-      <Filter>Header Files</Filter>
+      <Filter>Behaviours</Filter>
     </ClInclude>
     <ClInclude Include="Behaviours\Rotator.h">
-      <Filter>Header Files</Filter>
+      <Filter>Behaviours</Filter>
     </ClInclude>
     <ClInclude Include="Behaviours\SceneChanger.h">
-      <Filter>Header Files</Filter>
+      <Filter>Behaviours</Filter>
     </ClInclude>
     <ClInclude Include="Behaviours\SpawnedCrosshair.h">
-      <Filter>Header Files</Filter>
+      <Filter>Behaviours</Filter>
     </ClInclude>
     <ClInclude Include="Behaviours\Spawner.h">
+      <Filter>Behaviours</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\TimeTesterScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Behaviours\Mover.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

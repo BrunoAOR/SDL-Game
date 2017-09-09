@@ -42,11 +42,13 @@
     <ClCompile Include="Behaviours\SceneChanger.cpp" />
     <ClCompile Include="Behaviours\SpawnedCrosshair.cpp" />
     <ClCompile Include="Behaviours\Spawner.cpp" />
+    <ClCompile Include="Behaviours\Mover.cpp" />
     <ClCompile Include="Scenes\TestScene.cpp" />
     <ClCompile Include="Scenes\TestScene2.cpp" />
     <ClCompile Include="Scenes\TestScene3.cpp" />
     <ClCompile Include="Engine\Time.cpp" />
     <ClCompile Include="Scenes\TransformPivotScene.cpp" />
+    <ClCompile Include="Scenes\TimeTesterScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Behaviours\BehaviourToRemove.h" />
@@ -72,11 +74,13 @@
     <ClInclude Include="Behaviours\SceneChanger.h" />
     <ClInclude Include="Behaviours\SpawnedCrosshair.h" />
     <ClInclude Include="Behaviours\Spawner.h" />
+    <ClInclude Include="Behaviours\Mover.h" />
     <ClInclude Include="Scenes\TestScene.h" />
     <ClInclude Include="Scenes\TestScene2.h" />
     <ClInclude Include="Scenes\TestScene3.h" />
     <ClInclude Include="Engine\Time.h" />
     <ClInclude Include="Scenes\TransformPivotScene.h" />
+    <ClInclude Include="Scenes\TimeTesterScene.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\Crosshair.png" />
