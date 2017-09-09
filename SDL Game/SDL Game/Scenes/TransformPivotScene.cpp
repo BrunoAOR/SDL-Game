@@ -2,9 +2,9 @@
 
 #include "Engine/GameObject.h"
 #include "Engine/Transform.h"
-#include "Pivotter.h"
-#include "SceneChanger.h"
-#include "Rotator.h"
+#include "Behaviours/Pivotter.h"
+#include "Behaviours/SceneChanger.h"
+#include "Behaviours/Rotator.h"
 
 bool TransformPivotScene::load()
 {

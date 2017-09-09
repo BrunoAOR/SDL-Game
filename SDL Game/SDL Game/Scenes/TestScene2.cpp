@@ -1,9 +1,9 @@
 #include "TestScene2.h"
 
 #include "Engine/GameObject.h"
-#include "Crosshair2.h"
-#include "ColorChanger.h"
-#include "SceneChanger.h"
+#include "Behaviours/Crosshair2.h"
+#include "Behaviours/ColorChanger.h"
+#include "Behaviours/SceneChanger.h"
 
 bool TestScene2::load()
 {

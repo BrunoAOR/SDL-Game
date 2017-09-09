@@ -19,13 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BehaviourToRemove.cpp" />
-    <ClCompile Include="ColorChanger.cpp" />
+    <ClCompile Include="Behaviours\BehaviourToRemove.cpp" />
+    <ClCompile Include="Behaviours\ColorChanger.cpp" />
     <ClCompile Include="Engine\Component.cpp" />
     <ClCompile Include="Engine\EngineUtils.h" />
     <ClCompile Include="Engine\Behaviour.cpp" />
-    <ClCompile Include="Crosshair.cpp" />
-    <ClCompile Include="Crosshair2.cpp" />
+    <ClCompile Include="Behaviours\Crosshair.cpp" />
+    <ClCompile Include="Behaviours\Crosshair2.cpp" />
     <ClCompile Include="Engine\GameObject.cpp" />
     <ClCompile Include="Engine\Input.cpp" />
     <ClCompile Include="Engine\main.cpp" />
@@ -36,25 +36,26 @@
     <ClCompile Include="Engine\Scene.cpp" />
     <ClCompile Include="Engine\SceneManager.cpp" />
     <ClCompile Include="Engine\GameObjectsManager.cpp" />
-    <ClCompile Include="GOKiller.cpp" />
-    <ClCompile Include="Pivotter.cpp" />
-    <ClCompile Include="Rotator.cpp" />
-    <ClCompile Include="SceneChanger.cpp" />
-    <ClCompile Include="SpawnedCrosshair.cpp" />
-    <ClCompile Include="Spawner.cpp" />
-    <ClCompile Include="TestScene.cpp" />
-    <ClCompile Include="TestScene2.cpp" />
-    <ClCompile Include="TestScene3.cpp" />
-    <ClCompile Include="TransformPivotScene.cpp" />
+    <ClCompile Include="Behaviours\GOKiller.cpp" />
+    <ClCompile Include="Behaviours\Pivotter.cpp" />
+    <ClCompile Include="Behaviours\Rotator.cpp" />
+    <ClCompile Include="Behaviours\SceneChanger.cpp" />
+    <ClCompile Include="Behaviours\SpawnedCrosshair.cpp" />
+    <ClCompile Include="Behaviours\Spawner.cpp" />
+    <ClCompile Include="Scenes\TestScene.cpp" />
+    <ClCompile Include="Scenes\TestScene2.cpp" />
+    <ClCompile Include="Scenes\TestScene3.cpp" />
+    <ClCompile Include="Engine\Time.cpp" />
+    <ClCompile Include="Scenes\TransformPivotScene.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BehaviourToRemove.h" />
-    <ClInclude Include="ColorChanger.h" />
+    <ClInclude Include="Behaviours\BehaviourToRemove.h" />
+    <ClInclude Include="Behaviours\ColorChanger.h" />
     <ClInclude Include="Engine\Component.h" />
     <ClInclude Include="Engine\Behaviour.h" />
     <ClInclude Include="Engine\constants.h" />
-    <ClInclude Include="Crosshair.h" />
-    <ClInclude Include="Crosshair2.h" />
+    <ClInclude Include="Behaviours\Crosshair.h" />
+    <ClInclude Include="Behaviours\Crosshair2.h" />
     <ClInclude Include="Engine\GameObject.h" />
     <ClInclude Include="Engine\Input.h" />
     <ClInclude Include="Engine\Texture.h" />
@@ -64,16 +65,18 @@
     <ClInclude Include="Engine\Scene.h" />
     <ClInclude Include="Engine\SceneManager.h" />
     <ClInclude Include="Engine\GameObjectsManager.h" />
-    <ClInclude Include="GOKiller.h" />
-    <ClInclude Include="Pivotter.h" />
-    <ClInclude Include="Rotator.h" />
-    <ClInclude Include="SceneChanger.h" />
-    <ClInclude Include="SpawnedCrosshair.h" />
-    <ClInclude Include="Spawner.h" />
-    <ClInclude Include="TestScene.h" />
-    <ClInclude Include="TestScene2.h" />
-    <ClInclude Include="TestScene3.h" />
-    <ClInclude Include="TransformPivotScene.h" />
+    <ClInclude Include="Behaviours\GOKiller.h" />
+    <ClInclude Include="Behaviours\Pivotter.h" />
+    <ClInclude Include="Behaviours\resource.h" />
+    <ClInclude Include="Behaviours\Rotator.h" />
+    <ClInclude Include="Behaviours\SceneChanger.h" />
+    <ClInclude Include="Behaviours\SpawnedCrosshair.h" />
+    <ClInclude Include="Behaviours\Spawner.h" />
+    <ClInclude Include="Scenes\TestScene.h" />
+    <ClInclude Include="Scenes\TestScene2.h" />
+    <ClInclude Include="Scenes\TestScene3.h" />
+    <ClInclude Include="Engine\Time.h" />
+    <ClInclude Include="Scenes\TransformPivotScene.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\Crosshair.png" />
@@ -132,7 +135,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\VS Dev Libraries\SDL2_&amp;_Ext\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir);C:\VS Dev Libraries\SDL2_&amp;_Ext\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\VS Dev Libraries\SDL2_&amp;_Ext\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

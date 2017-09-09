@@ -16,14 +16,11 @@
     <Filter Include="Engine">
       <UniqueIdentifier>{1c08ae73-06e3-4e97-9edc-d5ba5bea7d1e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scenes">
+      <UniqueIdentifier>{4c1177d7-6691-47e6-92b9-38f5b13303f1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Crosshair.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Crosshair2.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Behaviour.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
@@ -45,26 +42,11 @@
     <ClCompile Include="Engine\RenderManager.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Spawner.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Scene.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="Engine\SceneManager.cpp">
       <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="TestScene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ColorChanger.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SpawnedCrosshair.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BehaviourToRemove.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Engine\GameObjectsManager.cpp">
       <Filter>Engine</Filter>
@@ -75,38 +57,56 @@
     <ClCompile Include="Engine\EngineUtils.h">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="TestScene2.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneChanger.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TestScene3.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GOKiller.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Transform.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="TransformPivotScene.cpp">
+    <ClCompile Include="Scenes\TestScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\TestScene2.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\TestScene3.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\TransformPivotScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Time.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Behaviours\BehaviourToRemove.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Pivotter.cpp">
+    <ClCompile Include="Behaviours\ColorChanger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Rotator.cpp">
+    <ClCompile Include="Behaviours\Crosshair.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Behaviours\Crosshair2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Behaviours\GOKiller.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Behaviours\Pivotter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Behaviours\Rotator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Behaviours\SceneChanger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Behaviours\SpawnedCrosshair.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Behaviours\Spawner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Crosshair.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Crosshair2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Behaviour.h">
       <Filter>Engine</Filter>
     </ClInclude>
@@ -131,26 +131,11 @@
     <ClInclude Include="Engine\RenderManager.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Spawner.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Scene.h">
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Engine\SceneManager.h">
       <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="TestScene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ColorChanger.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SpawnedCrosshair.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BehaviourToRemove.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\GameObjectsManager.h">
       <Filter>Engine</Filter>
@@ -158,25 +143,52 @@
     <ClInclude Include="Engine\Component.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="TestScene2.h">
+    <ClInclude Include="Scenes\TransformPivotScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\TestScene3.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\TestScene2.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\TestScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Time.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Behaviours\BehaviourToRemove.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SceneChanger.h">
+    <ClInclude Include="Behaviours\ColorChanger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TestScene3.h">
+    <ClInclude Include="Behaviours\Crosshair.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GOKiller.h">
+    <ClInclude Include="Behaviours\Crosshair2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TransformPivotScene.h">
+    <ClInclude Include="Behaviours\GOKiller.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Pivotter.h">
+    <ClInclude Include="Behaviours\Pivotter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Rotator.h">
+    <ClInclude Include="Behaviours\resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Behaviours\Rotator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Behaviours\SceneChanger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Behaviours\SpawnedCrosshair.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Behaviours\Spawner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

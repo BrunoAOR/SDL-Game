@@ -2,8 +2,8 @@
 
 #include "Engine/GameObject.h"
 #include "Engine/Transform.h"
-#include "GOKiller.h"
-#include "SceneChanger.h"
+#include "Behaviours/GOKiller.h"
+#include "Behaviours/SceneChanger.h"
 
 
 bool TestScene3::load()

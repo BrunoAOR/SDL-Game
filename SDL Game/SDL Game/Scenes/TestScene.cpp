@@ -6,12 +6,12 @@
 #include "Engine/constants.h"
 #include "Engine/Texture.h"
 
-#include "Crosshair.h"
-#include "Crosshair2.h"
-#include "Spawner.h"
-#include "ColorChanger.h"
-#include "BehaviourToRemove.h"
-#include "SceneChanger.h"
+#include "Behaviours/Crosshair.h"
+#include "Behaviours./Crosshair2.h"
+#include "Behaviours/Spawner.h"
+#include "Behaviours./ColorChanger.h"
+#include "Behaviours/BehaviourToRemove.h"
+#include "Behaviours/SceneChanger.h"
 
 
 bool TestScene::load()
