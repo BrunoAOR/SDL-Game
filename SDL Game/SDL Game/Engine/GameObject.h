@@ -28,7 +28,7 @@ public:
 
 	// Components/Behaviours related
 	template<typename T>
-	bool addComponent();
+	std::weak_ptr<T> addComponent();
 	void removeComponent(std::weak_ptr<Component> component);
 	template<typename T>
 	std::weak_ptr<T> getComponent();
@@ -75,12 +75,13 @@ private:
 
 
 template<typename T>
-inline bool GameObject::addComponent()
+inline std::weak_ptr<T> GameObject::addComponent()
 {
+	std::weak_ptr<T> weakGO;
 	if (!std::is_base_of<Component, T>::value || std::is_same<Component, T>::value || std::is_same<Behaviour, T>::value)
 	{
 		printf("Error, can't attach selected class as a component!");
-		return false;
+		return weakGO;
 	}
 	else
 	{
@@ -88,7 +89,8 @@ inline bool GameObject::addComponent()
 		auto component = std::make_shared<T>();
 		component->m_gameObject = m_self;
 		m_componentsToAdd.push_back(component);
-		return true;
+		weakGO = component;
+		return weakGO;
 	}
 }
 

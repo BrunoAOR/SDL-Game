@@ -14,9 +14,9 @@ bool TestScene2::load()
 
 	if (go) {
 		go->transform.setWorldPosition({ 300, 300 });
-		success &= go->addComponent<Crosshair2>();
-		success &= go->addComponent<ColorChanger>();
-		success &= go->addComponent<SceneChanger>();
+		success &= !(go->addComponent<Crosshair2>().expired());
+		success &= !(go->addComponent<ColorChanger>().expired());
+		success &= !(go->addComponent<SceneChanger>().expired());
 		success &= go->addTexture("assets/Target.png");
 	}
 

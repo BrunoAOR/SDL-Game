@@ -30,8 +30,8 @@ bool TestScene::load()
 	auto spawnerGO = weakSpawnerGO.lock();
 	if (spawnerGO)
 	{
-		success &= spawnerGO->addComponent<Spawner>();
-		success &= spawnerGO->addComponent<SceneChanger>();
+		success &= !(spawnerGO->addComponent<Spawner>().expired());
+		success &= !(spawnerGO->addComponent<SceneChanger>().expired());
 	}
 
 	// Crosshair1
@@ -42,8 +42,8 @@ bool TestScene::load()
 		crosshairGO->transform.setWorldPosition({ 200, 200 });
 		crosshairGO->transform.setWorldRotation(45.0);
 		crosshairGO->transform.setWorldScale({ 1.5, 1.5 });
-		success &= crosshairGO->addComponent<Crosshair>();
-		success &= crosshairGO->addComponent<BehaviourToRemove>();
+		success &= !(crosshairGO->addComponent<Crosshair>().expired());
+		success &= !(crosshairGO->addComponent<BehaviourToRemove>().expired());
 		//crosshairGO->addBehaviour(new Crosshair2(crosshairGO));
 		if (!crosshairGO->addTexture("assets/Crosshair.png"))
 		{
@@ -63,7 +63,7 @@ bool TestScene::load()
 	if (crosshair2GO)
 	{
 		crosshair2GO->transform.setWorldPosition({ constants::SCREEN_WIDTH - 200, 200 });
-		success &= crosshair2GO->addComponent<Crosshair2>();
+		success &= !(crosshair2GO->addComponent<Crosshair2>().expired());
 		if (!crosshair2GO->addTexture("assets/Crosshair.png"))
 		{
 			printf("Error: Failed to load crosshair texture image!\n");
@@ -87,7 +87,7 @@ bool TestScene::load()
 			success = false;
 		}
 
-		success &= coloredGO->addComponent<ColorChanger>();
+		success &= !(coloredGO->addComponent<ColorChanger>().expired());
 		coloredGO->transform.setWorldPosition(
 		{ 
 			(float)(constants::SCREEN_WIDTH - coloredGO->texture->getWidth()) / 2,
