@@ -4,6 +4,34 @@
 #include <vector>
 
 
+template <typename T, typename U>
+bool ptr_owner_equality(std::weak_ptr<T> wp1, std::weak_ptr<U> wp2)
+{
+	return !wp1.owner_before(wp2) && !wp2.owner_before(wp1);
+}
+
+
+template <typename T, typename U>
+bool ptr_owner_equality(std::shared_ptr<T> wp1, std::shared_ptr<U> wp2)
+{
+	return !wp1.owner_before(wp2) && !wp2.owner_before(wp1);
+}
+
+
+template <typename T, typename U>
+bool ptr_owner_equality(std::shared_ptr<T> wp1, std::weak_ptr<U> wp2)
+{
+	return !wp1.owner_before(wp2) && !wp2.owner_before(wp1);
+}
+
+
+template <typename T, typename U>
+bool ptr_owner_equality(std::weak_ptr<T> wp1, std::shared_ptr<U> wp2)
+{
+	return !wp1.owner_before(wp2) && !wp2.owner_before(wp1);
+}
+
+
 template <typename T>
 int indexOf(std::vector<T> vector, T element)
 {
@@ -19,6 +47,7 @@ int indexOf(std::vector<T> vector, T element)
 	}
 }
 
+
 template <typename T>
 int indexOf(std::vector<std::weak_ptr<T>> vector, std::weak_ptr<T> element)
 {
@@ -26,7 +55,7 @@ int indexOf(std::vector<std::weak_ptr<T>> vector, std::weak_ptr<T> element)
 
 	for (; iterator != vector.end() ; ++iterator)
 	{
-		if ((*iterator).lock() == element.lock())
+		if (ptr_owner_equality(*iterator, element))
 		{
 			break;
 		}
