@@ -47,6 +47,7 @@ public:
 
 private:
 	// TESTING FIELDS START
+	static int s_alive;
 	static int s_nextId;
 	int m_id;
 	// TESTING FIELDS END
@@ -87,7 +88,7 @@ inline std::weak_ptr<T> GameObject::addComponent()
 	{
 		// So T inherits from Component and is NOT a Component or a Behaviour as such
 		auto component = std::make_shared<T>();
-		component->m_gameObject = m_self;
+		component->m_gameObject = m_self.lock();
 		m_componentsToAdd.push_back(component);
 		weakGO = component;
 		return weakGO;

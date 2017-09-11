@@ -112,7 +112,7 @@
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Behaviours\Mover.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Behaviours</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -204,7 +204,7 @@
       <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Behaviours\Mover.h">
-      <Filter>Header Files</Filter>
+      <Filter>Behaviours</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

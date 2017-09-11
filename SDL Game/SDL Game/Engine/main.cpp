@@ -38,7 +38,6 @@ int main(int argc, char* args[])
 	}
 
 	close();
-
 	return 0;
 }
 
@@ -108,7 +107,7 @@ bool setupScenes()
 	success &= SceneManager::addScene<TestScene3>();
 	success &= SceneManager::addScene<TransformPivotScene>();
 	success &= SceneManager::addScene<TimeTesterScene>();
-	SceneManager::loadScene(4);
+	SceneManager::loadScene(1);
 
 	return success;
 }

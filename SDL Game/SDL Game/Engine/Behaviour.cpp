@@ -8,24 +8,27 @@ Behaviour::Behaviour()
 }
 
 
+Behaviour::~Behaviour()
+{
+}
+
+
 void Behaviour::setActive(bool activeState)
 {
 	m_isActive = activeState;
 }
+
 
 bool Behaviour::isActive()
 {
 	return m_isActive;
 }
 
-Behaviour::~Behaviour()
-{
-
-}
 
 void Behaviour::awake()
 {
 }
+
 
 void Behaviour::start()
 {

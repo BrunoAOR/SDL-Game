@@ -8,13 +8,17 @@
 #include "GameObjectsManager.h"
 
 
+// TESTING START
+int GameObject::s_alive = 0;
 int GameObject::s_nextId = 0;
+// TESTING END
+
 
 GameObject::GameObject()
 {
 	// TESTING START
 	m_id = s_nextId++;
-	printf("GO constructed: %i\n", m_id);
+	printf("GO constructed -id: %i  ||  Alive: %i\n", m_id, ++s_alive);
 	// TESTING END
 
 	// Initialize texture empty
@@ -29,7 +33,10 @@ GameObject::~GameObject()
 	removeTexture();
 	m_components.clear();
 	m_behaviours.clear();
-	printf("GO destructed: %i\n", m_id);
+
+	// TESTING START
+	printf("GO  destructed -id: %i  ||  Alive: %i\n", m_id, --s_alive);
+	// TESTING END
 }
 
 

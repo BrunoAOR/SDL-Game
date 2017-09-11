@@ -4,6 +4,7 @@
 #include "Engine/Texture.h"
 #include "Engine/Transform.h"
 #include "Behaviours/Mover.h"
+#include "Behaviours/SceneChanger.h"
 
 bool TimeTesterScene::load()
 {
@@ -13,6 +14,7 @@ bool TimeTesterScene::load()
 	auto weakLeftGO = GameObject::createNew();
 	if (auto leftGO = weakLeftGO.lock())
 	{
+		leftGO->addComponent<SceneChanger>();
 		leftGO->addTexture("assets/Square.png");
 		leftGO->transform.setAllPivots(Vector2(0.5, 0));
 		leftGO->transform.setLocalPosition(Vector2(100, 200));
