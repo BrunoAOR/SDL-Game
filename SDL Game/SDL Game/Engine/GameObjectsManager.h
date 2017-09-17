@@ -3,13 +3,13 @@
 #include <memory>
 #include <vector>
 
-
 class GameObject;
+
 
 class GameObjectsManager
 {
 public:
-	static void updateGameObjectsAndBehaviours();
+	static void update();
 	static void addGameObject(std::shared_ptr<GameObject> gameObject);
 	static void destroyGameObject(std::weak_ptr<GameObject> gameObject);
 	static void destroyAllGameObjects();

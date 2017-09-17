@@ -13,27 +13,9 @@ GameObjectsManager::GameObjectsManager()
 }
 
 
-void GameObjectsManager::updateGameObjectsAndBehaviours()
+void GameObjectsManager::update()
 {
 	refreshGameObjects();
-
-	for (auto go : m_gameObjects)
-	{
-		if (go->isActive())
-		{
-			for (auto b : go->m_behaviours)
-			{
-				if (!b->m_started) {
-					b->start();
-					b->m_started = true;
-				}
-				else
-				{
-					b->update();
-				}
-			}
-		}
-	}
 }
 
 

@@ -4,6 +4,7 @@
 Behaviour::Behaviour()
 {
 	m_isActive = true;
+	m_isAwake = false;
 	m_started = false;
 }
 
@@ -31,5 +32,9 @@ void Behaviour::awake()
 
 
 void Behaviour::start()
+{
+}
+
+void Behaviour::update()
 {
 }

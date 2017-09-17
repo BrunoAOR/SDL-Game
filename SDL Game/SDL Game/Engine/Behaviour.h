@@ -9,20 +9,20 @@ class Behaviour :
 	public Component
 {
 public:
-	friend class GameObjectsManager;
-	friend class GameObject;
+	friend class BehavioursManager;
 
 	void setActive(bool activeState);
 	bool isActive();
 
 	Behaviour();
-	virtual ~Behaviour();
+	virtual ~Behaviour() = 0;
 
 	virtual void awake();
 	virtual void start();
-	virtual void update() = 0;
+	virtual void update();
 
 private:
 	bool m_isActive;
+	bool m_isAwake;
 	bool m_started;
 };

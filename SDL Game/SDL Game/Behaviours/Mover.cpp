@@ -10,6 +10,7 @@ Mover::Mover()
 {
 	useWASD = false;
 	speed = 100;
+	speedStep = 50;
 }
 
 
@@ -17,6 +18,19 @@ void Mover::update()
 {
 	Vector2 motion(0, 0);
 	
+	// Check speed
+	if (Input::getKeyDown(SDL_SCANCODE_KP_PLUS))
+	{
+		speed += speedStep;
+		printf("Speed: %i\n", speed);
+	}
+	if (Input::getKeyDown(SDL_SCANCODE_KP_MINUS))
+	{
+		speed -= speedStep;
+		printf("Speed: %i\n", speed);
+	}
+
+	// Check motion
 	if (useWASD)
 	{
 		moveWithWASD(motion.x, motion.y);

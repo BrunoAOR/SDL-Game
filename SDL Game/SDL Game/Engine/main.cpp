@@ -7,7 +7,8 @@
 #include "RenderManager.h"
 #include "SceneManager.h"
 #include "Time.h"
-
+#include "ComponentsManager.h"
+#include "BehavioursManager.h"
 
 // Global variables
 SDL_Window* gWindow = nullptr;
@@ -78,13 +79,14 @@ bool init()
 			else
 			{
 				// Initialize PNG loading
-				int imgFlags = IMG_INIT_PNG;
+				int imgFlags = IMG_INIT_PNG | IMG_INIT_JPG;
 				if ((IMG_Init(imgFlags) & imgFlags) != imgFlags)
 				{
 					printf("Error: SDL_Image could not initialize! SDL_image Error: %s\n", IMG_GetError());
 					success = false;
 				}
-				// Initialize the GameObjectsManager (create worldGO)
+				// Initialize the ComponentsManager
+				ComponentsManager::init();
 			}
 		}
 	}
@@ -154,7 +156,9 @@ void loop()
 
 		SceneManager::refreshScenes();
 
-		GameObjectsManager::updateGameObjectsAndBehaviours();
+		GameObjectsManager::update();
+
+		ComponentsManager::update();
 		
 		RenderManager::update();
 	}
@@ -164,6 +168,9 @@ void loop()
 
 void close()
 {
+	// Delete all ComponentManagers
+	ComponentsManager::close();
+
 	// Unload scene
 	SceneManager::close();
 

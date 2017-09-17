@@ -2,7 +2,6 @@
 
 #include "EngineUtils.h"
 #include "Texture.h"
-#include "Behaviour.h"
 #include "RenderManager.h"
 #include "SceneManager.h"
 #include "GameObjectsManager.h"
@@ -32,7 +31,6 @@ GameObject::~GameObject()
 {
 	removeTexture();
 	m_components.clear();
-	m_behaviours.clear();
 
 	// TESTING START
 	printf("GO  destructed -id: %i  ||  Alive: %i\n", m_id, --s_alive);
@@ -82,6 +80,7 @@ void GameObject::refreshComponents()
 	m_componentsToAdd.clear();
 }
 
+
 void GameObject::removeComponent(std::weak_ptr<Component> component)
 {
 	int componentIndex = indexOf(m_components, component.lock());
@@ -93,15 +92,13 @@ void GameObject::removeComponent(std::weak_ptr<Component> component)
 	}
 }
 
+
 void GameObject::doAddComponent(std::shared_ptr<Component> component)
 {
 	// No need to check for components's presence in m_components since this funciton gets called with newly instantiated components only
 	m_components.push_back(component);
-	if (std::shared_ptr<Behaviour> behaviour = std::dynamic_pointer_cast<Behaviour>(component))
-	{
-		m_behaviours.push_back(behaviour);
-	}
 }
+
 
 void GameObject::doRemoveComponent(std::weak_ptr<Component> component)
 {
@@ -109,17 +106,10 @@ void GameObject::doRemoveComponent(std::weak_ptr<Component> component)
 	int componentIndex = indexOf(m_components, component.lock());
 	if (componentIndex != -1)
 	{
-		if (std::shared_ptr<Behaviour> behaviour = std::dynamic_pointer_cast<Behaviour>(component.lock()))
-		{
-			int behaviourIndex = indexOf(m_behaviours, behaviour);
-			if (behaviourIndex != -1)
-			{
-				m_behaviours.erase(m_behaviours.begin() + behaviourIndex);
-			}
-		}
 		m_components.erase(m_components.begin() + componentIndex);
 	}
 }
+
 
 bool GameObject::setParent(std::weak_ptr<GameObject> parent)
 {
@@ -194,6 +184,7 @@ bool GameObject::addChild(std::weak_ptr<GameObject> child)
 	return false;
 }
 
+
 bool GameObject::removeChild(std::weak_ptr<GameObject> child)
 {
 	int index = indexOf(m_children, child);
@@ -216,6 +207,7 @@ bool GameObject::isActive()
 	return m_isActive;
 }
 
+
 std::weak_ptr<GameObject> GameObject::createNew()
 {
 	std::weak_ptr<GameObject> weakGo;
@@ -229,8 +221,8 @@ std::weak_ptr<GameObject> GameObject::createNew()
 	return weakGo;
 }
 
+
 void GameObject::destroy(std::weak_ptr<GameObject> gameObject)
 {
 	GameObjectsManager::destroyGameObject(gameObject);
 }
-

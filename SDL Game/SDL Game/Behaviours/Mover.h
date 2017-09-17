@@ -11,7 +11,8 @@ public:
 	// Inherited via Behaviour
 	virtual void update() override;
 	bool useWASD;
-	double speed;
+	int speed;
+	int speedStep;
 
 private:
 	void moveWithArrows(double& x, double& y);

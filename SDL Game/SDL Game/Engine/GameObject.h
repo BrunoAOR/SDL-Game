@@ -4,8 +4,9 @@
 #include <string>
 #include <vector>
 
-#include "Transform.h"
 #include "EngineUtils.h"
+#include "Transform.h"
+#include "ComponentsManager.h"
 
 class Texture;
 class Component;
@@ -67,7 +68,6 @@ private:
 	std::vector<std::shared_ptr<Component>> m_components;
 	std::vector<std::shared_ptr<Component>> m_componentsToAdd;
 	std::vector<std::weak_ptr<Component>> m_componentsToRemove;
-	std::vector<std::shared_ptr<Behaviour>> m_behaviours;
 
 	void doAddComponent(std::shared_ptr<Component> component);
 	void doRemoveComponent(std::weak_ptr<Component> component);
@@ -78,21 +78,22 @@ private:
 template<typename T>
 inline std::weak_ptr<T> GameObject::addComponent()
 {
-	std::weak_ptr<T> weakGO;
-	if (!std::is_base_of<Component, T>::value || std::is_same<Component, T>::value || std::is_same<Behaviour, T>::value)
+	std::weak_ptr<T> weakComponent;
+	if (!std::is_base_of<Component, T>::value || std::is_same<Component, T>::value)
 	{
 		printf("Error, can't attach selected class as a component!");
-		return weakGO;
 	}
 	else
 	{
+		auto component = ComponentsManager::createNew<T>(m_self);
 		// So T inherits from Component and is NOT a Component or a Behaviour as such
-		auto component = std::make_shared<T>();
-		component->m_gameObject = m_self.lock();
-		m_componentsToAdd.push_back(component);
-		weakGO = component;
-		return weakGO;
+		if (component)
+		{
+			m_componentsToAdd.push_back(component);
+			weakComponent = component;
+		}
 	}
+	return weakComponent;
 }
 
 template<typename T>

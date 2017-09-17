@@ -2,16 +2,15 @@
 
 #include<memory>
 
+class GameObject;
 
 class Component
 {
 public:
-	friend class GameObjectsManager;
-	friend class GameObject;
-	friend class Behaviour;
+	friend class ComponentsManager;
 
 	Component();
-	virtual ~Component();
+	virtual ~Component() = 0;
 	
 	std::shared_ptr<GameObject> gameObject();
 

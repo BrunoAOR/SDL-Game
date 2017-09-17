@@ -1,7 +1,5 @@
 #include "Component.h"
 
-#include "GameObject.h"
-
 
 // TESTING START
 int Component::s_alive = 0;

@@ -114,6 +114,15 @@
     <ClCompile Include="Behaviours\Mover.cpp">
       <Filter>Behaviours</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\ComponentsManager.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\BehavioursManager.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ComponentManager.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Behaviour.h">
@@ -205,6 +214,15 @@
     </ClInclude>
     <ClInclude Include="Behaviours\Mover.h">
       <Filter>Behaviours</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ComponentsManager.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\BehavioursManager.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ComponentManager.h">
+      <Filter>Engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
