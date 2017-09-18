@@ -8,12 +8,9 @@ class GameObject;
 class Behaviour :
 	public Component
 {
-public:
 	friend class BehavioursManager;
 
-	void setActive(bool activeState);
-	bool isActive();
-
+public:	
 	Behaviour();
 	virtual ~Behaviour() = 0;
 
@@ -22,7 +19,6 @@ public:
 	virtual void update();
 
 private:
-	bool m_isActive;
 	bool m_isAwake;
 	bool m_started;
 };
