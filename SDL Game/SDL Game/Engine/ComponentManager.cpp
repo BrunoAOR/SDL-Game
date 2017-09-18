@@ -42,7 +42,7 @@ void ComponentManager::refreshComponents()
 {
 	for (auto component : m_components)
 	{
-		if (!component.lock())
+		if (component.expired())
 		{
 			unsubscribeComponent(component);
 		}

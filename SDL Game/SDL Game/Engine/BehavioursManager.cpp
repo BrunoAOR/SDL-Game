@@ -8,6 +8,12 @@ BehavioursManager::BehavioursManager()
 {
 }
 
+
+BehavioursManager::~BehavioursManager()
+{
+}
+
+
 bool BehavioursManager::canManage(std::weak_ptr<Component> component)
 {
 	if (std::dynamic_pointer_cast<Behaviour>(component.lock()))
@@ -21,44 +27,31 @@ bool BehavioursManager::canManage(std::weak_ptr<Component> component)
 }
 
 
-BehavioursManager::~BehavioursManager()
-{
-}
-
-
 void BehavioursManager::update()
 {
+	// Note: refreshComponents ensures that all weak_ptr in m_components are valid, so locking them is guaranteed to produce a valid shared_ptr
 	refreshComponents();
 	for (auto weakBehaviour : m_components)
 	{
-		auto lockedBehaviour = weakBehaviour.lock();
-		if (lockedBehaviour)
+		if (auto behaviour = std::static_pointer_cast<Behaviour>(weakBehaviour.lock()))
 		{
-			if (auto behaviour = std::static_pointer_cast<Behaviour>(lockedBehaviour))
+			// Actual update
+			if (!behaviour->m_isAwake)
 			{
-				if (!behaviour->m_isAwake)
-				{
-					behaviour->awake();
-					behaviour->m_isAwake = true;
+				behaviour->awake();
+				behaviour->m_isAwake = true;
+			}
+			else if (behaviour->gameObject()->isActive())
+			{
+				if (!behaviour->m_started) {
+					behaviour->start();
+					behaviour->m_started = true;
 				}
-				else if (behaviour->gameObject()->isActive())
+				else
 				{
-					if (!behaviour->m_started) {
-						behaviour->start();
-						behaviour->m_started = true;
-					}
-					else
-					{
-						behaviour->update();
-					}
+					behaviour->update();
 				}
 			}
-		}
-		else
-		{
-			unsubscribeComponent(weakBehaviour);
-		}
+		}	
 	}
 }
-
-
