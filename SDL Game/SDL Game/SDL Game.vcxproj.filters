@@ -123,6 +123,24 @@
     <ClCompile Include="Engine\EngineUtils.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Behaviours\TimeLogger.cpp">
+      <Filter>Behaviours</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\CollidersScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\CircleCollider.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Collider.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\CollidersManager.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\RectangleCollider.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Behaviour.h">
@@ -225,6 +243,24 @@
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Engine\EngineUtils.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Behaviours\TimeLogger.h">
+      <Filter>Behaviours</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\CollidersScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\RectangleCollider.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\CircleCollider.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Collider.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\CollidersManager.h">
       <Filter>Engine</Filter>
     </ClInclude>
   </ItemGroup>

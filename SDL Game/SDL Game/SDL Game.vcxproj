@@ -19,6 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Behaviours\TimeLogger.cpp" />
+    <ClCompile Include="Engine\CircleCollider.cpp" />
+    <ClCompile Include="Engine\Collider.cpp" />
+    <ClCompile Include="Engine\CollidersManager.cpp" />
     <ClCompile Include="Engine\EngineUtils.cpp" />
     <ClCompile Include="Engine\ComponentManager.cpp" />
     <ClCompile Include="Engine\ComponentsManager.cpp" />
@@ -32,6 +36,7 @@
     <ClCompile Include="Engine\GameObject.cpp" />
     <ClCompile Include="Engine\Input.cpp" />
     <ClCompile Include="Engine\main.cpp" />
+    <ClCompile Include="Engine\RectangleCollider.cpp" />
     <ClCompile Include="Engine\Texture.cpp" />
     <ClCompile Include="Engine\Transform.cpp" />
     <ClCompile Include="Engine\Vector2.cpp" />
@@ -46,6 +51,7 @@
     <ClCompile Include="Behaviours\SpawnedCrosshair.cpp" />
     <ClCompile Include="Behaviours\Spawner.cpp" />
     <ClCompile Include="Behaviours\Mover.cpp" />
+    <ClCompile Include="Scenes\CollidersScene.cpp" />
     <ClCompile Include="Scenes\TestScene.cpp" />
     <ClCompile Include="Scenes\TestScene2.cpp" />
     <ClCompile Include="Scenes\TestScene3.cpp" />
@@ -54,6 +60,10 @@
     <ClCompile Include="Scenes\TimeTesterScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Behaviours\TimeLogger.h" />
+    <ClInclude Include="Engine\CircleCollider.h" />
+    <ClInclude Include="Engine\Collider.h" />
+    <ClInclude Include="Engine\CollidersManager.h" />
     <ClInclude Include="Engine\EngineUtils.h" />
     <ClInclude Include="Engine\ComponentsManager.h" />
     <ClInclude Include="Engine\BehavioursManager.h" />
@@ -67,6 +77,7 @@
     <ClInclude Include="Behaviours\Crosshair2.h" />
     <ClInclude Include="Engine\GameObject.h" />
     <ClInclude Include="Engine\Input.h" />
+    <ClInclude Include="Engine\RectangleCollider.h" />
     <ClInclude Include="Engine\Texture.h" />
     <ClInclude Include="Engine\Transform.h" />
     <ClInclude Include="Engine\Vector2.h" />
@@ -82,6 +93,7 @@
     <ClInclude Include="Behaviours\SpawnedCrosshair.h" />
     <ClInclude Include="Behaviours\Spawner.h" />
     <ClInclude Include="Behaviours\Mover.h" />
+    <ClInclude Include="Scenes\CollidersScene.h" />
     <ClInclude Include="Scenes\TestScene.h" />
     <ClInclude Include="Scenes\TestScene2.h" />
     <ClInclude Include="Scenes\TestScene3.h" />

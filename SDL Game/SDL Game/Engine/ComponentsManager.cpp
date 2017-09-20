@@ -1,7 +1,7 @@
 #include "ComponentsManager.h"
 
 #include "BehavioursManager.h"
-
+#include "CollidersManager.h"
 
 std::vector<std::shared_ptr<ComponentManager>> ComponentsManager::componentManagers;
 
@@ -29,6 +29,7 @@ ComponentsManager::~ComponentsManager()
 void ComponentsManager::init()
 {
 	componentManagers.push_back(std::unique_ptr<BehavioursManager>(new BehavioursManager()));
+	componentManagers.push_back(std::unique_ptr<CollidersManager>(new CollidersManager()));
 }
 
 void ComponentsManager::close()

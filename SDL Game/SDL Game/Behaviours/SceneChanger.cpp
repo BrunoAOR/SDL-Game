@@ -26,4 +26,8 @@ void SceneChanger::update()
 	{
 		SceneManager::loadScene(4);
 	}
+	if (Input::getKeyDown(SDL_SCANCODE_6))
+	{
+		SceneManager::loadScene(5);
+	}
 }

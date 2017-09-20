@@ -98,6 +98,7 @@ bool init()
 #include "Scenes/TestScene3.h"
 #include "Scenes/TransformPivotScene.h"
 #include "Scenes/TimeTesterScene.h"
+#include "Scenes/CollidersScene.h"
 
 bool setupScenes()
 {
@@ -109,7 +110,8 @@ bool setupScenes()
 	success &= SceneManager::addScene<TestScene3>();
 	success &= SceneManager::addScene<TransformPivotScene>();
 	success &= SceneManager::addScene<TimeTesterScene>();
-	SceneManager::loadScene(1);
+	success &= SceneManager::addScene<CollidersScene>();
+	SceneManager::loadScene(5);
 
 	return success;
 }
