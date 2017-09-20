@@ -28,35 +28,7 @@ Vector2 Transform::getLocalPosition() const
 
 Vector2 Transform::getWorldPosition() const
 {
-	if (m_parentTransform == nullptr)
-	{
-		return getLocalPosition();
-	}
-	else
-	{
-		Vector2 worldPosition;
-		//	1. Solve the rotation
-		//		1.1 Get polar coordinates for m_localPosition (r and theta)
-		double r = sqrt(m_localPosition.x * m_localPosition.x + m_localPosition.y * m_localPosition.y);
-		double theta = atan2(m_localPosition.y, m_localPosition.x);
-
-		//		1.2 use the polar coordinate to recalculate the x and y coordinates
-		double parentWorldRotation = m_parentTransform->getWorldRotation();
-		worldPosition.x = r * cos(theta + M_PI/180 * parentWorldRotation);
-		worldPosition.y = r * sin(theta + M_PI/180 * parentWorldRotation);
-		
-		//	2. Solve the scale
-		Vector2 parentWorldScale = m_parentTransform->getWorldScale();
-		worldPosition.x *= parentWorldScale.x;
-		worldPosition.y *= parentWorldScale.y;
-
-		//	3. Solve the position
-		Vector2 parentWorldPosition = m_parentTransform->getWorldPosition();
-		worldPosition.x += parentWorldPosition.x;
-		worldPosition.y += parentWorldPosition.y;
-
-		return (worldPosition);
-	}
+	return (localToWorldPosition(m_localPosition));
 }
 
 
@@ -80,24 +52,7 @@ void Transform::setWorldPosition(const Vector2& position)
 			return;
 		}
 
-		//	1. Solve position
-		Vector2 parentWorldPosition = m_parentTransform->getWorldPosition();
-		m_localPosition.x = position.x - parentWorldPosition.x;
-		m_localPosition.y = position.y - parentWorldPosition.y;
-
-		//	2. Solve scale
-		m_localPosition.x /= parentWorldScale.x;
-		m_localPosition.y /= parentWorldScale.y;
-
-		//	3. Solve rotation
-		//		3.1 Get polar coordinates for the current m_localPosition (r and theta)
-		double r = sqrt(m_localPosition.x * m_localPosition.x + m_localPosition.y * m_localPosition.y);
-		double theta = atan2(m_localPosition.y, m_localPosition.x);
-
-		//		3.2 use the polar coordinate to recalculate the x and y coordinates
-		double parentWorldRotation = m_parentTransform->getWorldRotation();
-		m_localPosition.x = r * cos(theta - parentWorldRotation);
-		m_localPosition.y = r * sin(theta - parentWorldRotation);
+		m_localPosition = worldToLocalPosition(position);
 	}
 }
 
@@ -245,6 +200,78 @@ void Transform::setAllPivots(const Vector2& pivot)
 	setPositionPivot(pivot);
 	setRotationPivot(pivot);
 	setScalePivot(pivot);
+}
+
+Vector2 Transform::localToWorldPosition(const Vector2 & localPosition) const
+{
+	if (m_parentTransform == nullptr)
+	{
+		return localPosition;
+	}
+	else
+	{
+		Vector2 worldPosition;
+		//	1. Solve the rotation
+		//		1.1 Get polar coordinates for m_localPosition (r and theta)
+		double r = sqrt(m_localPosition.x * m_localPosition.x + m_localPosition.y * m_localPosition.y);
+		double theta = atan2(m_localPosition.y, m_localPosition.x);
+
+		//		1.2 use the polar coordinate to recalculate the x and y coordinates
+		double parentWorldRotation = m_parentTransform->getWorldRotation();
+		worldPosition.x = r * cos(theta + M_PI / 180 * parentWorldRotation);
+		worldPosition.y = r * sin(theta + M_PI / 180 * parentWorldRotation);
+
+		//	2. Solve the scale
+		Vector2 parentWorldScale = m_parentTransform->getWorldScale();
+		worldPosition.x *= parentWorldScale.x;
+		worldPosition.y *= parentWorldScale.y;
+
+		//	3. Solve the position
+		Vector2 parentWorldPosition = m_parentTransform->getWorldPosition();
+		worldPosition.x += parentWorldPosition.x;
+		worldPosition.y += parentWorldPosition.y;
+
+		return (worldPosition);
+	}
+}
+
+Vector2 Transform::worldToLocalPosition(const Vector2 & worldPosition) const
+{
+	if (m_parentTransform == nullptr)
+	{
+		return worldPosition;
+	}
+	else
+	{
+		Vector2 parentWorldScale = m_parentTransform->getWorldScale();
+		if (parentWorldScale.x == 0 || parentWorldScale.y == 0)
+		{
+			return worldPosition;
+		}
+		
+		Vector2 localPosition = Vector2();
+
+		//	1. Solve position
+		Vector2 parentWorldPosition = m_parentTransform->getWorldPosition();
+		localPosition.x = worldPosition.x - parentWorldPosition.x;
+		localPosition.y = worldPosition.y - parentWorldPosition.y;
+
+		//	2. Solve scale
+		localPosition.x /= parentWorldScale.x;
+		localPosition.y /= parentWorldScale.y;
+
+		//	3. Solve rotation
+		//		3.1 Get polar coordinates for the current m_localPosition (r and theta)
+		double r = sqrt(m_localPosition.x * m_localPosition.x + m_localPosition.y * m_localPosition.y);
+		double theta = atan2(m_localPosition.y, m_localPosition.x);
+
+		//		3.2 use the polar coordinate to recalculate the x and y coordinates
+		double parentWorldRotation = m_parentTransform->getWorldRotation();
+		localPosition.x = r * cos(theta - parentWorldRotation);
+		localPosition.y = r * sin(theta - parentWorldRotation);
+
+		return localPosition;
+	}
 }
 
 void Transform::setParent(Transform * parent)

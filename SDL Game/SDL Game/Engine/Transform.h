@@ -40,6 +40,10 @@ public:
 
 	void setAllPivots(const Vector2& pivot);
 
+	// Helper methods
+	Vector2 localToWorldPosition(const Vector2& localPosition) const;
+	Vector2 worldToLocalPosition(const Vector2& worldPosition) const;
+
 private:	
 	Vector2 m_localPosition;
 	double m_localRotation;
