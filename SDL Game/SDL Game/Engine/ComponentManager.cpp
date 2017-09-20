@@ -17,7 +17,7 @@ ComponentManager::~ComponentManager()
 bool ComponentManager::subscribeComponent(std::weak_ptr<Component> component)
 {
 	// If component is not already in the components-to-subscribe list, add it
-	if (canManage(component) && indexOf(m_componentsToSubscribe, component) == -1)
+	if (canManage(component) && EngineUtils::indexOf(m_componentsToSubscribe, component) == -1)
 	{
 		m_componentsToSubscribe.push_back(component);
 		return true;
@@ -29,7 +29,7 @@ bool ComponentManager::subscribeComponent(std::weak_ptr<Component> component)
 bool ComponentManager::unsubscribeComponent(std::weak_ptr<Component> component)
 {
 	// If component is not already in the components-to-unsubscribe list, add it
-	if (indexOf(m_componentsToSubscribe, component) == -1)
+	if (EngineUtils::indexOf(m_componentsToSubscribe, component) == -1)
 	{
 		m_componentsToUnsubscribe.push_back(component);
 		return true;
@@ -67,7 +67,7 @@ void ComponentManager::refreshComponents()
 void ComponentManager::doSubscribe(std::weak_ptr<Component> component)
 {
 	// If component is not already in the components list, add it
-	if (indexOf(m_components, component) == -1)
+	if (EngineUtils::indexOf(m_components, component) == -1)
 	{
 		m_components.push_back(component);
 	}
@@ -77,7 +77,7 @@ void ComponentManager::doSubscribe(std::weak_ptr<Component> component)
 void ComponentManager::doUnsubscribe(std::weak_ptr<Component> component)
 {
 	// If component is in the components list, then remove it
-	int index = indexOf(m_components, component);
+	int index = EngineUtils::indexOf(m_components, component);
 	if (index != -1)
 	{
 		m_components.erase(m_components.begin() + index);

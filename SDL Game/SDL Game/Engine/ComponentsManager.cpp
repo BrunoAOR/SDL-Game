@@ -1,7 +1,7 @@
 #include "ComponentsManager.h"
 
-#include "ComponentManager.h"
 #include "BehavioursManager.h"
+
 
 std::vector<std::shared_ptr<ComponentManager>> ComponentsManager::componentManagers;
 

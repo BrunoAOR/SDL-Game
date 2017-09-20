@@ -47,7 +47,7 @@ void Spawner::createCrosshair()
 
 void Spawner::removeCrosshair(std::weak_ptr<GameObject> gameObject)
 {
-	int index = indexOf(m_spawned, gameObject);
+	int index = EngineUtils::indexOf(m_spawned, gameObject);
 	if (index != -1)
 	{
 		auto go = m_spawned.at(index);

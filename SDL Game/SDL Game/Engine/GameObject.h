@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 
-#include "EngineUtils.h"
 #include "Transform.h"
 #include "ComponentsManager.h"
 
@@ -46,11 +45,15 @@ public:
 	static std::weak_ptr<GameObject> createNew();
 	static void destroy(std::weak_ptr<GameObject> gameObject);
 
+	// TESTING FIELDS START
+	int m_id;
+	// TESTING FIELDS END
+
 private:
 	// TESTING FIELDS START
 	static int s_alive;
 	static int s_nextId;
-	int m_id;
+	//int m_id;
 	// TESTING FIELDS END
 
 	bool m_isActive;

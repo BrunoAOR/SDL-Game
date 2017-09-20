@@ -83,8 +83,8 @@ void GameObject::refreshComponents()
 
 void GameObject::removeComponent(std::weak_ptr<Component> component)
 {
-	int componentIndex = indexOf(m_components, component.lock());
-	int willBeRemovedIndex = indexOf(m_componentsToRemove, component);
+	int componentIndex = EngineUtils::indexOf(m_components, component.lock());
+	int willBeRemovedIndex = EngineUtils::indexOf(m_componentsToRemove, component);
 	if (componentIndex != -1 && willBeRemovedIndex == -1)
 	{
 		// So the component is contained in the list of components and not in the list of the components that WILL be deleted
@@ -103,7 +103,7 @@ void GameObject::doAddComponent(std::shared_ptr<Component> component)
 void GameObject::doRemoveComponent(std::weak_ptr<Component> component)
 {
 	// Remove from the vector and delete
-	int componentIndex = indexOf(m_components, component.lock());
+	int componentIndex = EngineUtils::indexOf(m_components, component.lock());
 	if (componentIndex != -1)
 	{
 		m_components.erase(m_components.begin() + componentIndex);
@@ -175,7 +175,7 @@ bool GameObject::isGameObjectInChildrenHierarchy(std::weak_ptr<GameObject> gameO
 
 bool GameObject::addChild(std::weak_ptr<GameObject> child)
 {
-	int index = indexOf(m_children, child);
+	int index = EngineUtils::indexOf(m_children, child);
 	if (index == -1)
 	{
 		m_children.push_back(child);
@@ -187,7 +187,7 @@ bool GameObject::addChild(std::weak_ptr<GameObject> child)
 
 bool GameObject::removeChild(std::weak_ptr<GameObject> child)
 {
-	int index = indexOf(m_children, child);
+	int index = EngineUtils::indexOf(m_children, child);
 	if (index != -1)
 	{
 		m_children.erase(m_children.begin() + index);

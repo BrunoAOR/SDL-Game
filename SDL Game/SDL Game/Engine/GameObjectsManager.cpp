@@ -22,7 +22,7 @@ void GameObjectsManager::update()
 void GameObjectsManager::addGameObject(std::shared_ptr<GameObject> gameObject)
 {
 	// Check if the gameObject hasn't already been added to the list
-	if (indexOf(m_gosToAdd, gameObject) == -1) {
+	if (EngineUtils::indexOf(m_gosToAdd, gameObject) == -1) {
 		m_gosToAdd.push_back(gameObject);
 	}
 	
@@ -32,7 +32,7 @@ void GameObjectsManager::addGameObject(std::shared_ptr<GameObject> gameObject)
 void GameObjectsManager::destroyGameObject(std::weak_ptr<GameObject> gameObject)
 {
 	// Check if the gameObject hasn't already been added to the list
-	if (indexOf(m_gosToDestroy, gameObject) == -1) {
+	if (EngineUtils::indexOf(m_gosToDestroy, gameObject) == -1) {
 		m_gosToDestroy.push_back(gameObject);
 	}
 }
@@ -69,7 +69,7 @@ void GameObjectsManager::refreshGameObjects()
 
 void GameObjectsManager::doAddGameObject(std::shared_ptr<GameObject> gameObject)
 {
-	if (indexOf(m_gameObjects, gameObject) == -1) {
+	if (EngineUtils::indexOf(m_gameObjects, gameObject) == -1) {
 		// So the gameObject hasn't previously been added
 		m_gameObjects.push_back(gameObject);
 	}
@@ -78,7 +78,7 @@ void GameObjectsManager::doAddGameObject(std::shared_ptr<GameObject> gameObject)
 
 void GameObjectsManager::doDestroyGameObject(std::weak_ptr<GameObject> gameObject)
 {
-	int index = indexOf(m_gameObjects, gameObject.lock());
+	int index = EngineUtils::indexOf(m_gameObjects, gameObject.lock());
 	if (index != -1) {
 		// So, the gameObject is in the gameObjects vector
 		// Destroy children first
@@ -94,7 +94,7 @@ void GameObjectsManager::doDestroyChildren(std::weak_ptr<GameObject> parentGameO
 		if (auto childGO = weakChildGO.lock())
 		{
 			doDestroyChildren(weakChildGO);
-			int index = indexOf(m_gameObjects, childGO);
+			int index = EngineUtils::indexOf(m_gameObjects, childGO);
 			if (index != -1) {
 				// So, the gameObject is in the gameObjects vector
 				m_gameObjects.erase(m_gameObjects.begin() + index);

@@ -41,7 +41,7 @@ void RenderManager::update()
 
 void RenderManager::subscribeGameObject(std::weak_ptr<GameObject> gameObject)
 {
-	if (indexOf(m_gameObjects, gameObject) == -1) {
+	if (EngineUtils::indexOf(m_gameObjects, gameObject) == -1) {
 		// So the gameObject hasn't previously been added
 		m_gameObjects.push_back(gameObject);
 	}
@@ -50,7 +50,7 @@ void RenderManager::subscribeGameObject(std::weak_ptr<GameObject> gameObject)
 
 void RenderManager::unsubscribeGameObject(std::weak_ptr<GameObject> gameObject)
 {
-	int index = indexOf(m_gameObjects, gameObject);
+	int index = EngineUtils::indexOf(m_gameObjects, gameObject);
 	if (index != -1) {
 		// So, the behaviour is in the behaviours vector
 		m_gameObjects.erase(m_gameObjects.begin() + index);

@@ -19,13 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\EngineUtils.cpp" />
     <ClCompile Include="Engine\ComponentManager.cpp" />
     <ClCompile Include="Engine\ComponentsManager.cpp" />
     <ClCompile Include="Engine\BehavioursManager.cpp" />
     <ClCompile Include="Behaviours\BehaviourToRemove.cpp" />
     <ClCompile Include="Behaviours\ColorChanger.cpp" />
     <ClCompile Include="Engine\Component.cpp" />
-    <ClCompile Include="Engine\EngineUtils.h" />
     <ClCompile Include="Engine\Behaviour.cpp" />
     <ClCompile Include="Behaviours\Crosshair.cpp" />
     <ClCompile Include="Behaviours\Crosshair2.cpp" />
@@ -54,6 +54,7 @@
     <ClCompile Include="Scenes\TimeTesterScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\EngineUtils.h" />
     <ClInclude Include="Engine\ComponentsManager.h" />
     <ClInclude Include="Engine\BehavioursManager.h" />
     <ClInclude Include="Behaviours\BehaviourToRemove.h" />

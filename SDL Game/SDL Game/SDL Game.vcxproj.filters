@@ -57,9 +57,6 @@
     <ClCompile Include="Engine\Component.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\EngineUtils.h">
-      <Filter>Engine</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Transform.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
@@ -121,6 +118,9 @@
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="Engine\ComponentManager.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\EngineUtils.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
   </ItemGroup>
@@ -222,6 +222,9 @@
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Engine\ComponentManager.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\EngineUtils.h">
       <Filter>Engine</Filter>
     </ClInclude>
   </ItemGroup>
