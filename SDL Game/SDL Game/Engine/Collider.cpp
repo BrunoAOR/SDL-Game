@@ -14,7 +14,6 @@ Collider::~Collider()
 
 Vector2 Collider::getWorldPosition()
 {
-	*this;
 	Transform& transform = gameObject()->transform;
 	Vector2 transformPos = transform.getLocalPosition();
 	Vector2 worldPos = transform.getLocalPosition() + offset;
