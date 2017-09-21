@@ -19,7 +19,8 @@ public:
 	friend Vector2 operator/ (double num, const Vector2& v2);
 	friend Vector2 operator* (Vector2 v2, double num);
 	friend Vector2 operator/ (Vector2 v2, double num);
-	
+	friend bool operator== (const Vector2& v1, const Vector2& v2);
+	friend bool operator!= (const Vector2& v1, const Vector2& v2);
 
 	Vector2& operator+= (const Vector2& rhs);
 	Vector2& operator-= (const Vector2& rhs);

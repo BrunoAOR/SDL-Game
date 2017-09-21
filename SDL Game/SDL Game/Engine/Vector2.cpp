@@ -111,4 +111,14 @@ Vector2 operator/(Vector2 v2, double num)
 	return operator/(num, v2);
 }
 
+bool operator==(const Vector2 & v1, const Vector2 & v2)
+{
+	return (v1.x == v2.x && v1.y == v2.y);
+}
+
+bool operator!=(const Vector2 & v1, const Vector2 & v2)
+{
+	return !(v1 == v2);
+}
+
 
