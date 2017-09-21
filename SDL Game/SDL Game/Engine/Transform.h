@@ -28,18 +28,6 @@ public:
 	void setLocalScale(const Vector2& scale);
 	void setWorldScale(const Vector2& scale);
 
-	// Pivots
-	Vector2 getPositionPivot() const;
-	void setPositionPivot(const Vector2& positionPivot, bool adjustScalePivot = true);
-
-	Vector2 getRotationPivot() const;
-	void setRotationPivot(const Vector2& rotationPivot);
-
-	Vector2 getScalePivot() const;
-	void setScalePivot(const Vector2& scalePivot);
-
-	void setAllPivots(const Vector2& pivot);
-
 	// Helper methods
 	Vector2 localToWorldPosition(const Vector2& localPosition) const;
 	Vector2 worldToLocalPosition(const Vector2& worldPosition) const;
@@ -48,10 +36,6 @@ private:
 	Vector2 m_localPosition;
 	double m_localRotation;
 	Vector2 m_localScale;
-
-	Vector2 m_positionPivot;
-	Vector2 m_rotationPivot;
-	Vector2 m_scalePivot;
 
 	Transform* m_parentTransform;
 	void setParent(Transform* parent);

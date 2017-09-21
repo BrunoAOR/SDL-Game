@@ -5,14 +5,17 @@
 #include "Transform.h"
 
 Texture::Texture(SDL_Renderer* renderer)
-{
+	: m_positionPivot(Vector2(0.5, 0.5))
+	, m_rotationPivot(Vector2(0.5, 0.5))
+	, m_scalePivot(Vector2(0.5,0.5))
 	// Initialize empty
-	m_texture = nullptr;
-	m_width = 0;
-	m_height = 0;
-
+	, m_texture(nullptr)
+	, m_width(0)
+	, m_height(0)
 	// Store renderer reference
-	m_renderer = renderer;
+	, m_renderer(renderer)
+{
+
 }
 
 
@@ -112,7 +115,7 @@ void Texture::setAlpha(Uint8 alpha)
 }
 
 
-void Texture::render(const Transform* transform, SDL_Rect* clip, SDL_RendererFlip flip)
+void Texture::render(const Transform* const transform, SDL_Rect* clip, SDL_RendererFlip flip)
 {
 	// Note: All transform pivots are transformed to "(1 - pivot) for the y axis so that the zero refers to the bottom of the RenderQuad"
 
@@ -120,9 +123,6 @@ void Texture::render(const Transform* transform, SDL_Rect* clip, SDL_RendererFli
 	Vector2 pos = transform->getWorldPosition();
 	double rot = transform->getWorldRotation();
 	Vector2 sca = transform->getWorldScale();
-	Vector2 posPivot = transform->getPositionPivot();
-	Vector2 rotPivot = transform->getRotationPivot();
-	Vector2 scaPivot = transform->getScalePivot();
 
 	// Correct the position and rotations to simulate a reference system with 0 in the bottom-left,
 	// x increasing to the right (same as SDL) and Y increasing up (opposite of SDL)
@@ -143,15 +143,15 @@ void Texture::render(const Transform* transform, SDL_Rect* clip, SDL_RendererFli
 	// Set the rendering space based on the position and positionPivot
 	SDL_Rect renderQuad =
 	{
-		(int)(pos.x - posPivot.x * rawSize.x),
-		(int)(pos.y - (1 - posPivot.y) * rawSize.y),
+		(int)(pos.x - m_positionPivot.x * rawSize.x),
+		(int)(pos.y - (1 - m_positionPivot.y) * rawSize.y),
 		(int)rawSize.x,
 		(int)rawSize.y
 	};
 	
 	// Modify for the scale and scalePivot
-	renderQuad.x = (int)(renderQuad.x - scaPivot.x * (sca.x - 1) * rawSize.x);
-	renderQuad.y = (int)(renderQuad.y - (1 - scaPivot.y) * (sca.y - 1) * rawSize.y);
+	renderQuad.x = (int)(renderQuad.x - m_scalePivot.x * (sca.x - 1) * rawSize.x);
+	renderQuad.y = (int)(renderQuad.y - (1 - m_scalePivot.y) * (sca.y - 1) * rawSize.y);
 	renderQuad.w = (int)(renderQuad.w * sca.x);
 	renderQuad.h = (int)(renderQuad.h * sca.y);
 	
@@ -159,8 +159,8 @@ void Texture::render(const Transform* transform, SDL_Rect* clip, SDL_RendererFli
 	Vector2 scaledSize = { rawSize.x * sca.x , rawSize.y * sca.y };
 	SDL_Point center =
 	{
-		(int)(rotPivot.x * scaledSize.x),
-		(int)((1 - rotPivot.y) * scaledSize.y)
+		(int)(m_rotationPivot.x * scaledSize.x),
+		(int)((1 - m_rotationPivot.y) * scaledSize.y)
 	};
 
 	// Correct issue with texture not being rendered if the renderQuad has negative width or height and there is no rotation
@@ -183,4 +183,56 @@ int Texture::getWidth()
 int Texture::getHeight()
 {
 	return m_height;
+}
+
+
+// PIVOTS
+
+
+Vector2 Texture::getPositionPivot() const
+{
+	return m_positionPivot;
+}
+
+
+void Texture::setPositionPivot(const Vector2& positionPivot, bool adjustScalePivot)
+{
+	m_positionPivot = positionPivot;
+
+	if (adjustScalePivot)
+	{
+		setScalePivot(m_positionPivot);
+	}
+}
+
+
+Vector2 Texture::getRotationPivot() const
+{
+	return m_rotationPivot;
+}
+
+
+void Texture::setRotationPivot(const Vector2& rotationPivot)
+{
+	m_rotationPivot = rotationPivot;
+}
+
+
+Vector2 Texture::getScalePivot() const
+{
+	return m_scalePivot;
+}
+
+
+void Texture::setScalePivot(const Vector2& scalePivot)
+{
+	m_scalePivot = scalePivot;
+}
+
+
+void Texture::setAllPivots(const Vector2& pivot)
+{
+	setPositionPivot(pivot);
+	setRotationPivot(pivot);
+	setScalePivot(pivot);
 }

@@ -7,16 +7,12 @@
 
 
 Transform::Transform()
+	: m_localPosition(Vector2(0,0))
+	, m_localRotation(0)
+	, m_localScale(Vector2(1,1))
+	, m_parentTransform(nullptr)
 {
-	m_localPosition = Vector2(0, 0);
-	m_localRotation = 0;
-	m_localScale = Vector2(1, 1);
-	
-	m_positionPivot = Vector2(0.5, 0.5);
-	m_rotationPivot = Vector2(0.5, 0.5);
-	m_scalePivot = Vector2(0.5, 0.5);
 
-	m_parentTransform = nullptr;
 }
 
 
@@ -150,57 +146,6 @@ void Transform::setWorldScale(const Vector2& scale)
 	}
 }
 
-
-// PIVOTS
-
-
-Vector2 Transform::getPositionPivot() const
-{
-	return m_positionPivot;
-}
-
-
-void Transform::setPositionPivot(const Vector2& positionPivot, bool adjustScalePivot)
-{
-	m_positionPivot = positionPivot;
-
-	if (adjustScalePivot)
-	{
-		setScalePivot(m_positionPivot);
-	}
-}
-
-
-Vector2 Transform::getRotationPivot() const
-{
-	return m_rotationPivot;
-}
-
-
-void Transform::setRotationPivot(const Vector2& rotationPivot)
-{
-	m_rotationPivot = rotationPivot;
-}
-
-
-Vector2 Transform::getScalePivot() const
-{
-	return m_scalePivot;
-}
-
-
-void Transform::setScalePivot(const Vector2& scalePivot)
-{
-	m_scalePivot = scalePivot;
-}
-
-
-void Transform::setAllPivots(const Vector2& pivot)
-{
-	setPositionPivot(pivot);
-	setRotationPivot(pivot);
-	setScalePivot(pivot);
-}
 
 Vector2 Transform::localToWorldPosition(const Vector2 & localPosition) const
 {

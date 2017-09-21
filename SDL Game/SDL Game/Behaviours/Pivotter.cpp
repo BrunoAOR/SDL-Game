@@ -3,6 +3,7 @@
 #include "Engine/Vector2.h"
 #include "Engine/GameObject.h"
 #include "Engine/Transform.h"
+#include "Engine/Texture.h"
 #include "Engine/Input.h"
 
 
@@ -125,9 +126,9 @@ void Pivotter::updateGO()
 	go->transform.setLocalPosition(position);
 	go->transform.setLocalRotation(rotation);
 	go->transform.setLocalScale(scale);
-	go->transform.setPositionPivot(positionPivot);
-	go->transform.setRotationPivot(rotationPivot);
-	go->transform.setScalePivot(scalePivot);
+	go->texture->setPositionPivot(positionPivot);
+	go->texture->setRotationPivot(rotationPivot);
+	go->texture->setScalePivot(scalePivot);
 }
 
 void Pivotter::printPivotInfo()

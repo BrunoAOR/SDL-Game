@@ -31,11 +31,23 @@ public:
 	void setAlpha(Uint8 a);
 
 	// Renders texture at given point
-	void render(const Transform* transform, SDL_Rect* clip = nullptr, SDL_RendererFlip flip = SDL_FLIP_NONE);
+	void render(const Transform* const transform, SDL_Rect* clip = nullptr, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
 	// Gets image dimensions
 	int getWidth();
 	int getHeight();
+
+	// Pivots
+	Vector2 getPositionPivot() const;
+	void setPositionPivot(const Vector2& positionPivot, bool adjustScalePivot = true);
+
+	Vector2 getRotationPivot() const;
+	void setRotationPivot(const Vector2& rotationPivot);
+
+	Vector2 getScalePivot() const;
+	void setScalePivot(const Vector2& scalePivot);
+
+	void setAllPivots(const Vector2& pivot);
 
 private:
 	// The renderer associated with this texture
@@ -50,4 +62,9 @@ private:
 
 	// Help functions
 	bool loadFromFile(std::string path, bool shouldColorKey, Uint32 colorKey);
+
+	// Pivots
+	Vector2 m_positionPivot;
+	Vector2 m_rotationPivot;
+	Vector2 m_scalePivot;
 };
