@@ -26,7 +26,7 @@ bool CollidersScene::load()
 
 			go->addTexture("assets/Target.png");
 			//go->transform.setAllPivots(Vector2(0.5, 0));
-			go->transform.setLocalPosition(Vector2(100, 50));
+			go->transform.lock()->setLocalPosition(Vector2(100, 50));
 			auto weakColl = go->addComponent<CircleCollider>();
 			if (auto coll = weakColl.lock())
 			{
@@ -57,7 +57,7 @@ bool CollidersScene::load()
 			go->addTexture("assets/Square.png");
 			go->addComponent<Rotator>();
 			//go->transform.setAllPivots(Vector2(0.5, 0));
-			go->transform.setLocalPosition(Vector2(700, 50));
+			go->transform.lock()->setLocalPosition(Vector2(700, 50));
 			auto weakColl = go->addComponent<RectangleCollider>();
 			if (auto coll = weakColl.lock())
 			{
@@ -87,7 +87,7 @@ bool CollidersScene::load()
 			go->addComponent<SceneChanger>();
 			go->addTexture("assets/Target.png");
 			//go->transform.setAllPivots(Vector2(0.5, 0));
-			go->transform.setLocalPosition(Vector2(100, 200));
+			go->transform.lock()->setLocalPosition(Vector2(100, 200));
 			auto weakColl = go->addComponent<CircleCollider>();
 			if (auto coll = weakColl.lock())
 			{
@@ -109,7 +109,7 @@ bool CollidersScene::load()
 			go->addComponent<SceneChanger>();
 			go->addTexture("assets/Square.png");
 			//go->transform.setAllPivots(Vector2(0.5, 0));
-			go->transform.setLocalPosition(Vector2(700, 200));
+			go->transform.lock()->setLocalPosition(Vector2(700, 200));
 			auto weakColl = go->addComponent<RectangleCollider>();
 			if (auto coll = weakColl.lock())
 			{
@@ -131,7 +131,7 @@ bool CollidersScene::load()
 			go->addComponent<SceneChanger>();
 			go->addTexture("assets/Target.png");
 			//go->transform.setAllPivots(Vector2(0.5, 0));
-			go->transform.setLocalPosition(Vector2(100, 350));
+			go->transform.lock()->setLocalPosition(Vector2(100, 350));
 			auto weakColl = go->addComponent<CircleCollider>();
 			if (auto coll = weakColl.lock())
 			{
@@ -153,7 +153,7 @@ bool CollidersScene::load()
 			go->addComponent<SceneChanger>();
 			go->addTexture("assets/Square.png");
 			//go->transform.setAllPivots(Vector2(0.5, 0));
-			go->transform.setLocalPosition(Vector2(700, 350));
+			go->transform.lock()->setLocalPosition(Vector2(700, 350));
 			auto weakColl = go->addComponent<RectangleCollider>();
 			if (auto coll = weakColl.lock())
 			{

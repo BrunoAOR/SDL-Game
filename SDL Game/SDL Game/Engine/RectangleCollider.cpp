@@ -100,9 +100,9 @@ std::vector<Vector2> RectangleCollider::getOuterNormals()
 
 void RectangleCollider::checkCacheValidity()
 {
-	Transform transform = gameObject()->transform;
-	Vector2 newPosition = transform.getWorldPosition();
-	double newRotation = transform.getWorldRotation();
+	auto transform = gameObject()->transform.lock();
+	Vector2 newPosition = transform->getWorldPosition();
+	double newRotation = transform->getWorldRotation();
 	if (m_previousWorldPosition != newPosition || m_previousRotation != newRotation)
 	{
 		m_previousWorldPosition = newPosition;

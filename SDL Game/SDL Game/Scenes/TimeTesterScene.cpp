@@ -17,7 +17,7 @@ bool TimeTesterScene::load()
 		leftGO->addComponent<SceneChanger>();
 		leftGO->addTexture("assets/Square.png");
 		leftGO->texture->setAllPivots(Vector2(0.5, 0));
-		leftGO->transform.setLocalPosition(Vector2(100, 200));
+		leftGO->transform.lock()->setLocalPosition(Vector2(100, 200));
 		auto weakLeftMover = leftGO->addComponent<Mover>();
 		if (auto leftMover = weakLeftMover.lock())
 		{
@@ -38,7 +38,7 @@ bool TimeTesterScene::load()
 	{
 		rightGO->addTexture("assets/Square.png");
 		rightGO->texture->setAllPivots(Vector2(0.5, 0));
-		rightGO->transform.setLocalPosition(Vector2(700, 200));
+		rightGO->transform.lock()->setLocalPosition(Vector2(700, 200));
 		if ((rightGO->addComponent<Mover>()).lock())
 		{
 			success &= true;

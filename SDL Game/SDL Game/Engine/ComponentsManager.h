@@ -36,14 +36,21 @@ inline std::shared_ptr<T> ComponentsManager::createNew(std::weak_ptr<GameObject>
 	}
 	else
 	{
-		auto component = std::make_shared<T>();
-		component->m_gameObject = goWeakPtr;
-
-		if(!sendToManager(component))
+		// Special case: A GameObject may only contain 1 Transform (added after GameObject instantiation
+		if (typeid(T) == typeid(Transform) && !(goWeakPtr.lock()->getComponent<Transform>().expired()))
 		{
-			component.reset();
+			return std::shared_ptr<T>();
 		}
+		else
+		{
+			auto component = std::make_shared<T>();
+			component->m_gameObject = goWeakPtr;
 
-		return component;
+			if (typeid(T) != typeid(Transform) && !sendToManager(component))
+			{
+				component.reset();
+			}
+			return component;
+		}
 	}
 }

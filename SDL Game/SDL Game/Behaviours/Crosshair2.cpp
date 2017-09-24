@@ -17,10 +17,10 @@ void Crosshair2::update()
 	if (angle >= 360) {
 		angle -= 360;
 	}
-	gameObject()->transform.setWorldRotation(angle);
+	gameObject()->transform.lock()->setWorldRotation(angle);
 	
 	// Position
-	Vector2 currentPos = gameObject()->transform.getLocalPosition();
+	Vector2 currentPos = gameObject()->transform.lock()->getLocalPosition();
 	if (Input::getKeyDown(SDL_SCANCODE_UP))
 	{
 		currentPos.y += stepSize;
@@ -37,7 +37,7 @@ void Crosshair2::update()
 	{
 		currentPos.x += stepSize;
 	}
-	gameObject()->transform.setLocalPosition(currentPos);
+	gameObject()->transform.lock()->setLocalPosition(currentPos);
 
 	// On/off
 	if (Input::getKeyDown(SDL_SCANCODE_0))

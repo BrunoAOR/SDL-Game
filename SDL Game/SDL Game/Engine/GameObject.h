@@ -16,7 +16,8 @@ class GameObject final
 {
 	friend class GameObjectsManager;
 public:
-	Transform transform;
+	std::weak_ptr<Transform> transform;
+
 	Texture* texture;
 	
 	GameObject();
@@ -26,7 +27,7 @@ public:
 	bool addTexture(std::string path);
 	void removeTexture();
 
-	// Components/Behaviours related
+	// Components related
 	template<typename T>
 	std::weak_ptr<T> addComponent();
 	void removeComponent(std::weak_ptr<Component> component);
@@ -56,6 +57,8 @@ private:
 	//int m_id;
 	// TESTING FIELDS END
 
+	std::shared_ptr<Transform> m_transform;
+
 	bool m_isActive;
 	std::weak_ptr<GameObject> m_self;
 
@@ -82,19 +85,15 @@ template<typename T>
 inline std::weak_ptr<T> GameObject::addComponent()
 {
 	std::weak_ptr<T> weakComponent;
-	if (!std::is_base_of<Component, T>::value || std::is_same<Component, T>::value)
+	auto component = ComponentsManager::createNew<T>(m_self);
+	if (component)
 	{
-		printf("Error, can't attach selected class as a component!");
+		m_componentsToAdd.push_back(component);
+		weakComponent = component;
 	}
 	else
 	{
-		auto component = ComponentsManager::createNew<T>(m_self);
-		// So T inherits from Component and is NOT a Component or a Behaviour as such
-		if (component)
-		{
-			m_componentsToAdd.push_back(component);
-			weakComponent = component;
-		}
+		printf("Error, can't attach selected class as a component!");
 	}
 	return weakComponent;
 }
@@ -103,7 +102,7 @@ template<typename T>
 inline std::weak_ptr<T> GameObject::getComponent()
 {
 	std::weak_ptr<T> weakPtr;
-	if (!std::is_base_of<Component, T>::value || std::is_same<Component, T>::value || std::is_same<Behaviour, T>::value)
+	if (!std::is_base_of<Component, T>::value || std::is_abstract<T>::value)
 	{
 		printf("Error, selected class is not allowed!");
 	}

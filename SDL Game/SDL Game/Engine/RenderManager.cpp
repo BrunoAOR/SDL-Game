@@ -29,7 +29,10 @@ void RenderManager::update()
 		{
 			if (go->isActive())
 			{
-				go->texture->render(&(go->transform));
+				if (auto sharedTransform = go->transform.lock())
+				{
+					go->texture->render(sharedTransform.get());
+				}
 			}
 		}
 	}

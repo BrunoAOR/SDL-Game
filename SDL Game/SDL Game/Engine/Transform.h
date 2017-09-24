@@ -1,11 +1,14 @@
 #pragma once
 
+#include "Component.h"
+
+#include <memory>
 #include "Vector2.h"
 
 
-class Transform
+class Transform final :
+	public Component
 {
-
 	friend class GameObject;
 public:	
 	Transform();
@@ -31,13 +34,21 @@ public:
 	// Helper methods
 	Vector2 localToWorldPosition(const Vector2& localPosition) const;
 	Vector2 worldToLocalPosition(const Vector2& worldPosition) const;
+	double localToWorldRotation(double localRotation) const;
+	double worldToLocalRotation(double worldRotation) const;
+	Vector2 localToWorldScale(const Vector2& localScale) const;
+	Vector2 worldToLocalScale(const Vector2& worldScale) const;
 
-private:	
+private:
 	Vector2 m_localPosition;
 	double m_localRotation;
 	Vector2 m_localScale;
 
 	Transform* m_parentTransform;
+
 	void setParent(Transform* parent);
 
+	// These declarations are here just to hide the inheritted members functions from Component
+	void setActive(bool activeState);
+	bool isActive();
 };

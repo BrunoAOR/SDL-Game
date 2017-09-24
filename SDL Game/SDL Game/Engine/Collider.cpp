@@ -14,14 +14,14 @@ Collider::~Collider()
 
 Vector2 Collider::getWorldPosition()
 {
-	Transform& transform = gameObject()->transform;
-	Vector2 transformPos = transform.getLocalPosition();
-	Vector2 worldPos = transform.getLocalPosition() + offset;
-	worldPos = transform.localToWorldPosition(worldPos);
+	auto transform = gameObject()->transform.lock();
+	Vector2 transformPos = transform->getLocalPosition();
+	Vector2 worldPos = transform->getLocalPosition() + offset;
+	worldPos = transform->localToWorldPosition(worldPos);
 	return worldPos;
 }
 
 double Collider::getWorldRotation()
 {
-	return gameObject()->transform.getWorldRotation();
+	return gameObject()->transform.lock()->getWorldRotation();
 }

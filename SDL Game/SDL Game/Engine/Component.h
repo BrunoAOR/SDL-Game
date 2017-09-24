@@ -7,7 +7,6 @@ class GameObject;
 class Component
 {
 	friend class ComponentsManager;
-
 public:
 	Component();
 	virtual ~Component() = 0;

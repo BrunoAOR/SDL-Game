@@ -2,7 +2,6 @@
 
 #define _USE_MATH_DEFINES
 #include <math.h>
-
 #include "constants.h"
 
 
@@ -24,7 +23,7 @@ Vector2 Transform::getLocalPosition() const
 
 Vector2 Transform::getWorldPosition() const
 {
-	return (localToWorldPosition(m_localPosition));
+	return localToWorldPosition(m_localPosition);
 }
 
 
@@ -61,18 +60,7 @@ double Transform::getLocalRotation() const
 
 double Transform::getWorldRotation() const
 {
-	if (m_parentTransform == nullptr)
-	{
-		return getLocalRotation();
-	}
-	else
-	{
-		// For rotation, one only needs to add the parent rotation
-		double worldRotation = m_localRotation + m_parentTransform->getWorldRotation();
-		// Clamp between 0 and 360
-		worldRotation -= 360 * (int)(worldRotation / 360);
-		return (worldRotation);
-	}
+	return localToWorldRotation(m_localRotation);
 }
 
 
@@ -86,15 +74,7 @@ void Transform::setLocalRotation(double rotation)
 
 void Transform::setWorldRotation(double rotation)
 {
-	if (m_parentTransform == nullptr)
-	{
-		setLocalRotation(rotation);
-	}
-	else
-	{
-		m_localRotation = rotation - m_parentTransform->getWorldRotation();
-		m_localRotation -= 360 * (int)(m_localRotation / 360);
-	}
+	m_localRotation = worldToLocalRotation(rotation);
 }
 
 
@@ -106,19 +86,7 @@ Vector2 Transform::getLocalScale() const
 
 Vector2 Transform::getWorldScale() const
 {
-	if (m_parentTransform == nullptr)
-	{
-		return getLocalScale();
-	}
-	else
-	{
-		Vector2 worldScale;
-		Vector2 parentWorldScale = m_parentTransform->getWorldScale();
-		worldScale.x = m_localScale.x * parentWorldScale.x;
-		worldScale.y = m_localScale.y * parentWorldScale.y;
-		// For scale, one only needs to multiply the parent scale
-		return (worldScale);
-	}
+	return localToWorldScale(m_localScale);
 }
 
 
@@ -130,20 +98,7 @@ void Transform::setLocalScale(const Vector2& scale)
 
 void Transform::setWorldScale(const Vector2& scale)
 {
-	if (m_parentTransform == nullptr)
-	{
-		setLocalScale(scale);
-	}
-	else
-	{
-		Vector2 parentWorldScale = m_parentTransform->getWorldScale();
-		if (parentWorldScale.x == 0 || parentWorldScale.y == 0)
-		{
-			return;
-		}
-		m_localScale.x = scale.x / parentWorldScale.x;
-		m_localScale.y = scale.y / parentWorldScale.y;
-	}
+	m_localScale = worldToLocalScale(scale);
 }
 
 
@@ -219,17 +174,77 @@ Vector2 Transform::worldToLocalPosition(const Vector2 & worldPosition) const
 	}
 }
 
-void Transform::setParent(Transform * parent)
+double Transform::localToWorldRotation(double localRotation) const
 {
-	if (parent == nullptr)
+	if (m_parentTransform == nullptr)
 	{
-		// Set parent to world
-		m_parentTransform = nullptr;
+		return localRotation;
 	}
 	else
 	{
-		// Set parent to the supplied transform
-		m_parentTransform = parent;
+		// For rotation, one only needs to add the parent rotation
+		double worldRotation = localRotation + m_parentTransform->getWorldRotation();
+		// Clamp between 0 and 360
+		worldRotation -= 360 * (int)(worldRotation / 360);
+		return (worldRotation);
 	}
+}
+
+double Transform::worldToLocalRotation(double worldRotation) const
+{
+	if (m_parentTransform == nullptr)
+	{
+		return worldRotation;
+	}
+	else
+	{
+		double localRotation = worldRotation - m_parentTransform->getWorldRotation();
+		localRotation -= 360 * (int)(m_localRotation / 360);
+		return localRotation;
+	}
+}
+
+Vector2 Transform::localToWorldScale(const Vector2 & localScale) const
+{
+	if (m_parentTransform == nullptr)
+	{
+		return localScale;
+	}
+	else
+	{
+		Vector2 worldScale;
+		Vector2 parentWorldScale = m_parentTransform->getWorldScale();
+		worldScale.x = m_localScale.x * parentWorldScale.x;
+		worldScale.y = m_localScale.y * parentWorldScale.y;
+		// For scale, one only needs to multiply the parent scale
+		return (worldScale);
+	}
+}
+
+Vector2 Transform::worldToLocalScale(const Vector2 & worldScale) const
+{
+	if (m_parentTransform == nullptr)
+	{
+		return worldScale;
+	}
+	else
+	{
+		Vector2 localScale;
+		Vector2 parentWorldScale = m_parentTransform->getWorldScale();
+		if (parentWorldScale.x != 0)
+		{
+			localScale.x = worldScale.x / parentWorldScale.x;
+		}
+		if (parentWorldScale.y != 0)
+		{
+			localScale.y = worldScale.y / parentWorldScale.y;
+		}
+		return localScale;
+	}
+}
+
+void Transform::setParent(Transform * parent)
+{
+	m_parentTransform = parent;
 }
 

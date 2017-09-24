@@ -130,7 +130,7 @@ bool GameObject::setParent(std::weak_ptr<GameObject> parent)
 	else
 	{
 		m_parent = parent;
-		transform.m_parentTransform = &(parent.lock()->transform);
+		transform.lock()->m_parentTransform = parent.lock()->transform.lock().get();
 		return true;
 	}
 }
@@ -216,6 +216,8 @@ std::weak_ptr<GameObject> GameObject::createNew()
 		auto go = std::make_shared<GameObject>();
 		GameObjectsManager::addGameObject(go);
 		go->m_self = go;
+		// Add and setup transform
+		go->transform = go->addComponent<Transform>();
 		weakGo = go;
 	}
 	return weakGo;

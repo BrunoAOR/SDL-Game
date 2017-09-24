@@ -39,9 +39,9 @@ bool TestScene::load()
 	auto crosshairGO = weakCrosshairGO.lock();
 	if (crosshairGO)
 	{
-		crosshairGO->transform.setWorldPosition({ 200, 200 });
-		crosshairGO->transform.setWorldRotation(45.0);
-		crosshairGO->transform.setWorldScale({ 1.5, 1.5 });
+		crosshairGO->transform.lock()->setWorldPosition({ 200, 200 });
+		crosshairGO->transform.lock()->setWorldRotation(45.0);
+		crosshairGO->transform.lock()->setWorldScale({ 1.5, 1.5 });
 		success &= !(crosshairGO->addComponent<Crosshair>().expired());
 		success &= !(crosshairGO->addComponent<BehaviourToRemove>().expired());
 		//crosshairGO->addBehaviour(new Crosshair2(crosshairGO));
@@ -62,7 +62,7 @@ bool TestScene::load()
 	auto crosshair2GO = weakCrosshair2GO.lock();
 	if (crosshair2GO)
 	{
-		crosshair2GO->transform.setWorldPosition({ constants::SCREEN_WIDTH - 200, 200 });
+		crosshair2GO->transform.lock()->setWorldPosition({ constants::SCREEN_WIDTH - 200, 200 });
 		success &= !(crosshair2GO->addComponent<Crosshair2>().expired());
 		if (!crosshair2GO->addTexture("assets/Crosshair.png"))
 		{
@@ -88,7 +88,7 @@ bool TestScene::load()
 		}
 
 		success &= !(coloredGO->addComponent<ColorChanger>().expired());
-		coloredGO->transform.setWorldPosition(
+		coloredGO->transform.lock()->setWorldPosition(
 		{ 
 			(float)(constants::SCREEN_WIDTH - coloredGO->texture->getWidth()) / 2,
 			(float)(constants::SCREEN_HEIGHT - coloredGO->texture->getHeight()) 

@@ -52,9 +52,10 @@ void Mover::update()
 		motion.x *= speed * elapsedSeconds;
 		motion.y *= speed * elapsedSeconds;
 
-		Vector2 currentPos = gameObject()->transform.getLocalPosition();
+		auto transform = gameObject()->transform.lock();
+		Vector2 currentPos = transform->getLocalPosition();
 		Vector2 targetPos = currentPos + motion;
-		gameObject()->transform.setLocalPosition(targetPos);
+		transform->setLocalPosition(targetPos);
 	}
 }
 

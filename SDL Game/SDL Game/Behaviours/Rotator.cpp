@@ -5,7 +5,7 @@
 
 void Rotator::update()
 {
-	double rotation = gameObject()->transform.getLocalRotation();
+	double rotation = gameObject()->transform.lock()->getLocalRotation();
 	double rotStep = 15;
 	if (Input::getKeyDown(SDL_SCANCODE_R))
 	{
@@ -17,5 +17,5 @@ void Rotator::update()
 		rotation -= rotStep;
 		printf("Rotation: %2.0f\n", rotation);
 	}
-	gameObject()->transform.setLocalRotation(rotation);
+	gameObject()->transform.lock()->setLocalRotation(rotation);
 }

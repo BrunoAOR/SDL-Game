@@ -122,10 +122,10 @@ void Pivotter::update()
 void Pivotter::updateGO()
 {
 	auto go = gameObject();
-
-	go->transform.setLocalPosition(position);
-	go->transform.setLocalRotation(rotation);
-	go->transform.setLocalScale(scale);
+	auto transform = go->transform.lock();
+	transform->setLocalPosition(position);
+	transform->setLocalRotation(rotation);
+	transform->setLocalScale(scale);
 	go->texture->setPositionPivot(positionPivot);
 	go->texture->setRotationPivot(rotationPivot);
 	go->texture->setScalePivot(scalePivot);

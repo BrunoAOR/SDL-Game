@@ -280,24 +280,24 @@ void CollidersManager::resolveCollision(CircleCollider& circColl1, const Vector2
 	{
 		// Only circColl1's gameObject is pushed
 		Vector2 targetPos = pos1 + moveVector - circColl1.offset;
-		circColl1.gameObject()->transform.setWorldPosition(targetPos);
+		circColl1.gameObject()->transform.lock()->setWorldPosition(targetPos);
 	}
 	else if (circColl1.isStatic && !circColl2.isStatic)
 	{
 		// Only circColl2's gameObject is pushed
 		moveVector = -moveVector;	// Invert the vector to clear rectColl2 away from rectColl1
 		Vector2 targetPos = pos2 + moveVector - circColl2.offset;
-		circColl2.gameObject()->transform.setWorldPosition(targetPos);
+		circColl2.gameObject()->transform.lock()->setWorldPosition(targetPos);
 	}
 	else {	// So neither circColl1, nor circColl2 are static (both can't be static because this function would have never been called
 		// Both  circColl1's gameObject and circColl1's gameObject are pushed
 		
 		// Move circColl1 away
 		Vector2 targetPos1 = pos1 + moveVector / 2 - circColl1.offset;
-		circColl1.gameObject()->transform.setWorldPosition(targetPos1);
+		circColl1.gameObject()->transform.lock()->setWorldPosition(targetPos1);
 		// Move circColl2 away
 		Vector2 targetPos2 = pos2 + -moveVector / 2 - circColl2.offset;
-		circColl2.gameObject()->transform.setWorldPosition(targetPos2);
+		circColl2.gameObject()->transform.lock()->setWorldPosition(targetPos2);
 	}
 }
 
@@ -319,24 +319,24 @@ void CollidersManager::resolveCollision(RectangleCollider & rectColl1, Rectangle
 	{
 		// Only rectColl1's gameObject is pushed
 		Vector2 targetPos = pos1 + penetrationVector - rectColl1.offset;
-		rectColl1.gameObject()->transform.setWorldPosition(targetPos);
+		rectColl1.gameObject()->transform.lock()->setWorldPosition(targetPos);
 	}
 	else if (rectColl1.isStatic && !rectColl2.isStatic)
 	{
 		// Only rectColl2's gameObject is pushed
 		// Invert the vector to clear rectColl2 away from rectColl1
 		Vector2 targetPos = pos2 + -penetrationVector - rectColl2.offset;
-		rectColl2.gameObject()->transform.setWorldPosition(targetPos);
+		rectColl2.gameObject()->transform.lock()->setWorldPosition(targetPos);
 	}
 	else {	// So neither rectColl1, nor rectColl2 are static (both can't be static because this function would have never been called
 		// Both  rectColl1's gameObject and rectColl1's gameObject are pushed
 
 		// Move rectColl1 away
 		Vector2 targetPos1 = pos1 + penetrationVector / 2 - rectColl1.offset;
-		rectColl1.gameObject()->transform.setWorldPosition(targetPos1);
+		rectColl1.gameObject()->transform.lock()->setWorldPosition(targetPos1);
 		// Move rectColl2 away
 		Vector2 targetPos2 = pos2 + -penetrationVector / 2 - rectColl2.offset;
-		rectColl2.gameObject()->transform.setWorldPosition(targetPos2);
+		rectColl2.gameObject()->transform.lock()->setWorldPosition(targetPos2);
 	}
 
 }
@@ -348,23 +348,23 @@ void CollidersManager::resolveCollision(CircleCollider & circColl, const Vector2
 	{
 		// Only circColl's gameObject is pushed
 		Vector2 targetPos = pos1 + penetrationVector - circColl.offset;
-		circColl.gameObject()->transform.setWorldPosition(targetPos);
+		circColl.gameObject()->transform.lock()->setWorldPosition(targetPos);
 	}
 	else if (circColl.isStatic && !rectColl.isStatic)
 	{
 		// Only rectColl's gameObject is pushed
 		Vector2 targetPos = pos2 + -penetrationVector - rectColl.offset;
-		rectColl.gameObject()->transform.setWorldPosition(targetPos);
+		rectColl.gameObject()->transform.lock()->setWorldPosition(targetPos);
 	}
 	else {	// So neither circColl, nor rectColl are static (both can't be static because this function would have never been called
 			// Both  circColl's gameObject and rectColl's gameObject are pushed
 
 			// Move rectColl1 away
 		Vector2 targetPos1 = pos1 + penetrationVector / 2 - circColl.offset;
-		circColl.gameObject()->transform.setWorldPosition(targetPos1);
+		circColl.gameObject()->transform.lock()->setWorldPosition(targetPos1);
 		// Move rectColl2 away
 		Vector2 targetPos2 = pos2 + -penetrationVector / 2 - rectColl.offset;
-		rectColl.gameObject()->transform.setWorldPosition(targetPos2);
+		rectColl.gameObject()->transform.lock()->setWorldPosition(targetPos2);
 	}
 
 }
