@@ -141,6 +141,12 @@
     <ClCompile Include="Engine\RectangleCollider.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Scenes\ParentSwitchScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Behaviours\ParentSwitcher.cpp">
+      <Filter>Behaviours</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Behaviour.h">
@@ -262,6 +268,12 @@
     </ClInclude>
     <ClInclude Include="Engine\CollidersManager.h">
       <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\ParentSwitchScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Behaviours\ParentSwitcher.h">
+      <Filter>Behaviours</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

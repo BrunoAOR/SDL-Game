@@ -8,21 +8,23 @@
 
 bool TransformPivotScene::load()
 {
-	auto squareGO = GameObject::createNew();
-	squareGO.lock()->addTexture("assets/Square.png");
-	squareGO.lock()->addComponent<Pivotter>();
-	squareGO.lock()->addComponent<SceneChanger>();
+	auto squareGO = GameObject::createNew().lock();
 	
-	auto childSquareGO = GameObject::createNew();
-	childSquareGO.lock()->addTexture("assets/Square.png");
-	childSquareGO.lock()->setParent(squareGO);
-	childSquareGO.lock()->transform.lock()->setLocalPosition(Vector2(100, 0));
-	childSquareGO.lock()->addComponent<Rotator>();
+	squareGO->addTexture("assets/Square.png");
+	squareGO->addComponent<Pivotter>();
+	squareGO->addComponent<SceneChanger>();
+	squareGO->transform.lock()->setLocalPosition(Vector2(100, 100));
+	
+	auto childSquareGO = GameObject::createNew().lock();
+	childSquareGO->addTexture("assets/Square.png");
+	childSquareGO->transform.lock()->setParent(squareGO->transform);
+	childSquareGO->transform.lock()->setLocalPosition(Vector2(100, 0));
+	childSquareGO->addComponent<Rotator>();
 
-	auto child2SquareGO = GameObject::createNew();
-	child2SquareGO.lock()->addTexture("assets/Square.png");
-	child2SquareGO.lock()->setParent(childSquareGO);
-	child2SquareGO.lock()->transform.lock()->setLocalPosition(Vector2(100, 0));
+	auto child2SquareGO = GameObject::createNew().lock();
+	child2SquareGO->addTexture("assets/Square.png");
+	child2SquareGO->transform.lock()->setParent(childSquareGO->transform);
+	child2SquareGO->transform.lock()->setLocalPosition(Vector2(100, 0));
 	return true;
 }
 

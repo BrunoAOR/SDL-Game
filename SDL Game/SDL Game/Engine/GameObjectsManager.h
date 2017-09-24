@@ -4,6 +4,7 @@
 #include <vector>
 
 class GameObject;
+class Transform;
 
 
 class GameObjectsManager
@@ -23,6 +24,6 @@ private:
 	static void refreshGameObjects();
 	static void doAddGameObject(std::shared_ptr<GameObject> gameObject);
 	static void doDestroyGameObject(std::weak_ptr<GameObject> gameObject);
-	static void doDestroyChildren(std::weak_ptr<GameObject> parentGameObject);
+	static void doDestroyChildren(Transform* transform);
 };
 

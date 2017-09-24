@@ -34,10 +34,6 @@ public:
 	template<typename T>
 	std::weak_ptr<T> getComponent();
 
-	// GameObjects hierarchy (parenting) related
-	bool setParent(std::weak_ptr<GameObject> parent);
-	bool removeParent();
-
 	// On/Off switch
 	void setActive(bool activeState);
 	bool isActive();
@@ -62,13 +58,6 @@ private:
 	bool m_isActive;
 	std::weak_ptr<GameObject> m_self;
 
-	// GameObjects hierarchy related
-	std::weak_ptr<GameObject> m_parent;
-	std::vector<std::weak_ptr<GameObject>> m_children;
-
-	bool addChild(std::weak_ptr<GameObject> child);
-	bool removeChild(std::weak_ptr<GameObject> child);
-	bool isGameObjectInChildrenHierarchy(std::weak_ptr<GameObject> gameObject);
 
 	// Components/Behaviours related
 	std::vector<std::shared_ptr<Component>> m_components;

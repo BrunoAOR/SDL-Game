@@ -3,13 +3,14 @@
 #include "Component.h"
 
 #include <memory>
+#include <vector>
 #include "Vector2.h"
 
 
 class Transform final :
 	public Component
 {
-	friend class GameObject;
+	friend class GameObjectsManager;
 public:	
 	Transform();
 
@@ -39,16 +40,33 @@ public:
 	Vector2 localToWorldScale(const Vector2& localScale) const;
 	Vector2 worldToLocalScale(const Vector2& worldScale) const;
 
+	// Hierarchy related
+	bool setParent(std::weak_ptr<Transform> parent);
+	void removeParent();
+
 private:
 	Vector2 m_localPosition;
 	double m_localRotation;
 	Vector2 m_localScale;
+	
+	Vector2 m_worldPosition;
+	double m_worldRotation;
+	Vector2 m_worldScale;
 
+	// Hierarchy related
 	Transform* m_parentTransform;
+	std::vector<Transform*> m_children;
 
-	void setParent(Transform* parent);
+	bool addChild(Transform* childTransform);
+	bool removeChild(Transform* childTransform);
+	bool isTransformInChildrenHierarchy(Transform* transform);
 
-	// These declarations are here just to hide the inheritted members functions from Component
+	void updateLocalFields();
+	void updateWorldFields();
+	void updateChildrenLocalFields();
+	void updateChildrenWorldFields();
+
+	// Hiding inherited members from Component
 	void setActive(bool activeState);
 	bool isActive();
 };

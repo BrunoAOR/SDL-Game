@@ -51,6 +51,8 @@
     <ClCompile Include="Behaviours\SpawnedCrosshair.cpp" />
     <ClCompile Include="Behaviours\Spawner.cpp" />
     <ClCompile Include="Behaviours\Mover.cpp" />
+    <ClCompile Include="Behaviours\ParentSwitcher.cpp" />
+    <ClCompile Include="Scenes\ParentSwitchScene.cpp" />
     <ClCompile Include="Scenes\CollidersScene.cpp" />
     <ClCompile Include="Scenes\TestScene.cpp" />
     <ClCompile Include="Scenes\TestScene2.cpp" />
@@ -93,6 +95,8 @@
     <ClInclude Include="Behaviours\SpawnedCrosshair.h" />
     <ClInclude Include="Behaviours\Spawner.h" />
     <ClInclude Include="Behaviours\Mover.h" />
+    <ClInclude Include="Behaviours\ParentSwitcher.h" />
+    <ClInclude Include="Scenes\ParentSwitchScene.h" />
     <ClInclude Include="Scenes\CollidersScene.h" />
     <ClInclude Include="Scenes\TestScene.h" />
     <ClInclude Include="Scenes\TestScene2.h" />

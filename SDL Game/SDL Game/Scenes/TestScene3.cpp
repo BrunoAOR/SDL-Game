@@ -11,28 +11,28 @@ bool TestScene3::load()
 	// Success flag
 	bool success = true;
 
-	auto parentGO = GameObject::createNew();
-	parentGO.lock()->addComponent<GOKiller>();
-	parentGO.lock()->addComponent<SceneChanger>();
+	auto parentGO = GameObject::createNew().lock();
+	parentGO->addComponent<SceneChanger>();
 
-	auto child1 = GameObject::createNew();
-	child1.lock()->setParent(parentGO);
+	auto child1 = GameObject::createNew().lock();
+	child1->transform.lock()->setParent(parentGO->transform);
 	
-	auto child2 = GameObject::createNew();
-	child2.lock()->setParent(parentGO);
+	auto child2 = GameObject::createNew().lock();
+	child2->transform.lock()->setParent(parentGO->transform);
 
-	auto child11 = GameObject::createNew();
-	child11.lock()->setParent(child1);
+	auto child11 = GameObject::createNew().lock();
+	child11->transform.lock()->setParent(child1->transform);
 
-	auto child12 = GameObject::createNew();
-	child12.lock()->setParent(child1);
+	auto child12 = GameObject::createNew().lock();
+	child12->transform.lock()->setParent(child1->transform);
 	
-	auto child21 = GameObject::createNew();
-	child21.lock()->setParent(child2);
+	auto child21 = GameObject::createNew().lock();
+	child21->transform.lock()->setParent(child2->transform);
 
-	success = child1.lock()->setParent(child21);
-	auto GO = parentGO.lock();
+	//success = child1->transform.lock()->setParent(child21->transform);
 
+	child1->addComponent<GOKiller>();
+	printf("Scene loaded\n");
 	return success;
 }
 

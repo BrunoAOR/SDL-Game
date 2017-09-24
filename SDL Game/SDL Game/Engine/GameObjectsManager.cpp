@@ -3,6 +3,7 @@
 #include "EngineUtils.h"
 #include "GameObject.h"
 #include "Behaviour.h"
+#include "Transform.h"
 
 std::vector<std::shared_ptr<GameObject>> GameObjectsManager::m_gameObjects;
 std::vector<std::shared_ptr<GameObject>> GameObjectsManager::m_gosToAdd;
@@ -78,30 +79,36 @@ void GameObjectsManager::doAddGameObject(std::shared_ptr<GameObject> gameObject)
 
 void GameObjectsManager::doDestroyGameObject(std::weak_ptr<GameObject> gameObject)
 {
-	int index = EngineUtils::indexOf(m_gameObjects, gameObject.lock());
-	if (index != -1) {
-		// So, the gameObject is in the gameObjects vector
-		// Destroy children first
-		doDestroyChildren(gameObject);
-		m_gameObjects.erase(m_gameObjects.begin() + index);
+	if (auto go = gameObject.lock())
+	{
+		int index = EngineUtils::indexOf(m_gameObjects, go);
+		if (index != -1) {
+			// So, the gameObject is in the gameObjects vector
+			// Destroy children first
+			if (auto go = gameObject.lock())
+			{
+				doDestroyChildren(gameObject.lock()->transform.lock().get());
+			}
+			// Now find the updated index, since destroying the children has modified the actual index
+			int newIndex = EngineUtils::indexOf(m_gameObjects, go);
+			m_gameObjects.erase(m_gameObjects.begin() + newIndex);
+		}
 	}
 }
 
-void GameObjectsManager::doDestroyChildren(std::weak_ptr<GameObject> parentGameObject)
+void GameObjectsManager::doDestroyChildren(Transform* parentTransform)
 {
-	for (auto weakChildGO : parentGameObject.lock()->m_children)
+	auto go = parentTransform->gameObject().get();
+	for (Transform* childTransform : parentTransform->m_children)
 	{
-		if (auto childGO = weakChildGO.lock())
-		{
-			doDestroyChildren(weakChildGO);
-			int index = EngineUtils::indexOf(m_gameObjects, childGO);
-			if (index != -1) {
-				// So, the gameObject is in the gameObjects vector
-				m_gameObjects.erase(m_gameObjects.begin() + index);
-			}
+		doDestroyChildren(childTransform);
+		int index = EngineUtils::indexOf(m_gameObjects, childTransform->gameObject());
+		if (index != -1) {
+			// So, the gameObject is in the gameObjects vector
+			m_gameObjects.erase(m_gameObjects.begin() + index);
 		}
-
 	}
+
 }
 
 
