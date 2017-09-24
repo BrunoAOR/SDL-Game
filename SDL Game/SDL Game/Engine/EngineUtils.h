@@ -8,7 +8,9 @@
 class EngineUtils
 {
 public:
+	static void swapValues(double& a, double& b);
 	static bool inRange(double value, double a, double b);
+	static double getRangesSeparationDistance(double aMin, double aMax, double bMin, double bMax);
 	static double clamp(double value, double a, double b);
 	static bool isPointInRect(const Vector2& rectCenter, const Vector2& rectSize, const Vector2& point);
 	static Vector2 closestPointOnOrientedRectFromPoint(const Vector2& rectCenter, const Vector2& rectSize, const Vector2& point);

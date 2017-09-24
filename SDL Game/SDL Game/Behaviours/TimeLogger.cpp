@@ -4,7 +4,7 @@
 
 void TimeLogger::start()
 {
-	m_logInterval = 200;
+	m_logInterval = 50;
 	m_elapsedInterval = 0;
 }
 

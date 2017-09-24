@@ -7,14 +7,34 @@ EngineUtils::EngineUtils()
 }
 
 
+void EngineUtils::swapValues(double & a, double & b)
+{
+	double temp = a;
+	a = b;
+	b = temp;
+}
+
 bool EngineUtils::inRange(double value, double a, double b)
 {
 	if (a > b) {
-		double temp = a;
-		a = b;
-		b = temp;
+		swapValues(a, b);
 	}
 	return (value >= a && value <= b);
+}
+
+double EngineUtils::getRangesSeparationDistance(double aMin, double aMax, double bMin, double bMax)
+{
+	if (aMin > aMax)
+	{
+		swapValues(aMin, aMax);
+	}
+	if (bMin > bMax)
+	{
+		swapValues(bMin, bMax);
+	}
+
+	return fmax(bMin - aMax, aMin - bMax);
+
 }
 
 double EngineUtils::clamp(double value, double a, double b)
@@ -24,9 +44,7 @@ double EngineUtils::clamp(double value, double a, double b)
 		return a;
 	}
 	if (a > b) {
-		double temp = a;
-		a = b;
-		b = temp;
+		swapValues(a, b);
 	}
 	if (value < a)
 	{
@@ -58,9 +76,7 @@ Vector2 EngineUtils::closestPointOnOrientedRectFromPoint(const Vector2& rectCent
 
 	if (rectMinX > rectMaxX)
 	{
-		double temp = rectMinX;
-		rectMinX = rectMaxX;
-		rectMaxX = temp;
+		swapValues(rectMinX, rectMaxX);
 	}
 
 	double rectMinY = rectCenter.y - rectSize.y / 2;
@@ -68,9 +84,7 @@ Vector2 EngineUtils::closestPointOnOrientedRectFromPoint(const Vector2& rectCent
 
 	if (rectMinY > rectMaxY)
 	{
-		double temp = rectMinY;
-		rectMinY = rectMaxY;
-		rectMaxY = temp;
+		swapValues(rectMinY, rectMaxY);
 	}
 
 	Vector2 closestPoint(clamp(point.x, rectMinX, rectMaxX), clamp(point.y, rectMinY, rectMaxY));

@@ -67,7 +67,7 @@ void CollidersManager::update()
 	if (prevCount != count)
 	{
 		prevCount = count;
-		printf("Colliders found: %i\n", count);
+		//printf("Colliders found: %i\n", count);
 	}
 }
 
@@ -108,7 +108,7 @@ bool CollidersManager::hasCollision(Collider* coll1, Collider* coll2)
 
 	if (collisionOccured)
 	{
-		informCollision(coll1, coll2);
+		//informCollision(coll1, coll2);
 	}
 	return collisionOccured;
 }
@@ -133,34 +133,95 @@ bool CollidersManager::hasCollision(CircleCollider & circColl1, CircleCollider &
 
 bool CollidersManager::hasCollision(RectangleCollider & rectColl1, RectangleCollider & rectColl2)
 {
-	// rectColl1
-	Vector2 pos1 = rectColl1.getWorldPosition();
-
-	double xMin1 = pos1.x - rectColl1.size.x / 2;
-	double xMax1 = xMin1 + rectColl1.size.x;
-	double yMin1 = pos1.y - rectColl1.size.y / 2;
-	double yMax1 = yMin1 + rectColl1.size.y;
-
-	// rectColl2
-	Vector2 pos2 = rectColl2.getWorldPosition();
-
-	double xMin2 = pos2.x - rectColl2.size.x / 2;
-	double xMax2 = xMin2 + rectColl2.size.x;
-	double yMin2 = pos2.y - rectColl2.size.y / 2;
-	double yMax2 = yMin2 + rectColl2.size.y;
-
-	// penetration calculation
-	double xPenetration = fmin(xMax1, xMax2) - fmax(xMin1, xMin2);
-	double yPenetration = fmin(yMax1, yMax2) - fmax(yMin1, yMin2);
-
-	if (xPenetration > MinPenetration && yPenetration > MinPenetration)
+	// First, we get the normals from the rectColls.
+	// Only the first 2 normals are needed for each rect, since the other two are the same but in opposite direction
+	// Special case: if the rotation of both rectangle is the same, then only the first 2 normals of either rectColl are required
+	if (rectColl1.gameObject()->m_id == 1 || rectColl2.gameObject()->m_id == 1) {
+		rectColl1.size = rectColl1.size;
+	}
+	std::vector<Vector2> selectedNormals;
+	if (rectColl1.getWorldRotation() == rectColl2.getWorldRotation())
 	{
-		printf("Rect on Rect: contanct x:%f, y:%f\n", xPenetration, yPenetration);
-		resolveCollision(rectColl1, pos1, rectColl2, pos2, xPenetration, yPenetration);
-		return true;
+		auto r1Normals = rectColl1.getOuterNormals();
+		selectedNormals = { r1Normals[0], r1Normals[1]};
+	}
+	else
+	{
+		auto r1Normals = rectColl1.getOuterNormals();
+		auto r2Normals = rectColl2.getOuterNormals();
+		selectedNormals = { r1Normals[0], r1Normals[1], r2Normals[0], r2Normals[1] };
 	}
 
-	return false;
+	// Now we need iterate through the selectedNormals projecting the rects' corners onto the normal and recording the smallest overlap found
+	// 1. Get the corners for both rects
+	auto r1Corners = rectColl1.getWorldCorners();
+	auto r2Corners = rectColl2.getWorldCorners();
+
+	// 2. Create variables to store the smallest overlap vector and direction (stored separate to easily compare the length)
+	double minOverlapLength = std::numeric_limits<double>::max();
+	Vector2 minOverlapDirection;
+
+	// 3. Now we iterate
+	for (unsigned int i = 0; i < selectedNormals.size(); ++i)
+	{
+		// 1. Get the Normal unit vector
+		Vector2 normalUnitVector = selectedNormals[i].normalized();
+
+		// 2. Find the min and max corner projections for r1 and r2
+		// For r1
+		double r1Min = std::numeric_limits<double>::max();
+		double r1Max = std::numeric_limits<double>::lowest();
+		// For r2
+		double r2Min = std::numeric_limits<double>::max();
+		double r2Max = std::numeric_limits<double>::lowest();
+
+		for (int c = 0; c < 4; ++c)
+		{
+			// r1
+			double currentR1Projection = Vector2::dot(r1Corners[c], normalUnitVector);
+			
+			if (currentR1Projection < r1Min)
+			{
+				r1Min = currentR1Projection;
+			}
+			if (currentR1Projection > r1Max)
+			{
+				r1Max = currentR1Projection;
+			}
+
+			// r2
+			double currentR2Projection = Vector2::dot(r2Corners[c], normalUnitVector);
+
+			if (currentR2Projection < r2Min)
+			{
+				r2Min = currentR2Projection;
+			}
+			if (currentR2Projection > r2Max)
+			{
+				r2Max = currentR2Projection;
+			}
+		}
+
+		// 3. Determine if there is an overlap. If there isn't, early exit and return false
+		double penetrationDistance = -EngineUtils::getRangesSeparationDistance(r1Min, r1Max, r2Min, r2Max);
+		if (penetrationDistance <= MinPenetration)
+		{
+			// So, no overlap in this axis
+			return false;
+		}
+		// So, there is overlap in this axis. Compare with cached minOverlap (turn projectionSeparation into a possitive value
+		else if (penetrationDistance < minOverlapLength)
+		{
+			minOverlapLength = penetrationDistance;
+			minOverlapDirection = normalUnitVector;
+		}
+		// And now we continue with the next test axis (next normal)
+	}
+
+	// If we got here, we have a minOverlapLength and Direction that can be used to resolve the collision
+	//printf("Rect on Rect: contanct penetrationDistance:%f\n", minOverlapLength);
+	resolveCollision(rectColl1, rectColl2, minOverlapLength * minOverlapDirection);
+	return true;
 }
 
 bool CollidersManager::hasCollision(CircleCollider & circColl, RectangleCollider & rectColl)
@@ -240,63 +301,44 @@ void CollidersManager::resolveCollision(CircleCollider& circColl1, const Vector2
 	}
 }
 
-void CollidersManager::resolveCollision(RectangleCollider & rectColl1, const Vector2 & pos1, RectangleCollider & rectColl2, const Vector2 & pos2, double xPenetration, double yPenetration)
-{
-	// First, get the vector to move rectColl1 away from rectColl2
-	Vector2 moveVector((pos1.x - pos2.x), (pos1.y - pos2.y));
-	if (pos1.x - pos2.x != 0)
-	{
-		moveVector.x /= abs(pos1.x - pos2.x);
-	}
-	if (pos1.y - pos2.y != 0)
-	{
-		moveVector.y /= abs(pos1.y - pos2.y);
-	}
-	// Next, scale each coordinate to clear the overlap
-	moveVector.x *= xPenetration;
-	moveVector.y *= yPenetration;
-	
-	// Now, remove the smallest coordinate
-	if (xPenetration <= yPenetration)
-	{
-		moveVector.y = 0;
-	}
-	else
-	{
-		moveVector.x = 0;
-	}
 
-	// Fix for complete overlap (just push along y axis)
-	if (moveVector.x == 0 && moveVector.y == 0)
+void CollidersManager::resolveCollision(RectangleCollider & rectColl1, RectangleCollider & rectColl2, Vector2 & penetrationVector)
+{
+	Vector2 pos1 = rectColl1.getWorldPosition();
+	Vector2 pos2 = rectColl2.getWorldPosition();
+
+	// Ensure penetrationVector is aligned so that r1 is pulled away from r2
+	if (Vector2::dot(pos1 - pos2, penetrationVector) < 0)
 	{
-		moveVector.x = 0;
-		moveVector.y = yPenetration;
+		// So they point in 'opposite' direction (angle between them is over 90 degrees)
+		penetrationVector *= -1;
 	}
 
 	// Now, define which rectColl has to move (see isStatic) and move only in the shortest direction
 	if (!rectColl1.isStatic && rectColl2.isStatic)
 	{
 		// Only rectColl1's gameObject is pushed
-		Vector2 targetPos = pos1 + moveVector - rectColl1.offset;
+		Vector2 targetPos = pos1 + penetrationVector - rectColl1.offset;
 		rectColl1.gameObject()->transform.setWorldPosition(targetPos);
 	}
 	else if (rectColl1.isStatic && !rectColl2.isStatic)
 	{
 		// Only rectColl2's gameObject is pushed
-		moveVector = -moveVector;	// Invert the vector to clear rectColl2 away from rectColl1
-		Vector2 targetPos = pos2 + moveVector - rectColl2.offset;
+		// Invert the vector to clear rectColl2 away from rectColl1
+		Vector2 targetPos = pos2 + -penetrationVector - rectColl2.offset;
 		rectColl2.gameObject()->transform.setWorldPosition(targetPos);
 	}
 	else {	// So neither rectColl1, nor rectColl2 are static (both can't be static because this function would have never been called
 		// Both  rectColl1's gameObject and rectColl1's gameObject are pushed
 
 		// Move rectColl1 away
-		Vector2 targetPos1 = pos1 + moveVector / 2 - rectColl1.offset;
+		Vector2 targetPos1 = pos1 + penetrationVector / 2 - rectColl1.offset;
 		rectColl1.gameObject()->transform.setWorldPosition(targetPos1);
 		// Move rectColl2 away
-		Vector2 targetPos2 = pos2 + -moveVector / 2 - rectColl2.offset;
+		Vector2 targetPos2 = pos2 + -penetrationVector / 2 - rectColl2.offset;
 		rectColl2.gameObject()->transform.setWorldPosition(targetPos2);
 	}
+
 }
 
 void CollidersManager::resolveCollision(CircleCollider & circColl, const Vector2 & pos1, RectangleCollider & rectColl, const Vector2 & pos2, const Vector2 & penetrationVector)

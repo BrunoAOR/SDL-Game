@@ -14,6 +14,7 @@ public:
 	virtual ~Collider() = 0;
 
 	Vector2 getWorldPosition();
+	double getWorldRotation();
 
 	Vector2 offset;
 	bool isStatic;

@@ -8,6 +8,7 @@
 #include "Behaviours/TimeLogger.h"
 #include "Engine/CircleCollider.h"
 #include "Engine/RectangleCollider.h"
+#include "Behaviours/Rotator.h"
 
 
 bool CollidersScene::load()
@@ -54,6 +55,7 @@ bool CollidersScene::load()
 		if (auto go = weakGO.lock())
 		{
 			go->addTexture("assets/Square.png");
+			go->addComponent<Rotator>();
 			//go->transform.setAllPivots(Vector2(0.5, 0));
 			go->transform.setLocalPosition(Vector2(700, 50));
 			auto weakColl = go->addComponent<RectangleCollider>();

@@ -31,4 +31,5 @@ public:
 	double y;
 
 	static double distance(const Vector2& lhs, const Vector2& rhs);
+	static double dot(const Vector2& lhs, const Vector2& rhs);
 };

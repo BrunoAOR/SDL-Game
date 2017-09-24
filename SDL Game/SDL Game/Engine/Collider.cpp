@@ -20,3 +20,8 @@ Vector2 Collider::getWorldPosition()
 	worldPos = transform.localToWorldPosition(worldPos);
 	return worldPos;
 }
+
+double Collider::getWorldRotation()
+{
+	return gameObject()->transform.getWorldRotation();
+}

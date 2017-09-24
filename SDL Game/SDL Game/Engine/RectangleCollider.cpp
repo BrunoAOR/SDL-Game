@@ -1,4 +1,7 @@
 #include "RectangleCollider.h"
+
+#define _USE_MATH_DEFINES
+#include <math.h>
 #include "GameObject.h"
 #include "Transform.h"
 
@@ -27,18 +30,14 @@ std::vector<Vector2> RectangleCollider::getWorldCorners()
 
 	// If it was empty, we recalculate the m_worldCorners
 
-	// Next, we update the cached position of the rectangle (center) and the transform's rotation
-	m_previousWorldPosition = getWorldPosition();
-	m_previousRotation = gameObject()->transform.getWorldRotation();
-
 	// In order to obtain the cornerVectors, we'll need to obtain them without rotation and then rotate them.
 	// To rotate the vectors counter-clockwise (CCW) by the worldRotation (from the transform)
 	// the following theorem is applied (for CCW rotation):
 	// x2 = x1 * cos(theta) - y1 * sin(theta)
 	// y2 = x1 * sin(theta) + y1 * cos(theta)
 	// So cache the resulting sin and cos values of the WorldRotation
-	double sinRot = sin(m_previousRotation);
-	double cosRot = cos(m_previousRotation);
+	double sinRot = sin(M_PI / 180 * m_previousRotation);
+	double cosRot = cos(M_PI / 180 * m_previousRotation);
 
 	// Now we create a std::vector to hold the unrotated centerToCorner vectors
 
@@ -54,10 +53,9 @@ std::vector<Vector2> RectangleCollider::getWorldCorners()
 	for (Vector2 centerToCornerVector : centerToCornerVectors)
 	{
 		// First, rotate it
-		centerToCornerVector.x = centerToCornerVector.x * cosRot - centerToCornerVector.y * sinRot;
-		centerToCornerVector.y = centerToCornerVector.x * sinRot + centerToCornerVector.y * cosRot;
+		Vector2 rotatedVector(centerToCornerVector.x * cosRot - centerToCornerVector.y * sinRot, centerToCornerVector.x * sinRot + centerToCornerVector.y * cosRot);
 		// Next calculate the cornerVector and add to the cache std::vector
-		m_worldCorners.push_back(m_previousWorldPosition + centerToCornerVector);
+		m_worldCorners.push_back(m_previousWorldPosition + rotatedVector);
 	}
 
 	return m_worldCorners;
@@ -87,7 +85,7 @@ std::vector<Vector2> RectangleCollider::getOuterNormals()
 	// So, we iterate through the corners
 	for (unsigned int i = 0; i < worldCorners.size(); ++i)
 	{
-		unsigned int iNext = i + 1 % worldCorners.size();
+		unsigned int iNext = (i + 1) % worldCorners.size();
 		Vector2 cornerToCornerVector = worldCorners[iNext] - worldCorners[i];
 		// The following theorem is applied (for CCW rotation):
 		// x2 = x1 * cos(theta) - y1 * sin(theta)
