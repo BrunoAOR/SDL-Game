@@ -30,17 +30,7 @@ std::vector<Vector2> RectangleCollider::getWorldCorners()
 
 	// If it was empty, we recalculate the m_worldCorners
 
-	// In order to obtain the cornerVectors, we'll need to obtain them without rotation and then rotate them.
-	// To rotate the vectors counter-clockwise (CCW) by the worldRotation (from the transform)
-	// the following theorem is applied (for CCW rotation):
-	// x2 = x1 * cos(theta) - y1 * sin(theta)
-	// y2 = x1 * sin(theta) + y1 * cos(theta)
-	// So cache the resulting sin and cos values of the WorldRotation
-	double sinRot = sin(M_PI / 180 * m_previousRotation);
-	double cosRot = cos(M_PI / 180 * m_previousRotation);
-
 	// Now we create a std::vector to hold the unrotated centerToCorner vectors
-
 	std::vector<Vector2> centerToCornerVectors =
 	{
 		Vector2(-size.x / 2, -size.y / 2),
@@ -53,9 +43,9 @@ std::vector<Vector2> RectangleCollider::getWorldCorners()
 	for (Vector2 centerToCornerVector : centerToCornerVectors)
 	{
 		// First, rotate it
-		Vector2 rotatedVector(centerToCornerVector.x * cosRot - centerToCornerVector.y * sinRot, centerToCornerVector.x * sinRot + centerToCornerVector.y * cosRot);
+		centerToCornerVector.rotateCCWDegrees(m_cachedRotation);
 		// Next calculate the cornerVector and add to the cache std::vector
-		m_worldCorners.push_back(m_previousWorldPosition + rotatedVector);
+		m_worldCorners.push_back(m_cachedWorldPosition + centerToCornerVector);
 	}
 
 	return m_worldCorners;
@@ -103,10 +93,10 @@ void RectangleCollider::checkCacheValidity()
 	auto transform = gameObject()->transform.lock();
 	Vector2 newPosition = transform->getWorldPosition();
 	double newRotation = transform->getWorldRotation();
-	if (m_previousWorldPosition != newPosition || m_previousRotation != newRotation)
+	if (m_cachedWorldPosition != newPosition || m_cachedRotation != newRotation)
 	{
-		m_previousWorldPosition = newPosition;
-		m_previousRotation = newRotation;
+		m_cachedWorldPosition = newPosition;
+		m_cachedRotation = newRotation;
 		m_worldCorners.clear();
 		m_outerNormals.clear();
 	}

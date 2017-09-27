@@ -1,4 +1,5 @@
 #include "Vector2.h"
+#define _USE_MATH_DEFINES
 #include <cmath>
 
 
@@ -40,6 +41,31 @@ void Vector2::normalize()
 	}
 	x /= length;
 	y /= length;
+}
+
+void Vector2::rotateCCWDegrees(double degrees)
+{
+	// To rotate a vector counter-clockwise (CCW) by an angle
+	// the following theorem is applied (for CCW rotation):
+	// x2 = x1 * cos(theta) - y1 * sin(theta)
+	// y2 = x1 * sin(theta) + y1 * cos(theta)
+	rotateCCWRadians(M_PI / 180 * degrees);
+}
+
+void Vector2::rotateCCWRadians(double radians)
+{
+	// To rotate a vector counter-clockwise (CCW) by an angle
+	// the following theorem is applied (for CCW rotation):
+	// x2 = x1 * cos(theta) - y1 * sin(theta)
+	// y2 = x1 * sin(theta) + y1 * cos(theta)
+	double sinRot = sin(radians);
+	double cosRot = cos(radians);
+
+	double oldX = x;
+	double oldY = y;
+
+	x = oldX * cosRot - oldY * sinRot;
+	y = oldX * sinRot + oldY * cosRot;
 }
 
 Vector2 & Vector2::operator+=(const Vector2 & rhs)

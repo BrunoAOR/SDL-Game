@@ -110,6 +110,9 @@
     <Image Include="assets\Square.png" />
     <Image Include="assets\Target.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="assets\ToDoList.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{17fc6cb7-6bcc-4683-910e-d58cfb74ba3e}</ProjectGuid>

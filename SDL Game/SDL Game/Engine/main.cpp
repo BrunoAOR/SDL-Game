@@ -113,7 +113,7 @@ bool setupScenes()
 	success &= SceneManager::addScene<TimeTesterScene>();
 	success &= SceneManager::addScene<CollidersScene>();
 	success &= SceneManager::addScene<ParentSwitchScene>();
-	SceneManager::loadScene(6);
+	SceneManager::loadScene(5);
 
 	return success;
 }

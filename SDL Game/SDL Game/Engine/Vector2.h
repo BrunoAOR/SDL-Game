@@ -11,6 +11,8 @@ public:
 	double getLengthSquared() const;
 	Vector2 normalized() const;
 	void normalize();
+	void rotateCCWDegrees(double degrees);
+	void rotateCCWRadians(double radians);
 
 	friend Vector2 operator- (const Vector2& v2);
 	friend Vector2 operator+ (Vector2 lhs, const Vector2& rhs);

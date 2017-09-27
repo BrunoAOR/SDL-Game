@@ -18,8 +18,8 @@ public:
 	Vector2 size;
 
 private:
-	Vector2 m_previousWorldPosition;
-	double m_previousRotation;
+	Vector2 m_cachedWorldPosition;
+	double m_cachedRotation;
 	std::vector<Vector2> m_worldCorners;
 	std::vector<Vector2> m_outerNormals;
 

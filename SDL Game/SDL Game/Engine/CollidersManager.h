@@ -28,7 +28,7 @@ private:
 
 	void resolveCollision(CircleCollider& circColl1, const Vector2& pos1, CircleCollider& circColl2, const Vector2& pos2, double penetrationDistance);
 	void resolveCollision(RectangleCollider& rectColl1, RectangleCollider& rectColl2, Vector2& penetrationVector);
-	void resolveCollision(CircleCollider& circColl, const Vector2& pos1, RectangleCollider& rectColl, const Vector2& pos2, const Vector2& penetrationVector);
+	void resolveCollision(CircleCollider& circColl, RectangleCollider& rectColl, const Vector2& penetrationVector);
 
 	void informCollision(Collider* coll1, Collider* coll2);
 };

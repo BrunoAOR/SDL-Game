@@ -219,41 +219,55 @@ bool CollidersManager::hasCollision(RectangleCollider & rectColl1, RectangleColl
 	}
 
 	// If we got here, we have a minOverlapLength and Direction that can be used to resolve the collision
-	//printf("Rect on Rect: contanct penetrationDistance:%f\n", minOverlapLength);
+	printf("Rect on Rect: contanct penetrationDistance:%f\n", minOverlapLength);
 	resolveCollision(rectColl1, rectColl2, minOverlapLength * minOverlapDirection);
 	return true;
 }
 
 bool CollidersManager::hasCollision(CircleCollider & circColl, RectangleCollider & rectColl)
 {
+	// To solve this collision with rotated rectangles, we'll temporarily place the circle as a child of the rectangle.
+	// In this way, the rectColl will be axis aligned in the reference system for the circle
+	// So locally, the rectangle would be possitioned at its offset and the circle would be positioned at its localPoisiton + offset
+
+	// Store the circ's previous parent and then change to the rect
+	auto circTransform = circColl.gameObject()->transform.lock();
+	auto originalCircParent = circTransform->getParent();
+	circTransform->setParent(rectColl.gameObject()->transform);
+
 	// circColl
-	Vector2 circPos = circColl.getWorldPosition();
+	Vector2 localCircPos = circColl.getLocalPosition();
 
 	// rectColl
-	Vector2 rectPos = rectColl.getWorldPosition();
+	Vector2 localRectPos = rectColl.offset;
 
-	Vector2 closestPointFromPointToRect = EngineUtils::closestPointOnOrientedRectFromPoint(rectPos, rectColl.size, circPos);
+	Vector2 closestPointFromPointToRect = EngineUtils::closestPointOnOrientedRectFromPoint(localRectPos, rectColl.size, localCircPos);
 
 	double penetrationDistance = 0;
 	Vector2 penetrationVector;
-	if (EngineUtils::isPointInRect(rectPos, rectColl.size, circPos))
+	if (EngineUtils::isPointInRect(localRectPos, rectColl.size, localCircPos))
 	{
-		penetrationVector = closestPointFromPointToRect - circPos;
+		penetrationVector = closestPointFromPointToRect - localCircPos;
 		penetrationDistance = circColl.radius + penetrationVector.getLength();
 	}
 	else
 	{
-		penetrationVector = circPos - closestPointFromPointToRect;
+		penetrationVector = localCircPos - closestPointFromPointToRect;
 		penetrationDistance = circColl.radius - penetrationVector.getLength();
 	}
 	penetrationVector.normalize();
 	penetrationVector *= penetrationDistance;
 	
+	// Now that all calculations are finished, readjust the penetrationVector for world space (rotation)
+	double worldRotOfRectSystem = circTransform->localToWorldRotation(0);
+	penetrationVector.rotateCCWDegrees(worldRotOfRectSystem);
+	// and return the circ's parent to its original parent
+	circTransform->setParent(originalCircParent);
 
 	if (penetrationDistance > MinPenetration)
 	{
-		printf("Circ on Rect: contact: %f\n", penetrationDistance);
-		resolveCollision(circColl, circPos, rectColl, rectPos, penetrationVector);
+		printf("Circ on Rect: contact: %f\n", penetrationDistance);		
+		resolveCollision(circColl, rectColl, penetrationVector);
 		return true;
 	}
 
@@ -301,7 +315,6 @@ void CollidersManager::resolveCollision(CircleCollider& circColl1, const Vector2
 	}
 }
 
-
 void CollidersManager::resolveCollision(RectangleCollider & rectColl1, RectangleCollider & rectColl2, Vector2 & penetrationVector)
 {
 	Vector2 pos1 = rectColl1.getWorldPosition();
@@ -341,29 +354,32 @@ void CollidersManager::resolveCollision(RectangleCollider & rectColl1, Rectangle
 
 }
 
-void CollidersManager::resolveCollision(CircleCollider & circColl, const Vector2 & pos1, RectangleCollider & rectColl, const Vector2 & pos2, const Vector2 & penetrationVector)
+void CollidersManager::resolveCollision(CircleCollider & circColl, RectangleCollider & rectColl, const Vector2 & penetrationVector)
 {
+	Vector2 circPos = circColl.getWorldPosition();
+	Vector2 rectPos = rectColl.getWorldPosition();
+
 	// Define which collider has to move (see isStatic) and move using the penetrationVector
 	if (!circColl.isStatic && rectColl.isStatic)
 	{
 		// Only circColl's gameObject is pushed
-		Vector2 targetPos = pos1 + penetrationVector - circColl.offset;
+		Vector2 targetPos = circPos + penetrationVector - circColl.offset;
 		circColl.gameObject()->transform.lock()->setWorldPosition(targetPos);
 	}
 	else if (circColl.isStatic && !rectColl.isStatic)
 	{
 		// Only rectColl's gameObject is pushed
-		Vector2 targetPos = pos2 + -penetrationVector - rectColl.offset;
+		Vector2 targetPos = rectPos + -penetrationVector - rectColl.offset;
 		rectColl.gameObject()->transform.lock()->setWorldPosition(targetPos);
 	}
 	else {	// So neither circColl, nor rectColl are static (both can't be static because this function would have never been called
 			// Both  circColl's gameObject and rectColl's gameObject are pushed
 
 			// Move rectColl1 away
-		Vector2 targetPos1 = pos1 + penetrationVector / 2 - circColl.offset;
+		Vector2 targetPos1 = circPos + penetrationVector / 2 - circColl.offset;
 		circColl.gameObject()->transform.lock()->setWorldPosition(targetPos1);
 		// Move rectColl2 away
-		Vector2 targetPos2 = pos2 + -penetrationVector / 2 - rectColl.offset;
+		Vector2 targetPos2 = rectPos + -penetrationVector / 2 - rectColl.offset;
 		rectColl.gameObject()->transform.lock()->setWorldPosition(targetPos2);
 	}
 

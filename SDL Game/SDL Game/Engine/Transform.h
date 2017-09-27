@@ -41,6 +41,7 @@ public:
 	Vector2 worldToLocalScale(const Vector2& worldScale) const;
 
 	// Hierarchy related
+	std::weak_ptr<Transform> getParent();
 	bool setParent(std::weak_ptr<Transform> parent);
 	void removeParent();
 
@@ -55,6 +56,7 @@ private:
 
 	// Hierarchy related
 	Transform* m_parentTransform;
+	std::weak_ptr<Transform> m_parentWeakPtr;
 	std::vector<Transform*> m_children;
 
 	bool addChild(Transform* childTransform);

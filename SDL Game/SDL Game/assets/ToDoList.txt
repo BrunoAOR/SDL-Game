@@ -1,0 +1,10 @@
+
+Stuff to do:
+
+* Consider creating a Wrapper template class to container std::weak_ptr<Component> for specific components
+	- Purpose: Have the addComponent and getComponent (as well as the transform member field in GameObject) return this wrapper
+	- Wrapper should have an implicit bool operator overload that returns !weak_ptr.expired, so the wrapper can be evaluated in an if statement to check if its safe to use.
+	- Wrapper should have overloads for the dereference operator (*) and the structure dereference operator (->) to provide direct access to the pointer being held by the weak_ptr
+		(see https://stackoverflow.com/questions/21569483/c-overloading-dereference-operators)
+
+* Review all engine classes and implement (or delete) copy constructors/assignments and move constructors/assignments

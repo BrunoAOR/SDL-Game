@@ -89,6 +89,7 @@ Vector2 EngineUtils::closestPointOnOrientedRectFromPoint(const Vector2& rectCent
 
 	Vector2 closestPoint(clamp(point.x, rectMinX, rectMaxX), clamp(point.y, rectMinY, rectMaxY));
 	
+	// Correct for points that lie inside the rect
 	if (inRange(closestPoint.x, rectMinX, rectMaxX) && inRange(closestPoint.y, rectMinY, rectMaxY))
 	{
 		// Distance to vertical lines is viewed on the x-direction

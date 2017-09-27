@@ -276,11 +276,16 @@ Vector2 Transform::worldToLocalScale(const Vector2 & worldScale) const
 }
 
 
+std::weak_ptr<Transform> Transform::getParent()
+{
+	return m_parentWeakPtr;
+}
+
 bool Transform::setParent(std::weak_ptr<Transform> parent)
 {
 	if (parent.expired())
 	{
-		return false;
+		removeParent();
 	}
 
 	Transform* parentTransform = parent.lock().get();
@@ -307,6 +312,7 @@ bool Transform::setParent(std::weak_ptr<Transform> parent)
 	{
 		// And then set the m_parent variable
 		m_parentTransform = parentTransform;
+		m_parentWeakPtr = parent;
 		updateLocalFields();
 		return true;
 	}
@@ -325,6 +331,7 @@ void Transform::removeParent()
 	{
 		m_parentTransform->removeChild(this);
 		m_parentTransform = nullptr;
+		m_parentWeakPtr.reset();
 	}
 	updateLocalFields();
 }

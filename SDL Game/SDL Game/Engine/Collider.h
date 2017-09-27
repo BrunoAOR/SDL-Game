@@ -13,6 +13,7 @@ public:
 	Collider();
 	virtual ~Collider() = 0;
 
+	Vector2 getLocalPosition();
 	Vector2 getWorldPosition();
 	double getWorldRotation();
 
