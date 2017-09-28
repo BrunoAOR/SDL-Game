@@ -1,6 +1,7 @@
 #include "TestScene2.h"
 
 #include "Engine/GameObjects/GameObject.h"
+#include "Engine/Components/Renderers/Sprite.h"
 #include "Engine/Components/Transforms/Transform.h"
 
 #include "Behaviours/Crosshair2.h"
@@ -19,7 +20,14 @@ bool TestScene2::load()
 		success &= !(go->addComponent<Crosshair2>().expired());
 		success &= !(go->addComponent<ColorChanger>().expired());
 		success &= !(go->addComponent<SceneChanger>().expired());
-		success &= go->addTexture("assets/Target.png");
+		if (auto sprite = go->addComponent<Sprite>().lock())
+		{
+			success &= sprite->loadImage("assets/Target.png");
+		}
+		else
+		{
+			success = false;
+		}
 	}
 
 	return success;

@@ -13,8 +13,11 @@ class CollidersManager final :
 public:
 	~CollidersManager();
 	// Inherited via ComponentManager
-	virtual void update() override;
 	virtual bool canManage(std::weak_ptr<Component> component) override;
+	virtual void update() override;
+	virtual bool init() override;
+	virtual void close() override;
+	virtual bool initializeComponent(std::weak_ptr<Component> component) override;
 
 private:
 	CollidersManager();

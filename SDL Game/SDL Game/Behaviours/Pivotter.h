@@ -2,7 +2,10 @@
 
 #include "Engine/Components/Behaviours/Behaviour.h"
 
+#include <memory>
 #include "Engine/Vector2.h"
+
+class Sprite;
 
 
 class Pivotter :
@@ -26,6 +29,7 @@ private:
 	double positionStep;
 	double pivotStep;
 	double rotStep;
+	std::weak_ptr<Sprite> sprite;
 
 	enum class MoveMode {
 		POSITION,

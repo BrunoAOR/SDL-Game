@@ -55,3 +55,20 @@ void BehavioursManager::update()
 		}	
 	}
 }
+
+
+bool BehavioursManager::init()
+{
+	return true;
+}
+
+
+void BehavioursManager::close()
+{
+}
+
+
+bool BehavioursManager::initializeComponent(std::weak_ptr<Component> component)
+{
+	return true;
+}

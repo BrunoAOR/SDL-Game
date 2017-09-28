@@ -3,6 +3,7 @@
 #include "Engine/EngineUtils.h"
 #include "Engine/Input.h"
 #include "Engine/GameObjects/GameObject.h"
+#include "Engine/Components/Renderers/Sprite.h"
 #include "Engine/Components/Transforms/Transform.h"
 #include "SpawnedCrosshair.h"
 
@@ -39,7 +40,10 @@ void Spawner::createCrosshair()
 		crosshairGO->transform.lock()->setWorldPosition({(double)m_xPos, 80 });
 		crosshairGO->addComponent<SpawnedCrosshair>();
 		m_xPos += m_spawnOffset;
-		crosshairGO->addTexture("assets/Crosshair.png");
+		if (auto sprite = crosshairGO->addComponent<Sprite>().lock())
+		{
+			sprite->loadImage("assets/Crosshair.png");
+		}
 		m_spawned.push_back(crosshairGO);
 	}
 	

@@ -1,44 +1,55 @@
-#include "Texture.h"
+#include "Renderer.h"
 
 #include <SDL_image.h>
-#include "constants.h"
+#include "Engine/constants.h"
+#include "Engine/Components/Renderers/RenderersManager.h"
+#include "Engine/GameObjects/GameObject.h"
 #include "Engine/Components/Transforms/Transform.h"
 
-
-Texture::Texture(SDL_Renderer* renderer)
-	: m_positionPivot(Vector2(0.5, 0.5))
-	, m_rotationPivot(Vector2(0.5, 0.5))
-	, m_scalePivot(Vector2(0.5,0.5))
-	// Initialize empty
+Renderer::Renderer()
+	: m_renderer(nullptr)
 	, m_texture(nullptr)
 	, m_width(0)
 	, m_height(0)
-	// Store renderer reference
-	, m_renderer(renderer)
+	, m_positionPivot(Vector2(0.5, 0.5))
+	, m_rotationPivot(Vector2(0.5, 0.5))
+	, m_scalePivot(Vector2(0.5, 0.5))
 {
 }
 
 
-Texture::~Texture()
+Renderer::~Renderer()
 {
-	// Deallocate
+	// Deallocate texture
 	free();
 }
 
 
-bool Texture::loadFromFile(std::string path)
+void Renderer::free()
 {
-	return loadFromFile(path, false, 0);
+	// Free texture if it exists
+	if (m_texture != nullptr)
+	{
+		SDL_DestroyTexture(m_texture);
+		m_texture = nullptr;
+		m_width = 0;
+		m_height = 0;
+	}
 }
 
 
-bool Texture::loadFromFile(std::string path, Uint32 colorKey)
+bool Renderer::loadImage(std::string path)
 {
-	return loadFromFile(path, true, colorKey);
+	return loadImage(path, false, 0);
+}
+
+bool Renderer::loadImage(std::string path, Uint32 colorKey)
+{
+	return loadImage(path, true, colorKey);
 }
 
 
-bool Texture::loadFromFile(std::string path, bool shouldColorKey, Uint32 colorKey)
+bool Renderer::loadImage(std::string path, bool shouldColorKey, Uint32 colorKey)
 {
 	// Get rid of previous texture
 	free();
@@ -81,43 +92,49 @@ bool Texture::loadFromFile(std::string path, bool shouldColorKey, Uint32 colorKe
 }
 
 
-void Texture::free()
+void Renderer::setColor(Uint8 r, Uint8 g, Uint8 b)
 {
-	// Free texture if it exists
-	if (m_texture != nullptr)
-	{
-		SDL_DestroyTexture(m_texture);
-		m_texture = nullptr;
-		m_width = 0;
-		m_height = 0;
+	// Modulate texture color
+	if (m_texture != nullptr) {
+		SDL_SetTextureColorMod(m_texture, r, g, b);
 	}
 }
 
 
-void Texture::setColor(Uint8 r, Uint8 g, Uint8 b)
-{
-	// Modulate texture color
-	SDL_SetTextureColorMod(m_texture, r, g, b);
-}
-
-
-void Texture::setBlendMode(SDL_BlendMode blendMode)
+void Renderer::setBlendMode(SDL_BlendMode blendMode)
 {
 	// Set blending function
-	SDL_SetTextureBlendMode(m_texture, blendMode);
+	if (m_texture != nullptr) {
+		SDL_SetTextureBlendMode(m_texture, blendMode);
+	}
 }
 
 
-void Texture::setAlpha(Uint8 alpha)
+void Renderer::setAlpha(Uint8 alpha)
 {
 	// Modulate texture alpha
-	SDL_SetTextureAlphaMod(m_texture, alpha);
+	if (m_texture != nullptr) {
+		SDL_SetTextureAlphaMod(m_texture, alpha);
+	}
 }
 
 
-void Texture::render(const Transform* const transform, SDL_Rect* clip, SDL_RendererFlip flip)
+int Renderer::getWidth()
+{
+	return m_width;
+}
+
+
+int Renderer::getHeight()
+{
+	return m_height;
+}
+
+
+void Renderer::renderMain(SDL_Rect* clip, SDL_RendererFlip flip)
 {
 	// Note: All transform pivots are transformed to "(1 - pivot) for the y axis so that the zero refers to the bottom of the RenderQuad"
+	Transform* transform = gameObject()->transform.lock().get();
 
 	// Extract info from the transform
 	Vector2 pos = transform->getWorldPosition();
@@ -148,13 +165,13 @@ void Texture::render(const Transform* const transform, SDL_Rect* clip, SDL_Rende
 		(int)rawSize.x,
 		(int)rawSize.y
 	};
-	
+
 	// Modify for the scale and scalePivot
 	renderQuad.x = (int)(renderQuad.x - m_scalePivot.x * (sca.x - 1) * rawSize.x);
 	renderQuad.y = (int)(renderQuad.y - (1 - m_scalePivot.y) * (sca.y - 1) * rawSize.y);
 	renderQuad.w = (int)(renderQuad.w * sca.x);
 	renderQuad.h = (int)(renderQuad.h * sca.y);
-	
+
 	// Calculate the center of rotation based on the rotationPivot
 	Vector2 scaledSize = { rawSize.x * sca.x , rawSize.y * sca.y };
 	SDL_Point center =
@@ -174,63 +191,46 @@ void Texture::render(const Transform* const transform, SDL_Rect* clip, SDL_Rende
 }
 
 
-int Texture::getWidth()
-{
-	return m_width;
-}
-
-
-int Texture::getHeight()
-{
-	return m_height;
-}
-
-
 // PIVOTS
 
 
-Vector2 Texture::getPositionPivot() const
+Vector2 Renderer::getPositionPivot() const
 {
 	return m_positionPivot;
 }
 
 
-void Texture::setPositionPivot(const Vector2& positionPivot, bool adjustScalePivot)
+void Renderer::setPositionPivot(const Vector2& positionPivot)
 {
 	m_positionPivot = positionPivot;
-
-	if (adjustScalePivot)
-	{
-		setScalePivot(m_positionPivot);
-	}
 }
 
 
-Vector2 Texture::getRotationPivot() const
+Vector2 Renderer::getRotationPivot() const
 {
 	return m_rotationPivot;
 }
 
 
-void Texture::setRotationPivot(const Vector2& rotationPivot)
+void Renderer::setRotationPivot(const Vector2& rotationPivot)
 {
 	m_rotationPivot = rotationPivot;
 }
 
 
-Vector2 Texture::getScalePivot() const
+Vector2 Renderer::getScalePivot() const
 {
 	return m_scalePivot;
 }
 
 
-void Texture::setScalePivot(const Vector2& scalePivot)
+void Renderer::setScalePivot(const Vector2& scalePivot)
 {
 	m_scalePivot = scalePivot;
 }
 
 
-void Texture::setAllPivots(const Vector2& pivot)
+void Renderer::setAllPivots(const Vector2& pivot)
 {
 	setPositionPivot(pivot);
 	setRotationPivot(pivot);

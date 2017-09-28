@@ -2,8 +2,8 @@
 
 #include "Engine/Vector2.h"
 #include "Engine/GameObjects/GameObject.h"
+#include "Engine/Components/Renderers/Sprite.h"
 #include "Engine/Components/Transforms/Transform.h"
-#include "Engine/Texture.h"
 #include "Engine/Input.h"
 
 
@@ -30,6 +30,8 @@ void Pivotter::start()
 	selectedStep = positionStep;
 	mode = MoveMode::POSITION;
 	updateGO();
+
+	sprite = gameObject()->getComponent<Sprite>();
 }
 
 void Pivotter::update()
@@ -126,9 +128,12 @@ void Pivotter::updateGO()
 	transform->setLocalPosition(position);
 	transform->setLocalRotation(rotation);
 	transform->setLocalScale(scale);
-	go->texture->setPositionPivot(positionPivot);
-	go->texture->setRotationPivot(rotationPivot);
-	go->texture->setScalePivot(scalePivot);
+	if (auto lockedSprite = sprite.lock())
+	{
+		lockedSprite->setPositionPivot(positionPivot);
+		lockedSprite->setRotationPivot(rotationPivot);
+		lockedSprite->setScalePivot(scalePivot);
+	}
 }
 
 void Pivotter::printPivotInfo()

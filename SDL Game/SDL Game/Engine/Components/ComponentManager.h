@@ -15,8 +15,11 @@ public:
 	bool subscribeComponent(std::weak_ptr<Component> component);
 	bool unsubscribeComponent(std::weak_ptr<Component> component);
 	
-	virtual void update() = 0;
 	virtual bool canManage(std::weak_ptr<Component> component) = 0;
+	virtual void update() = 0;
+	virtual bool init() = 0;
+	virtual void close() = 0;
+	virtual bool initializeComponent(std::weak_ptr<Component> component) = 0;
 
 protected:
 	

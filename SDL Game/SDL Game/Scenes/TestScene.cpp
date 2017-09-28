@@ -3,9 +3,9 @@
 #include <memory>
 
 #include "Engine/GameObjects/GameObject.h"
+#include "Engine/Components/Renderers/Sprite.h"
 #include "Engine/Components/Transforms/Transform.h"
 #include "Engine/constants.h"
-#include "Engine/Texture.h"
 
 #include "Behaviours/Crosshair.h"
 #include "Behaviours/Crosshair2.h"
@@ -46,14 +46,16 @@ bool TestScene::load()
 		success &= !(crosshairGO->addComponent<Crosshair>().expired());
 		success &= !(crosshairGO->addComponent<BehaviourToRemove>().expired());
 		//crosshairGO->addBehaviour(new Crosshair2(crosshairGO));
-		if (!crosshairGO->addTexture("assets/Crosshair.png"))
+
+		if (auto sprite = crosshairGO->addComponent<Sprite>().lock())
 		{
-			printf("Error: Failed to load crosshair texture image!\n");
-			success &= false;
+			sprite->loadImage("assets/Crosshair.png");
+			sprite->setColor(0, 255, 255);
 		}
 		else
 		{
-			crosshairGO->texture->setColor(0, 255, 255);
+			printf("Error: Failed to load crosshair texture image!\n");
+			success &= false;
 		}
 	}
 	
@@ -65,15 +67,18 @@ bool TestScene::load()
 	{
 		crosshair2GO->transform.lock()->setWorldPosition({ constants::SCREEN_WIDTH - 200, 200 });
 		success &= !(crosshair2GO->addComponent<Crosshair2>().expired());
-		if (!crosshair2GO->addTexture("assets/Crosshair.png"))
+		
+		if (auto sprite = crosshair2GO->addComponent<Sprite>().lock())
 		{
-			printf("Error: Failed to load crosshair texture image!\n");
-			success = false;
+			sprite->loadImage("assets/Crosshair.png");
+			sprite->setColor(255, 0, 255);
 		}
 		else
 		{
-			crosshair2GO->texture->setColor(255, 0, 255);
+			printf("Error: Failed to load crosshair texture image!\n");
+			success &= false;
 		}
+
 	}
 	
 
@@ -82,18 +87,24 @@ bool TestScene::load()
 	auto coloredGO = weakColoredGO.lock();
 	if (coloredGO)
 	{
-		if (!coloredGO->addTexture("assets/Crosshair.png"))
+		std::shared_ptr<Sprite> sprite = coloredGO->addComponent<Sprite>().lock();
+		if (auto sprite = coloredGO->addComponent<Sprite>().lock())
+		{
+			sprite->loadImage("assets/Crosshair.png");
+			coloredGO->transform.lock()->setWorldPosition(
+			{
+				(float)(constants::SCREEN_WIDTH - sprite->getWidth()) / 2,
+				(float)(constants::SCREEN_HEIGHT - sprite->getHeight())
+			});
+		}
+		else
 		{
 			printf("Error: Failed to load crosshair texture image!\n");
 			success = false;
 		}
 
 		success &= !(coloredGO->addComponent<ColorChanger>().expired());
-		coloredGO->transform.lock()->setWorldPosition(
-		{ 
-			(float)(constants::SCREEN_WIDTH - coloredGO->texture->getWidth()) / 2,
-			(float)(constants::SCREEN_HEIGHT - coloredGO->texture->getHeight()) 
-		});
+		
 	}
 	
 	return success;

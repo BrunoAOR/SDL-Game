@@ -1,7 +1,7 @@
 #include "TimeTesterScene.h"
 
 #include "Engine/GameObjects/GameObject.h"
-#include "Engine/Texture.h"
+#include "Engine/Components/Renderers/Sprite.h"
 #include "Engine/Components/Transforms/Transform.h"
 
 #include "Behaviours/Mover.h"
@@ -16,8 +16,11 @@ bool TimeTesterScene::load()
 	if (auto leftGO = weakLeftGO.lock())
 	{
 		leftGO->addComponent<SceneChanger>();
-		leftGO->addTexture("assets/Square.png");
-		leftGO->texture->setAllPivots(Vector2(0.5, 0));
+		if (auto sprite = leftGO->addComponent<Sprite>().lock())
+		{
+			sprite->loadImage("assets/Square.png");
+			sprite->setAllPivots(Vector2(0.5, 0));
+		}
 		leftGO->transform.lock()->setLocalPosition(Vector2(100, 200));
 		auto weakLeftMover = leftGO->addComponent<Mover>();
 		if (auto leftMover = weakLeftMover.lock())
@@ -37,8 +40,11 @@ bool TimeTesterScene::load()
 	auto weakRightGO = GameObject::createNew();
 	if (auto rightGO = weakRightGO.lock())
 	{
-		rightGO->addTexture("assets/Square.png");
-		rightGO->texture->setAllPivots(Vector2(0.5, 0));
+		if (auto sprite = rightGO->addComponent<Sprite>().lock())
+		{
+			sprite->loadImage("assets/Square.png");
+			sprite->setAllPivots(Vector2(0.5, 0));
+		}
 		rightGO->transform.lock()->setLocalPosition(Vector2(700, 200));
 		if ((rightGO->addComponent<Mover>()).lock())
 		{

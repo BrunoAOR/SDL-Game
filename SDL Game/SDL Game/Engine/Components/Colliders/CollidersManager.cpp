@@ -74,6 +74,23 @@ void CollidersManager::update()
 }
 
 
+bool CollidersManager::init()
+{
+	return true;
+}
+
+
+void CollidersManager::close()
+{
+}
+
+
+bool CollidersManager::initializeComponent(std::weak_ptr<Component> component)
+{
+	return true;
+}
+
+
 bool CollidersManager::hasCollision(Collider* coll1, Collider* coll2)
 {
 	bool collisionOccured = false;

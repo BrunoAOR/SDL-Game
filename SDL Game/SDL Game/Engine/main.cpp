@@ -4,14 +4,11 @@
 #include "Engine/constants.h"
 #include "Engine/Input.h"
 #include "Engine/GameObjects/GameObjectsManager.h"
-#include "Engine/RenderManager.h"
 #include "Engine/Scenes/SceneManager.h"
 #include "Engine/Time.h"
 #include "Engine/Components/ComponentsManager.h"
 #include "Engine/Components/Behaviours/BehavioursManager.h"
 
-// Global variables
-SDL_Window* gWindow = nullptr;
 
 // Function declarations
 bool init();
@@ -60,35 +57,16 @@ bool init()
 		{
 			printf("Warning: Linear texture filtering not enabled!");
 		}
-
-		// Create window
-		gWindow = SDL_CreateWindow("SDL Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, constants::SCREEN_WIDTH, constants::SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-		if (gWindow == nullptr)
+		// Initialize PNG loading
+		int imgFlags = IMG_INIT_PNG | IMG_INIT_JPG;
+		if ((IMG_Init(imgFlags) & imgFlags) != imgFlags)
 		{
-			printf("Error: Window could not be created! SDL Error: %s\n", SDL_GetError());
+			printf("Error: SDL_Image could not initialize! SDL_image Error: %s\n", IMG_GetError());
 			success = false;
 		}
-		else
-		{
-			// Create Renderer for window (used for texture rendering)
-			if (!RenderManager::createRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED))
-			{
-				// An Error message will be printed by the RenderManager::createRenderer function
-				success = false;
-			}
-			else
-			{
-				// Initialize PNG loading
-				int imgFlags = IMG_INIT_PNG | IMG_INIT_JPG;
-				if ((IMG_Init(imgFlags) & imgFlags) != imgFlags)
-				{
-					printf("Error: SDL_Image could not initialize! SDL_image Error: %s\n", IMG_GetError());
-					success = false;
-				}
-				// Initialize the ComponentsManager
-				ComponentsManager::init();
-			}
-		}
+		// Initialize the ComponentsManager
+		success &= ComponentsManager::init();
+
 	}
 	return success;
 }
@@ -113,7 +91,7 @@ bool setupScenes()
 	success &= SceneManager::addScene<TimeTesterScene>();
 	success &= SceneManager::addScene<CollidersScene>();
 	success &= SceneManager::addScene<ParentSwitchScene>();
-	SceneManager::loadScene(5);
+	SceneManager::loadScene(6);
 
 	return success;
 }
@@ -163,10 +141,7 @@ void loop()
 		GameObjectsManager::update();
 
 		ComponentsManager::update();
-		
-		RenderManager::update();
 	}
-
 }
 
 
@@ -177,11 +152,6 @@ void close()
 
 	// Unload scene
 	SceneManager::close();
-
-	// Destroy window and its renderer
-	RenderManager::close();
-	SDL_DestroyWindow(gWindow);
-	gWindow = nullptr;
 
 	// Quit SDL subsystems
 	IMG_Quit();

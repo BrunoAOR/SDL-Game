@@ -1,25 +1,24 @@
 #pragma once
 
-#include <string>
 #include <SDL.h>
-
+#include <string>
+#include "Engine/Components/Component.h"
 #include "Engine/Vector2.h"
 
-class Transform;
 
-
-class Texture
+class Renderer :
+	public Component
 {
+	friend class RenderersManager;
+
 public:
-	Texture(SDL_Renderer* renderer);
-	~Texture();
+	Renderer();
+	virtual ~Renderer() = 0;
 
-	// Loads image at specified path
-	bool loadFromFile(std::string path);
-	bool loadFromFile(std::string path, Uint32 colorKey);
+	virtual void render() = 0;
 
-	// Deallocates texture
-	void free();
+	bool loadImage(std::string path);
+	bool loadImage(std::string path, Uint32 colorKey);
 
 	// Set color modulation
 	void setColor(Uint8 r, Uint8 g, Uint8 b);
@@ -30,16 +29,13 @@ public:
 	// Set alpha modulation
 	void setAlpha(Uint8 a);
 
-	// Renders texture at given point
-	void render(const Transform* const transform, SDL_Rect* clip = nullptr, SDL_RendererFlip flip = SDL_FLIP_NONE);
-
-	// Gets image dimensions
+	// Get dimensions
 	int getWidth();
 	int getHeight();
 
 	// Pivots
 	Vector2 getPositionPivot() const;
-	void setPositionPivot(const Vector2& positionPivot, bool adjustScalePivot = true);
+	void setPositionPivot(const Vector2& positionPivot);
 
 	Vector2 getRotationPivot() const;
 	void setRotationPivot(const Vector2& rotationPivot);
@@ -48,6 +44,10 @@ public:
 	void setScalePivot(const Vector2& scalePivot);
 
 	void setAllPivots(const Vector2& pivot);
+
+protected:
+	// Renders texture at given point
+	void renderMain(SDL_Rect* clip = nullptr, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
 private:
 	// The renderer associated with this texture
@@ -60,8 +60,8 @@ private:
 	int m_width;
 	int m_height;
 
-	// Help functions
-	bool loadFromFile(std::string path, bool shouldColorKey, Uint32 colorKey);
+	void free();
+	bool loadImage(std::string path, bool shouldColorKey, Uint32 colorKey);
 
 	// Pivots
 	Vector2 m_positionPivot;

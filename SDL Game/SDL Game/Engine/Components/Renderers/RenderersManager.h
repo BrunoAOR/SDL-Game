@@ -1,17 +1,18 @@
 #pragma once
 
+#include <SDL.h>
 #include "Engine/Components/ComponentManager.h"
 
 class Component;
 
 
-class BehavioursManager final :
+class RenderersManager final :
 	public ComponentManager
 {
 	friend class ComponentsManager;
 public:
-	~BehavioursManager();
-
+	~RenderersManager();
+	
 	// Inherited via ComponentManager
 	virtual bool canManage(std::weak_ptr<Component> component) override;
 	virtual void update() override;
@@ -19,6 +20,11 @@ public:
 	virtual void close() override;
 	virtual bool initializeComponent(std::weak_ptr<Component> component) override;
 
+
 private:
-	BehavioursManager();	
+	RenderersManager();
+	SDL_Window * m_window;
+	SDL_Renderer * m_renderer;
+
+	SDL_Renderer * getRenderer();
 };

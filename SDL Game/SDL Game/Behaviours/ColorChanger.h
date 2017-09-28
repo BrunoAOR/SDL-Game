@@ -2,6 +2,10 @@
 
 #include "Engine/Components/Behaviours/Behaviour.h"
 
+#include <memory>
+
+class Sprite;
+
 
 class ColorChanger :
 	public Behaviour
@@ -15,5 +19,8 @@ public:
 	// Inherited via Behaviour
 	virtual void start() override;
 	virtual void update() override;
+
+private:
+	std::weak_ptr<Sprite> sprite;
 };
 

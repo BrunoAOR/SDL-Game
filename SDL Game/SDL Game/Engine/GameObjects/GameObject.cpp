@@ -2,8 +2,6 @@
 
 #include "Engine/EngineUtils.h"
 #include "Engine/Components/Transforms/Transform.h"
-#include "Engine/Texture.h"
-#include "Engine/RenderManager.h"
 #include "Engine/Scenes/SceneManager.h"
 #include "Engine/GameObjects/GameObjectsManager.h"
 
@@ -21,46 +19,17 @@ GameObject::GameObject()
 	printf("GO constructed -id: %i  ||  Alive: %i\n", m_id, ++s_alive);
 	// TESTING END
 
-	// Initialize texture empty
-	texture = nullptr;
-
 	m_isActive = true;
 }
 
 
 GameObject::~GameObject()
 {
-	removeTexture();
 	m_components.clear();
 
 	// TESTING START
 	printf("GO  destructed -id: %i  ||  Alive: %i\n", m_id, --s_alive);
 	// TESTING END
-}
-
-
-bool GameObject::addTexture(std::string path)
-{
-	removeTexture();
-	texture = RenderManager::createTexture(path);
-
-	if (texture != nullptr)
-	{
-		RenderManager::subscribeGameObject(m_self);
-	}
-	return texture != nullptr;
-}
-
-
-void GameObject::removeTexture()
-{
-	if (texture != nullptr)
-	{
-		texture->free();
-		delete texture;
-		texture = nullptr;
-		RenderManager::unsubscribeGameObject(m_self);
-	}
 }
 
 

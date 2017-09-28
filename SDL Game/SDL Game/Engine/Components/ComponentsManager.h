@@ -13,7 +13,7 @@ class ComponentsManager final
 public:
 	virtual ~ComponentsManager() = 0;
 	
-	static void init();
+	static bool init();
 	static void close();
 
 	static void update();

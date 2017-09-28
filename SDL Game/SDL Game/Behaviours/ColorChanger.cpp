@@ -1,9 +1,10 @@
 #include "ColorChanger.h"
 
 #include "Engine/Input.h"
+#include "Engine/Components/Renderers/Sprite.h"
 #include "Engine/GameObjects/GameObject.h"
 #include "Engine/Components/Transforms/Transform.h"
-#include "Engine/Texture.h"
+
 
 #include "Behaviours/Crosshair2.h"
 
@@ -21,7 +22,11 @@ void ColorChanger::start()
 	color1active = true;
 	hasCrosshair = false;
 	
-	gameObject()->texture->setColor(color1[0], color1[1], color1[2]);
+	sprite = gameObject()->getComponent<Sprite>();
+	if (auto lockedSprite = sprite.lock())
+	{
+		lockedSprite->setColor(color1[0], color1[1], color1[2]);
+	}
 }
 
 
@@ -32,12 +37,18 @@ void ColorChanger::update()
 		if (color1active)
 		{
 			color1active = false;
-			gameObject()->texture->setColor(color2[0], color2[1], color2[2]);
+			if (auto lockedSprite = sprite.lock())
+			{
+				lockedSprite->setColor(color2[0], color2[1], color2[2]);
+			}
 		}
 		else
 		{
 			color1active = true;
-			gameObject()->texture->setColor(color1[0], color1[1], color1[2]);
+			if (auto lockedSprite = sprite.lock())
+			{
+				lockedSprite->setColor(color1[0], color1[1], color1[2]);
+			}
 		}
 	}
 	if (Input::getKeyDown(SDL_SCANCODE_V))

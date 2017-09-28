@@ -8,8 +8,6 @@
 
 class Component;
 class Transform;
-class Texture;
-
 
 
 class GameObject final
@@ -17,15 +15,9 @@ class GameObject final
 	friend class GameObjectsManager;
 public:
 	std::weak_ptr<Transform> transform;
-
-	Texture* texture;
 	
 	GameObject();
 	~GameObject();
-
-	// Texture related
-	bool addTexture(std::string path);
-	void removeTexture();
 
 	// Components related
 	template<typename T>

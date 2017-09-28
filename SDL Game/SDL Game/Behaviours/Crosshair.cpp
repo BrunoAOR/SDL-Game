@@ -1,14 +1,15 @@
 #include "Crosshair.h"
 
 #include "Engine/GameObjects/GameObject.h"
+#include "Engine/Components/Renderers/Sprite.h"
 #include "Engine/Input.h"
-#include "Engine/Texture.h"
 
 #include "Behaviours/BehaviourToRemove.h"
 
 void Crosshair::start()
 {
 	m_alpha = 255;
+	sprite = gameObject()->getComponent<Sprite>();
 }
 
 
@@ -40,5 +41,8 @@ void Crosshair::update()
 		}
 	}
 	
-	gameObject()->texture->setAlpha(m_alpha);
+	if (auto lockedSprite = sprite.lock())
+	{
+		lockedSprite->setAlpha(m_alpha);
+	}
 }

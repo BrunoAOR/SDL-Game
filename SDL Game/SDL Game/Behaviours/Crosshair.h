@@ -2,6 +2,10 @@
 
 #include "Engine/Components/Behaviours/Behaviour.h"
 
+#include <memory>
+
+class Sprite;
+
 
 class Crosshair :
 	public Behaviour
@@ -13,5 +17,5 @@ public:
 
 private:
 	int m_alpha;
-	
+	std::weak_ptr<Sprite> sprite;
 };

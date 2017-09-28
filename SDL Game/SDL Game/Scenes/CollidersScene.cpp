@@ -1,7 +1,7 @@
 #include "CollidersScene.h"
 
 #include "Engine/GameObjects/GameObject.h"
-#include "Engine/Texture.h"
+#include "Engine/Components/Renderers/Sprite.h"
 #include "Engine/Components/Transforms/Transform.h"
 #include "Engine/Components/Colliders/CircleCollider.h"
 #include "Engine/Components/Colliders/RectangleCollider.h"
@@ -25,7 +25,9 @@ bool CollidersScene::load()
 			go->addComponent<SceneChanger>();
 			//go->addComponent<TimeLogger>();
 
-			go->addTexture("assets/Target.png");
+			auto sprite = go->addComponent<Sprite>().lock();
+			sprite->loadImage("assets/Target.png");
+			
 			//go->transform.setAllPivots(Vector2(0.5, 0));
 			go->transform.lock()->setLocalPosition(Vector2(100, 50));
 			auto weakColl = go->addComponent<CircleCollider>();
@@ -55,7 +57,9 @@ bool CollidersScene::load()
 		auto weakGO = GameObject::createNew();
 		if (auto go = weakGO.lock())
 		{
-			go->addTexture("assets/Square.png");
+			auto sprite = go->addComponent<Sprite>().lock();
+			sprite->loadImage("assets/Square.png");
+			
 			go->addComponent<Rotator>();
 			//go->transform.setAllPivots(Vector2(0.5, 0));
 			go->transform.lock()->setLocalPosition(Vector2(700, 50));
@@ -86,7 +90,10 @@ bool CollidersScene::load()
 		if (auto go = weakGO.lock())
 		{
 			go->addComponent<SceneChanger>();
-			go->addTexture("assets/Target.png");
+
+			auto sprite = go->addComponent<Sprite>().lock();
+			sprite->loadImage("assets/Target.png");
+			
 			//go->transform.setAllPivots(Vector2(0.5, 0));
 			go->transform.lock()->setLocalPosition(Vector2(100, 200));
 			auto weakColl = go->addComponent<CircleCollider>();
@@ -108,7 +115,10 @@ bool CollidersScene::load()
 		if (auto go = weakGO.lock())
 		{
 			go->addComponent<SceneChanger>();
-			go->addTexture("assets/Square.png");
+
+			auto sprite = go->addComponent<Sprite>().lock();
+			sprite->loadImage("assets/Square.png");
+			
 			//go->transform.setAllPivots(Vector2(0.5, 0));
 			go->transform.lock()->setLocalPosition(Vector2(700, 200));
 			auto weakColl = go->addComponent<RectangleCollider>();
@@ -130,7 +140,10 @@ bool CollidersScene::load()
 		if (auto go = weakGO.lock())
 		{
 			go->addComponent<SceneChanger>();
-			go->addTexture("assets/Target.png");
+
+			auto sprite = go->addComponent<Sprite>().lock();
+			sprite->loadImage("assets/Target.png");
+			
 			//go->transform.setAllPivots(Vector2(0.5, 0));
 			go->transform.lock()->setLocalPosition(Vector2(100, 350));
 			auto weakColl = go->addComponent<CircleCollider>();
@@ -152,7 +165,10 @@ bool CollidersScene::load()
 		if (auto go = weakGO.lock())
 		{
 			go->addComponent<SceneChanger>();
-			go->addTexture("assets/Square.png");
+
+			auto sprite = go->addComponent<Sprite>().lock();
+			sprite->loadImage("assets/Square.png");
+			
 			//go->transform.setAllPivots(Vector2(0.5, 0));
 			go->transform.lock()->setLocalPosition(Vector2(700, 350));
 			auto weakColl = go->addComponent<RectangleCollider>();

@@ -37,10 +37,8 @@
     <ClCompile Include="Engine\Input.cpp" />
     <ClCompile Include="Engine\main.cpp" />
     <ClCompile Include="Engine\Components\Colliders\RectangleCollider.cpp" />
-    <ClCompile Include="Engine\Texture.cpp" />
     <ClCompile Include="Engine\Components\Transforms\Transform.cpp" />
     <ClCompile Include="Engine\Vector2.cpp" />
-    <ClCompile Include="Engine\RenderManager.cpp" />
     <ClCompile Include="Engine\Scenes\Scene.cpp" />
     <ClCompile Include="Engine\Scenes\SceneManager.cpp" />
     <ClCompile Include="Engine\GameObjects\GameObjectsManager.cpp" />
@@ -52,6 +50,8 @@
     <ClCompile Include="Behaviours\Spawner.cpp" />
     <ClCompile Include="Behaviours\Mover.cpp" />
     <ClCompile Include="Behaviours\ParentSwitcher.cpp" />
+    <ClCompile Include="Engine\Components\Renderers\Renderer.cpp" />
+    <ClCompile Include="Engine\Components\Renderers\RenderersManager.cpp" />
     <ClCompile Include="Scenes\ParentSwitchScene.cpp" />
     <ClCompile Include="Scenes\CollidersScene.cpp" />
     <ClCompile Include="Scenes\TestScene.cpp" />
@@ -60,6 +60,7 @@
     <ClCompile Include="Engine\Time.cpp" />
     <ClCompile Include="Scenes\TransformPivotScene.cpp" />
     <ClCompile Include="Scenes\TimeTesterScene.cpp" />
+    <ClCompile Include="Engine\Components\Renderers\Sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Behaviours\TimeLogger.h" />
@@ -80,10 +81,8 @@
     <ClInclude Include="Engine\GameObjects\GameObject.h" />
     <ClInclude Include="Engine\Input.h" />
     <ClInclude Include="Engine\Components\Colliders\RectangleCollider.h" />
-    <ClInclude Include="Engine\Texture.h" />
     <ClInclude Include="Engine\Components\Transforms\Transform.h" />
     <ClInclude Include="Engine\Vector2.h" />
-    <ClInclude Include="Engine\RenderManager.h" />
     <ClInclude Include="Engine\Scenes\Scene.h" />
     <ClInclude Include="Engine\Scenes\SceneManager.h" />
     <ClInclude Include="Engine\GameObjects\GameObjectsManager.h" />
@@ -95,6 +94,8 @@
     <ClInclude Include="Behaviours\Spawner.h" />
     <ClInclude Include="Behaviours\Mover.h" />
     <ClInclude Include="Behaviours\ParentSwitcher.h" />
+    <ClInclude Include="Engine\Components\Renderers\Renderer.h" />
+    <ClInclude Include="Engine\Components\Renderers\RenderersManager.h" />
     <ClInclude Include="Scenes\ParentSwitchScene.h" />
     <ClInclude Include="Scenes\CollidersScene.h" />
     <ClInclude Include="Scenes\TestScene.h" />
@@ -103,6 +104,7 @@
     <ClInclude Include="Engine\Time.h" />
     <ClInclude Include="Scenes\TransformPivotScene.h" />
     <ClInclude Include="Scenes\TimeTesterScene.h" />
+    <ClInclude Include="Engine\Components\Renderers\Sprite.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\Crosshair.png" />
