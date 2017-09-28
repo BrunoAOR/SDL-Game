@@ -150,6 +150,15 @@
     <ClCompile Include="Engine\Components\Renderers\Sprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Components\Renderers\SpriteSheet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\SpriteSheetScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Behaviours\SpriteSheetController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\constants.h">
@@ -278,6 +287,15 @@
     <ClInclude Include="Engine\Components\Renderers\Sprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Components\Renderers\SpriteSheet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\SpriteSheetScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Behaviours\SpriteSheetController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\Crosshair.png">
@@ -287,6 +305,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="assets\Square.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\Spritesheet.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

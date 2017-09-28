@@ -78,6 +78,7 @@ bool init()
 #include "Scenes/TimeTesterScene.h"
 #include "Scenes/CollidersScene.h"
 #include "Scenes/ParentSwitchScene.h"
+#include "Scenes/SpriteSheetScene.h"
 
 bool setupScenes()
 {
@@ -91,7 +92,8 @@ bool setupScenes()
 	success &= SceneManager::addScene<TimeTesterScene>();
 	success &= SceneManager::addScene<CollidersScene>();
 	success &= SceneManager::addScene<ParentSwitchScene>();
-	SceneManager::loadScene(6);
+	success &= SceneManager::addScene<SpriteSheetScene>();
+	SceneManager::loadScene(7);
 
 	return success;
 }

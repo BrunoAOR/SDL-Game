@@ -13,5 +13,5 @@ Sprite::~Sprite()
 
 void Sprite::render()
 {
-	Renderer::renderMain();
+	renderMain();
 }

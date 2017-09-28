@@ -1,0 +1,51 @@
+#pragma once
+
+#include <SDL.h>
+#include <unordered_map>
+#include <vector>
+#include <string>
+#include "Engine/Components/Renderers/Renderer.h"
+
+
+class SpriteSheet :
+	public Renderer
+{
+public:
+	SpriteSheet();
+	~SpriteSheet();
+
+	// Inherited via Renderer
+	virtual void render() override;
+
+	// Adding and removing Animations and sub-sprites
+	bool addAnimation(const std::string animationName);
+	bool addRectForAnimation(const std::string animationName, const Vector2& topLeftCorner, int width, int height);
+
+	bool clearAllRectsInAnimation(const std::string animationName);
+	bool removeAnimation(const std::string animationName);
+	void clearAllAnimations();
+
+	// Manually select animations and their frames
+	bool selectAnimation(std::string animationName);
+	bool previousAnimationFrame();
+	bool nextAnimationFrame();
+
+	// Play animations
+	bool playAnimation(std::string animationName, double fps = 0.25);
+	bool stopAnimation();
+
+private:
+	std::unordered_map<std::string, std::vector<SDL_Rect>> m_animations;
+	std::vector<SDL_Rect>* m_currentAnimation;
+	SDL_Rect* m_currentClipRect;
+	int m_currentClipRectIndex;
+
+	// automatic animation playback
+	bool m_isPlaying;
+	int m_elapsedTime;
+	int m_limitTime;
+	int m_direction;
+
+	void resetCachedFields();
+};
+

@@ -61,6 +61,9 @@
     <ClCompile Include="Scenes\TransformPivotScene.cpp" />
     <ClCompile Include="Scenes\TimeTesterScene.cpp" />
     <ClCompile Include="Engine\Components\Renderers\Sprite.cpp" />
+    <ClCompile Include="Engine\Components\Renderers\SpriteSheet.cpp" />
+    <ClCompile Include="Scenes\SpriteSheetScene.cpp" />
+    <ClCompile Include="Behaviours\SpriteSheetController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Behaviours\TimeLogger.h" />
@@ -105,9 +108,13 @@
     <ClInclude Include="Scenes\TransformPivotScene.h" />
     <ClInclude Include="Scenes\TimeTesterScene.h" />
     <ClInclude Include="Engine\Components\Renderers\Sprite.h" />
+    <ClInclude Include="Engine\Components\Renderers\SpriteSheet.h" />
+    <ClInclude Include="Scenes\SpriteSheetScene.h" />
+    <ClInclude Include="Behaviours\SpriteSheetController.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\Crosshair.png" />
+    <Image Include="assets\Spritesheet.png" />
     <Image Include="assets\Square.png" />
     <Image Include="assets\Target.png" />
   </ItemGroup>
