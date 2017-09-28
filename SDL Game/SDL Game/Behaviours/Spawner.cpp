@@ -2,7 +2,8 @@
 
 #include "Engine/EngineUtils.h"
 #include "Engine/Input.h"
-#include "Engine/GameObject.h"
+#include "Engine/GameObjects/GameObject.h"
+#include "Engine/Components/Transforms/Transform.h"
 #include "SpawnedCrosshair.h"
 
 

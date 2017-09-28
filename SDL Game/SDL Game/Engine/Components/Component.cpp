@@ -13,7 +13,6 @@ Component::Component() : m_isActive(true)
 	m_id = s_nextId++;
 	printf("Component constructed -id: %i  ||  Alive: %i\n", m_id, ++s_alive);
 	// TESTING END
-	
 }
 
 

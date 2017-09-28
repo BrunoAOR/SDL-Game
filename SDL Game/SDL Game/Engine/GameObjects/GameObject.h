@@ -4,12 +4,12 @@
 #include <string>
 #include <vector>
 
-#include "Transform.h"
-#include "ComponentsManager.h"
+#include "Engine/Components/ComponentsManager.h"
 
-class Texture;
 class Component;
-class Behaviour;
+class Transform;
+class Texture;
+
 
 
 class GameObject final
@@ -59,7 +59,7 @@ private:
 	std::weak_ptr<GameObject> m_self;
 
 
-	// Components/Behaviours related
+	// Components related
 	std::vector<std::shared_ptr<Component>> m_components;
 	std::vector<std::shared_ptr<Component>> m_componentsToAdd;
 	std::vector<std::weak_ptr<Component>> m_componentsToRemove;

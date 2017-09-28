@@ -4,6 +4,7 @@
 Uint32 Time::m_frameStartTime = 0;
 Uint32 Time::m_deltaTime = 0;
 
+
 Time::Time()
 {
 }
@@ -27,5 +28,3 @@ void Time::updateTime()
 	m_deltaTime = currentTicks - m_frameStartTime;
 	m_frameStartTime = currentTicks;
 }
-
-

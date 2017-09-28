@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Component.h"
+#include "Engine/Components/Component.h"
 
 #include <memory>
 #include <vector>
-#include "Vector2.h"
+#include "Engine/Vector2.h"
 
 
 class Transform final :

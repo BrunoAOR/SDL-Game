@@ -1,13 +1,15 @@
 #include "GameObjectsManager.h"
 
-#include "EngineUtils.h"
-#include "GameObject.h"
-#include "Behaviour.h"
-#include "Transform.h"
+#include "Engine/EngineUtils.h"
+#include "Engine/GameObjects/GameObject.h"
+#include "Engine/Components/Behaviours/Behaviour.h"
+#include "Engine/Components/Transforms/Transform.h"
+
 
 std::vector<std::shared_ptr<GameObject>> GameObjectsManager::m_gameObjects;
 std::vector<std::shared_ptr<GameObject>> GameObjectsManager::m_gosToAdd;
 std::vector<std::weak_ptr<GameObject>> GameObjectsManager::m_gosToDestroy;
+
 
 GameObjectsManager::GameObjectsManager()
 {

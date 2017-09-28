@@ -1,10 +1,11 @@
 #include "ColorChanger.h"
 
 #include "Engine/Input.h"
-#include "Engine/GameObject.h"
+#include "Engine/GameObjects/GameObject.h"
+#include "Engine/Components/Transforms/Transform.h"
 #include "Engine/Texture.h"
 
-#include "Crosshair2.h"
+#include "Behaviours/Crosshair2.h"
 
 
 void ColorChanger::start()

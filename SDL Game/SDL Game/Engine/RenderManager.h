@@ -8,6 +8,7 @@
 class GameObject;
 class Texture;
 
+
 class RenderManager
 {
 public:
@@ -22,4 +23,3 @@ private:
 	static SDL_Renderer* m_renderer;
 	static std::vector<std::weak_ptr<GameObject>> m_gameObjects;
 };
-

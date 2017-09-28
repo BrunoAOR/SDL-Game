@@ -1,10 +1,10 @@
 #include "Crosshair.h"
 
-#include "Engine/GameObject.h"
+#include "Engine/GameObjects/GameObject.h"
 #include "Engine/Input.h"
 #include "Engine/Texture.h"
 
-#include "BehaviourToRemove.h"
+#include "Behaviours/BehaviourToRemove.h"
 
 void Crosshair::start()
 {

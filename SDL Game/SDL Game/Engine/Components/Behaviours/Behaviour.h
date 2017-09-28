@@ -1,8 +1,6 @@
 #pragma once
 
-#include "Component.h"
-
-class GameObject;
+#include "Engine/Components/Component.h"
 
 
 class Behaviour :

@@ -4,7 +4,7 @@
 #include <vector>
 
 class Scene;
-class GameObject;
+
 
 class SceneManager
 {

@@ -1,7 +1,6 @@
 #pragma once
 
-#include "Engine/Collider.h"
-#include "Engine/Vector2.h"
+#include "Engine/Components/Colliders/Collider.h"
 
 
 class CircleCollider :

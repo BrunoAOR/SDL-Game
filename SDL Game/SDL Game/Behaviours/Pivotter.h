@@ -1,8 +1,9 @@
 #pragma once
 
-#include "Engine/Behaviour.h"
+#include "Engine/Components/Behaviours/Behaviour.h"
 
 #include "Engine/Vector2.h"
+
 
 class Pivotter :
 	public Behaviour

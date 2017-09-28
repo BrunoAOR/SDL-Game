@@ -1,14 +1,14 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
-#include "constants.h"
-#include "Input.h"
-#include "GameObjectsManager.h"
-#include "RenderManager.h"
-#include "SceneManager.h"
-#include "Time.h"
-#include "ComponentsManager.h"
-#include "BehavioursManager.h"
+#include "Engine/constants.h"
+#include "Engine/Input.h"
+#include "Engine/GameObjects/GameObjectsManager.h"
+#include "Engine/RenderManager.h"
+#include "Engine/Scenes/SceneManager.h"
+#include "Engine/Time.h"
+#include "Engine/Components/ComponentsManager.h"
+#include "Engine/Components/Behaviours/BehavioursManager.h"
 
 // Global variables
 SDL_Window* gWindow = nullptr;

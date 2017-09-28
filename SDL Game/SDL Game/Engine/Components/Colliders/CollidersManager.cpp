@@ -1,12 +1,14 @@
 #include "CollidersManager.h"
 
 #include <cmath>
-#include "EngineUtils.h"
-#include "Vector2.h"
-#include "GameObject.h"
+#include "Engine/EngineUtils.h"
+#include "Engine/Vector2.h"
+#include "Engine/GameObjects/GameObject.h"
+#include "Engine/Components/Transforms/Transform.h"
 
 
 const double CollidersManager::MinPenetration = 0.01;
+
 
 CollidersManager::CollidersManager()
 {
@@ -71,6 +73,7 @@ void CollidersManager::update()
 	}
 }
 
+
 bool CollidersManager::hasCollision(Collider* coll1, Collider* coll2)
 {
 	bool collisionOccured = false;
@@ -113,6 +116,7 @@ bool CollidersManager::hasCollision(Collider* coll1, Collider* coll2)
 	return collisionOccured;
 }
 
+
 bool CollidersManager::hasCollision(CircleCollider & circColl1, CircleCollider & circColl2)
 {
 	Vector2 pos1 = circColl1.getWorldPosition();
@@ -130,6 +134,7 @@ bool CollidersManager::hasCollision(CircleCollider & circColl1, CircleCollider &
 
 	return false;
 }
+
 
 bool CollidersManager::hasCollision(RectangleCollider & rectColl1, RectangleCollider & rectColl2)
 {
@@ -219,10 +224,11 @@ bool CollidersManager::hasCollision(RectangleCollider & rectColl1, RectangleColl
 	}
 
 	// If we got here, we have a minOverlapLength and Direction that can be used to resolve the collision
-	printf("Rect on Rect: contanct penetrationDistance:%f\n", minOverlapLength);
+	printf("Rect on Rect: contanct: %f\n", minOverlapLength);
 	resolveCollision(rectColl1, rectColl2, minOverlapLength * minOverlapDirection);
 	return true;
 }
+
 
 bool CollidersManager::hasCollision(CircleCollider & circColl, RectangleCollider & rectColl)
 {
@@ -274,10 +280,12 @@ bool CollidersManager::hasCollision(CircleCollider & circColl, RectangleCollider
 	return false;
 }
 
+
 bool CollidersManager::hasCollision(RectangleCollider & rectColl, CircleCollider & circColl)
 {
 	return hasCollision(circColl, rectColl);
 }
+
 
 void CollidersManager::resolveCollision(CircleCollider& circColl1, const Vector2& pos1, CircleCollider& circColl2, const Vector2& pos2, double penetrationDistance)
 {
@@ -314,6 +322,7 @@ void CollidersManager::resolveCollision(CircleCollider& circColl1, const Vector2
 		circColl2.gameObject()->transform.lock()->setWorldPosition(targetPos2);
 	}
 }
+
 
 void CollidersManager::resolveCollision(RectangleCollider & rectColl1, RectangleCollider & rectColl2, Vector2 & penetrationVector)
 {
@@ -354,6 +363,7 @@ void CollidersManager::resolveCollision(RectangleCollider & rectColl1, Rectangle
 
 }
 
+
 void CollidersManager::resolveCollision(CircleCollider & circColl, RectangleCollider & rectColl, const Vector2 & penetrationVector)
 {
 	Vector2 circPos = circColl.getWorldPosition();
@@ -384,6 +394,7 @@ void CollidersManager::resolveCollision(CircleCollider & circColl, RectangleColl
 	}
 
 }
+
 
 void CollidersManager::informCollision(Collider * coll1, Collider * coll2)
 {

@@ -1,6 +1,8 @@
 #include "TestScene2.h"
 
-#include "Engine/GameObject.h"
+#include "Engine/GameObjects/GameObject.h"
+#include "Engine/Components/Transforms/Transform.h"
+
 #include "Behaviours/Crosshair2.h"
 #include "Behaviours/ColorChanger.h"
 #include "Behaviours/SceneChanger.h"

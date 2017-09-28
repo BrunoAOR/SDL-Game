@@ -1,7 +1,9 @@
 #include "Rotator.h"
 
 #include "Engine/Input.h"
-#include "Engine/GameObject.h"
+#include "Engine/GameObjects/GameObject.h"
+#include "Engine/Components/Transforms/Transform.h"
+
 
 void Rotator::update()
 {

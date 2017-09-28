@@ -1,7 +1,6 @@
 #include "EngineUtils.h"
 
 
-
 EngineUtils::EngineUtils()
 {
 }
@@ -14,6 +13,7 @@ void EngineUtils::swapValues(double & a, double & b)
 	b = temp;
 }
 
+
 bool EngineUtils::inRange(double value, double a, double b)
 {
 	if (a > b) {
@@ -21,6 +21,7 @@ bool EngineUtils::inRange(double value, double a, double b)
 	}
 	return (value >= a && value <= b);
 }
+
 
 double EngineUtils::getRangesSeparationDistance(double aMin, double aMax, double bMin, double bMax)
 {
@@ -36,6 +37,7 @@ double EngineUtils::getRangesSeparationDistance(double aMin, double aMax, double
 	return fmax(bMin - aMax, aMin - bMax);
 
 }
+
 
 double EngineUtils::clamp(double value, double a, double b)
 {
@@ -56,6 +58,7 @@ double EngineUtils::clamp(double value, double a, double b)
 	}
 	return value;
 }
+
 
 bool EngineUtils::isPointInRect(const Vector2 & rectCenter, const Vector2 & rectSize, const Vector2 & point)
 {
@@ -127,4 +130,3 @@ Vector2 EngineUtils::closestPointOnOrientedRectFromPoint(const Vector2& rectCent
 
 	return closestPoint;
 }
-

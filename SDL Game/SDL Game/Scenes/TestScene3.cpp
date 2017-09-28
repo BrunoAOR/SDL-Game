@@ -1,7 +1,8 @@
 #include "TestScene3.h"
 
-#include "Engine/GameObject.h"
-#include "Engine/Transform.h"
+#include "Engine/GameObjects/GameObject.h"
+#include "Engine/Components/Transforms/Transform.h"
+
 #include "Behaviours/GOKiller.h"
 #include "Behaviours/SceneChanger.h"
 

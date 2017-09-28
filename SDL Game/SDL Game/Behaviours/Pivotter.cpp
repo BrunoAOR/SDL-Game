@@ -1,8 +1,8 @@
 #include "Pivotter.h"
 
 #include "Engine/Vector2.h"
-#include "Engine/GameObject.h"
-#include "Engine/Transform.h"
+#include "Engine/GameObjects/GameObject.h"
+#include "Engine/Components/Transforms/Transform.h"
 #include "Engine/Texture.h"
 #include "Engine/Input.h"
 

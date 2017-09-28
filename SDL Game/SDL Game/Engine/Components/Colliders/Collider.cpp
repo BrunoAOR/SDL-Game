@@ -1,6 +1,7 @@
 #include "Collider.h"
 
-#include "GameObject.h"
+#include "Engine/GameObjects/GameObject.h"
+#include "Engine/Components/Transforms/Transform.h"
 
 
 Collider::Collider() : offset(0, 0), isStatic(false), isTrigger(false)
@@ -12,12 +13,14 @@ Collider::~Collider()
 {
 }
 
+
 Vector2 Collider::getLocalPosition()
 {
 	auto transform = gameObject()->transform.lock();
 	Vector2 localPos = transform->getLocalPosition() + offset;
 	return localPos;
 }
+
 
 Vector2 Collider::getWorldPosition()
 {
@@ -26,6 +29,7 @@ Vector2 Collider::getWorldPosition()
 	worldPos = transform->localToWorldPosition(worldPos);
 	return worldPos;
 }
+
 
 double Collider::getWorldRotation()
 {

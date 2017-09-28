@@ -1,8 +1,9 @@
 #pragma once
 
+#include "Engine/Components/Behaviours/Behaviour.h"
+
 #include <memory>
 #include <vector>
-#include "Engine\Behaviour.h"
 
 class GameObject;
 

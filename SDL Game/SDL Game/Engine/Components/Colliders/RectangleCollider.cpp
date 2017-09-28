@@ -2,8 +2,8 @@
 
 #define _USE_MATH_DEFINES
 #include <math.h>
-#include "GameObject.h"
-#include "Transform.h"
+#include "Engine/GameObjects/GameObject.h"
+#include "Engine/Components/Transforms/Transform.h"
 
 
 RectangleCollider::RectangleCollider() : size(0, 0)
@@ -14,6 +14,7 @@ RectangleCollider::RectangleCollider() : size(0, 0)
 RectangleCollider::~RectangleCollider()
 {
 }
+
 
 std::vector<Vector2> RectangleCollider::getWorldCorners()
 {
@@ -51,6 +52,7 @@ std::vector<Vector2> RectangleCollider::getWorldCorners()
 	return m_worldCorners;
 }
 
+
 std::vector<Vector2> RectangleCollider::getOuterNormals()
 {
 	// Check if the previously cached values are still valid
@@ -87,6 +89,7 @@ std::vector<Vector2> RectangleCollider::getOuterNormals()
 
 	return m_outerNormals;
 }
+
 
 void RectangleCollider::checkCacheValidity()
 {

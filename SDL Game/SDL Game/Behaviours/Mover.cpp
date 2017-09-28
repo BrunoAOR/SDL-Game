@@ -1,7 +1,7 @@
 #include "Mover.h"
 
-#include "Engine/GameObject.h"
-#include "Engine/Transform.h"
+#include "Engine/GameObjects/GameObject.h"
+#include "Engine/Components/Transforms/Transform.h"
 #include "Engine/Input.h"
 #include "Engine/Time.h"
 #include "Engine/Vector2.h"

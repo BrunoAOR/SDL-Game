@@ -2,7 +2,8 @@
 
 #include <SDL_image.h>
 #include "constants.h"
-#include "Transform.h"
+#include "Engine/Components/Transforms/Transform.h"
+
 
 Texture::Texture(SDL_Renderer* renderer)
 	: m_positionPivot(Vector2(0.5, 0.5))
@@ -15,7 +16,6 @@ Texture::Texture(SDL_Renderer* renderer)
 	// Store renderer reference
 	, m_renderer(renderer)
 {
-
 }
 
 

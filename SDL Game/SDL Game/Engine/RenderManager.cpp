@@ -1,8 +1,8 @@
 #include "RenderManager.h"
 
-#include "EngineUtils.h"
-#include "GameObject.h"
-#include "Texture.h"
+#include "Engine/EngineUtils.h"
+#include "Engine/GameObjects/GameObject.h"
+#include "Engine/Texture.h"
 
 
 SDL_Renderer* RenderManager::m_renderer = nullptr;

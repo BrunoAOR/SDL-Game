@@ -1,13 +1,16 @@
 #include "ComponentsManager.h"
 
-#include "BehavioursManager.h"
-#include "CollidersManager.h"
+#include "Engine/Components/Behaviours/BehavioursManager.h"
+#include "Engine/Components/Colliders/CollidersManager.h"
+
 
 std::vector<std::shared_ptr<ComponentManager>> ComponentsManager::componentManagers;
+
 
 ComponentsManager::ComponentsManager()
 {
 }
+
 
 bool ComponentsManager::sendToManager(std::weak_ptr<Component> component)
 {
@@ -26,16 +29,19 @@ ComponentsManager::~ComponentsManager()
 {
 }
 
+
 void ComponentsManager::init()
 {
 	componentManagers.push_back(std::unique_ptr<BehavioursManager>(new BehavioursManager()));
 	componentManagers.push_back(std::unique_ptr<CollidersManager>(new CollidersManager()));
 }
 
+
 void ComponentsManager::close()
 {
 	componentManagers.clear();
 }
+
 
 void ComponentsManager::update()
 {

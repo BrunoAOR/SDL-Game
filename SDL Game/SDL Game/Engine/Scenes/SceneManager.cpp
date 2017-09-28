@@ -1,8 +1,9 @@
 #include "SceneManager.h"
 
-#include "EngineUtils.h"
-#include "Scene.h"
-#include "GameObjectsManager.h"
+#include "Engine/EngineUtils.h"
+#include "Engine/Scenes/Scene.h"
+#include "Engine/GameObjects/GameObjectsManager.h"
+
 
 std::vector<std::shared_ptr<Scene>> SceneManager::m_scenes;
 std::weak_ptr<Scene> SceneManager::m_activeScene;
@@ -28,6 +29,7 @@ void SceneManager::refreshScenes()
 		doLoadScene();
 	}
 }
+
 
 void SceneManager::loadScene(unsigned int index)
 {
@@ -67,6 +69,7 @@ void SceneManager::doLoadScene()
 	// Load scene
 	m_activeScene.lock()->load();
 }
+
 
 void SceneManager::unloadScene(std::weak_ptr<Scene> sceneToUnload)
 {

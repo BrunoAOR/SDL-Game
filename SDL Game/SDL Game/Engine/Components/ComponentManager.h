@@ -4,7 +4,6 @@
 #include <memory>
 
 class Component;
-class GameObject;
 
 
 class ComponentManager

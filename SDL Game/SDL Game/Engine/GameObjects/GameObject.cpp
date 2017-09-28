@@ -1,10 +1,11 @@
 #include "GameObject.h"
 
-#include "EngineUtils.h"
-#include "Texture.h"
-#include "RenderManager.h"
-#include "SceneManager.h"
-#include "GameObjectsManager.h"
+#include "Engine/EngineUtils.h"
+#include "Engine/Components/Transforms/Transform.h"
+#include "Engine/Texture.h"
+#include "Engine/RenderManager.h"
+#include "Engine/Scenes/SceneManager.h"
+#include "Engine/GameObjects/GameObjectsManager.h"
 
 
 // TESTING START
@@ -115,6 +116,7 @@ void GameObject::setActive(bool activeState)
 {
 	m_isActive = activeState;
 }
+
 
 bool GameObject::isActive()
 {

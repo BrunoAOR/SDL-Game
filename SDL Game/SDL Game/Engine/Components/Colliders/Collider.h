@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Component.h"
-#include "Vector2.h"
+#include "Engine/Components/Component.h"
+
+#include "Engine/Vector2.h"
 
 
 class Collider :
@@ -21,4 +22,3 @@ public:
 	bool isStatic;
 	bool isTrigger;
 };
-

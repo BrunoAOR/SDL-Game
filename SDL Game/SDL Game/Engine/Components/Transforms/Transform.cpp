@@ -2,8 +2,9 @@
 
 #define _USE_MATH_DEFINES
 #include <math.h>
-#include "constants.h"
-#include "EngineUtils.h"
+
+#include "Engine/constants.h"
+#include "Engine/EngineUtils.h"
 
 
 Transform::Transform()
@@ -15,7 +16,6 @@ Transform::Transform()
 	, m_worldScale(Vector2(1, 1))
 	, m_parentTransform(nullptr)
 {
-
 }
 
 
@@ -281,6 +281,7 @@ std::weak_ptr<Transform> Transform::getParent()
 	return m_parentWeakPtr;
 }
 
+
 bool Transform::setParent(std::weak_ptr<Transform> parent)
 {
 	if (parent.expired())
@@ -374,6 +375,7 @@ bool Transform::isTransformInChildrenHierarchy(Transform* transform)
 	return false;
 }
 
+
 void Transform::updateLocalFields()
 {
 	m_localPosition = worldToLocalPosition(m_worldPosition);
@@ -381,12 +383,14 @@ void Transform::updateLocalFields()
 	m_localScale = worldToLocalScale(m_worldScale);
 }
 
+
 void Transform::updateWorldFields()
 {
 	m_worldPosition = localToWorldPosition(m_localPosition);
 	m_worldRotation = localToWorldRotation(m_localRotation); 
 	m_worldScale = localToWorldScale(m_localScale);
 }
+
 
 void Transform::updateChildrenLocalFields()
 {
@@ -396,6 +400,7 @@ void Transform::updateChildrenLocalFields()
 		childTransform->updateChildrenLocalFields();
 	}
 }
+
 
 void Transform::updateChildrenWorldFields()
 {

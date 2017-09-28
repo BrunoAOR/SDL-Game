@@ -1,8 +1,9 @@
 #include "TimeTesterScene.h"
 
-#include "Engine/GameObject.h"
+#include "Engine/GameObjects/GameObject.h"
 #include "Engine/Texture.h"
-#include "Engine/Transform.h"
+#include "Engine/Components/Transforms/Transform.h"
+
 #include "Behaviours/Mover.h"
 #include "Behaviours/SceneChanger.h"
 

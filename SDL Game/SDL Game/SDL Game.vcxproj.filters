@@ -24,12 +24,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Engine\Behaviour.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\GameObject.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Input.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
@@ -43,21 +37,6 @@
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="Engine\RenderManager.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Scene.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\SceneManager.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\GameObjectsManager.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Component.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Transform.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="Scenes\TestScene.cpp">
@@ -111,15 +90,6 @@
     <ClCompile Include="Behaviours\Mover.cpp">
       <Filter>Behaviours</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\ComponentsManager.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\BehavioursManager.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\ComponentManager.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\EngineUtils.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
@@ -129,33 +99,57 @@
     <ClCompile Include="Scenes\CollidersScene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\CircleCollider.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Collider.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\CollidersManager.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\RectangleCollider.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
     <ClCompile Include="Scenes\ParentSwitchScene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Behaviours\ParentSwitcher.cpp">
       <Filter>Behaviours</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Components\Component.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Components\ComponentManager.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Components\ComponentsManager.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Components\Behaviours\Behaviour.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Components\Behaviours\BehavioursManager.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Components\Colliders\CircleCollider.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Components\Colliders\Collider.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Components\Colliders\CollidersManager.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Components\Colliders\RectangleCollider.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GameObjects\GameObject.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GameObjects\GameObjectsManager.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Scenes\Scene.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Scenes\SceneManager.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Components\Transforms\Transform.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine\Behaviour.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\constants.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\GameObject.h">
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Input.h">
@@ -164,25 +158,10 @@
     <ClInclude Include="Engine\Texture.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Transform.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Vector2.h">
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Engine\RenderManager.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Scene.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\SceneManager.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\GameObjectsManager.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Component.h">
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Scenes\TransformPivotScene.h">
@@ -218,9 +197,6 @@
     <ClInclude Include="Behaviours\Pivotter.h">
       <Filter>Behaviours</Filter>
     </ClInclude>
-    <ClInclude Include="Behaviours\resource.h">
-      <Filter>Behaviours</Filter>
-    </ClInclude>
     <ClInclude Include="Behaviours\Rotator.h">
       <Filter>Behaviours</Filter>
     </ClInclude>
@@ -239,15 +215,6 @@
     <ClInclude Include="Behaviours\Mover.h">
       <Filter>Behaviours</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\ComponentsManager.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\BehavioursManager.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\ComponentManager.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\EngineUtils.h">
       <Filter>Engine</Filter>
     </ClInclude>
@@ -257,23 +224,53 @@
     <ClInclude Include="Scenes\CollidersScene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\RectangleCollider.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\CircleCollider.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Collider.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\CollidersManager.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
     <ClInclude Include="Scenes\ParentSwitchScene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Behaviours\ParentSwitcher.h">
       <Filter>Behaviours</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Components\Component.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Components\ComponentManager.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Components\ComponentsManager.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Components\Behaviours\Behaviour.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Components\Behaviours\BehavioursManager.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Components\Colliders\CircleCollider.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Components\Colliders\Collider.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Components\Colliders\CollidersManager.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Components\Colliders\RectangleCollider.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GameObjects\GameObject.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GameObjects\GameObjectsManager.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Scenes\SceneManager.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Scenes\Scene.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Components\Transforms\Transform.h">
+      <Filter>Engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

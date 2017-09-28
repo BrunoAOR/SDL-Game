@@ -1,13 +1,14 @@
 #include "CollidersScene.h"
 
-#include "Engine/GameObject.h"
+#include "Engine/GameObjects/GameObject.h"
 #include "Engine/Texture.h"
-#include "Engine/Transform.h"
+#include "Engine/Components/Transforms/Transform.h"
+#include "Engine/Components/Colliders/CircleCollider.h"
+#include "Engine/Components/Colliders/RectangleCollider.h"
+
 #include "Behaviours/Mover.h"
 #include "Behaviours/SceneChanger.h"
 #include "Behaviours/TimeLogger.h"
-#include "Engine/CircleCollider.h"
-#include "Engine/RectangleCollider.h"
 #include "Behaviours/Rotator.h"
 
 

@@ -1,7 +1,8 @@
 #include "ParentSwitchScene.h"
 
-#include "Engine/GameObject.h"
-#include "Engine/Transform.h"
+#include "Engine/GameObjects/GameObject.h"
+#include "Engine/Components/Transforms/Transform.h"
+
 #include "Behaviours/SceneChanger.h"
 #include "Behaviours/Rotator.h"
 #include "Behaviours/Mover.h"

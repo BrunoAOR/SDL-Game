@@ -4,6 +4,7 @@
 
 class GameObject;
 
+
 class Component
 {
 	friend class ComponentsManager;

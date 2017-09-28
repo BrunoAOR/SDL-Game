@@ -1,8 +1,6 @@
 #pragma once
 
-#include "Engine/Behaviour.h"
-
-class GameObject;
+#include "Engine/Components/Behaviours/Behaviour.h"
 
 
 class Crosshair :

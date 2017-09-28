@@ -2,14 +2,15 @@
 
 #include <memory>
 
-#include "Engine/GameObject.h"
+#include "Engine/GameObjects/GameObject.h"
+#include "Engine/Components/Transforms/Transform.h"
 #include "Engine/constants.h"
 #include "Engine/Texture.h"
 
 #include "Behaviours/Crosshair.h"
-#include "Behaviours./Crosshair2.h"
+#include "Behaviours/Crosshair2.h"
 #include "Behaviours/Spawner.h"
-#include "Behaviours./ColorChanger.h"
+#include "Behaviours/ColorChanger.h"
 #include "Behaviours/BehaviourToRemove.h"
 #include "Behaviours/SceneChanger.h"
 

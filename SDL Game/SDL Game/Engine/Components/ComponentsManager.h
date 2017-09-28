@@ -2,7 +2,7 @@
 
 #include <memory>
 #include <vector>
-#include "Component.h"
+#include "Engine/Components/Component.h"
 
 class GameObject;
 class ComponentManager;

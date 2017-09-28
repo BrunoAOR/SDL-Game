@@ -1,5 +1,8 @@
 #pragma once
-#include "Engine\Scene.h"
+
+#include "Engine/Scenes/Scene.h"
+
+
 class TransformPivotScene :
 	public Scene
 {

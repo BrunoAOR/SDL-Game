@@ -33,8 +33,6 @@ private:
 };
 
 
-
-
 template <typename T, typename U>
 bool EngineUtils::ptr_owner_equality(std::weak_ptr<T> wp1, std::weak_ptr<U> wp2)
 {

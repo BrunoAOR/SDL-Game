@@ -1,7 +1,7 @@
 #include "BehavioursManager.h"
 
-#include "Behaviour.h"
-#include "GameObject.h"
+#include "Engine/Components/Behaviours/Behaviour.h"
+#include "Engine/GameObjects/GameObject.h"
 
 
 BehavioursManager::BehavioursManager()

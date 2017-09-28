@@ -1,7 +1,7 @@
 #include "GOKiller.h"
 
 #include "Engine/Input.h"
-#include "Engine/GameObject.h"
+#include "Engine/GameObjects/GameObject.h"
 
 void GOKiller::update()
 {

@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Engine\Behaviour.h"
+#include "Engine/Components/Behaviours/Behaviour.h"
+
 #include <memory>
 
 class Transform;

@@ -1,8 +1,9 @@
 #pragma once
 
-#include "ComponentManager.h"
-#include "CircleCollider.h"
-#include "RectangleCollider.h"
+#include "Engine/Components/ComponentManager.h"
+#include "Engine/Components/Colliders/CircleCollider.h"
+#include "Engine/Components/Colliders/RectangleCollider.h"
+
 
 class CollidersManager final :
 	public ComponentManager
@@ -32,4 +33,3 @@ private:
 
 	void informCollision(Collider* coll1, Collider* coll2);
 };
-

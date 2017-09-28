@@ -1,7 +1,7 @@
 #include "SceneChanger.h"
 
 #include "Engine/Input.h"
-#include "Engine/SceneManager.h"
+#include "Engine/Scenes/SceneManager.h"
 
 
 void SceneChanger::update()
