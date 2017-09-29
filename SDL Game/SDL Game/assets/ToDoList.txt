@@ -1,18 +1,13 @@
 
 Stuff to do:
 
-* Convert the Texture class into a Component based on an abstract Renderer (or similarly named class) with the following child options
-	- Sprite: 
-		Simple class for a single image per texture
-		Exactly what is currently available
+* Implement a TextComponent to draw text on the screen. It could inherit from Texture since it will require rendering and the generation of the text terture on every change.
 
-	- SpriteSheet:
-		Class that takes one texture and allows for many sub-images to be defined by using Rect (new class similar to SDL_Rect) elements to define the sub-sprites.
-		This class has a currentSprite pointer that indicates the appropiate clipRect to use when rendering
-		The class should expose a method to goToNextClip or maybe to go to a specific clip
-		Perhaps it would be important to define a way to store diferent "sets" of clips since a single Texture (SpriteSheet) could hold animation frames to many animations
-			Walking, running, jumping could all be in a single SpriteSheet. Perhaps an std::map could serve the purpose as: std::map<string, std::set<Rect>>.
-			In this way, one could have not only the currentSprite pointer but also a currentAnimation pointer.
+* Implement callbacks to behaviours when a collision has occurred. (OnCollision, OnTriggerEnter, OnTriggerStay, OnTriggerExit)
+	Also review whether the isTrigger property is being taken into account (besides the isStatic) to define which object must move
+
+* Implement a Prefabs system. It could work through factory methods that could be written to create
+	and setup a certain GameObject and then return a std::weak_ptr<GameObject> just like the usual GameOBject::createNew() function does.
 
 * Consider creating a template class to base the ComponentManager on: Something like ElementsManager<T> which could be reused for the GameObjectsManager and SceneManager
 
@@ -24,8 +19,4 @@ Stuff to do:
 
 * Review all engine classes and implement (or delete) copy constructors/assignments and move constructors/assignments
 
-* Implement a Prefabs system. It could work through factory methods that could be written to create
-	and setup a certain GameObject and then return a std::weak_ptr<GameObject> just like the usual GameOBject::createNew() function does.
-		
-* Implement a TextComponent to draw text on the screen. It could inherit from Texture since it will require rendering and the generation of the text terture on every change.
 

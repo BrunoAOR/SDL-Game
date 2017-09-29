@@ -9,7 +9,7 @@ SpriteSheet::SpriteSheet()
 	, m_currentClipRectIndex(-1)
 	, m_isPlaying(false)
 	, m_elapsedTime(0)
-	, m_limitTime(0)
+	, m_limitTime(200)
 	, m_direction(0)
 {
 }
@@ -22,10 +22,11 @@ SpriteSheet::~SpriteSheet()
 
 void SpriteSheet::render()
 {
+	// Only render if an clipRect (and therefore an animation) is selected
 	if (m_currentClipRect != nullptr)
 	{
 		// Check if automatic animation playback is active
-		if (m_isPlaying)
+		if (m_isPlaying && m_limitTime != 0)
 		{
 			m_elapsedTime += Time::deltaTime();
 			if (m_elapsedTime >= m_limitTime)
@@ -43,11 +44,6 @@ void SpriteSheet::render()
 		}
 
 		renderMain(m_currentClipRect);
-	}
-	else
-	{
-		stopAnimation();
-		renderMain();
 	}
 }
 
@@ -165,27 +161,52 @@ bool SpriteSheet::nextAnimationFrame()
 	return false;
 }
 
+
+bool SpriteSheet::playAnimation(std::string animationName)
+{
+	stopAnimation();
+	if (selectAnimation(animationName)) {
+		m_elapsedTime = 0;
+		m_isPlaying = true;
+		return true;
+	}
+
+	return false;
+}
+
 bool SpriteSheet::playAnimation(std::string animationName, double fps)
 {
 	stopAnimation();
-	bool success = selectAnimation(animationName);
-	if (success && fps != 0) {
-		if (fps > 0)
-		{
-			m_limitTime = (int)(1000 / fps);
-			m_direction = 1;
-		}
-		else // if (fps < 0)
-		{
-			m_limitTime = (int)(-1000 / fps);
-			m_direction = -1;
-		}
+	if (selectAnimation(animationName) && fps != 0) {
+		setAnimationSpeed(fps);
 		m_elapsedTime = 0;
 		m_isPlaying = true;
+		return true;
 	}
 	
 	return false;
 }
+
+
+void SpriteSheet::setAnimationSpeed(double fps)
+{
+	if (fps == 0)
+	{
+		m_limitTime = 0;
+		m_direction = 0;
+	}
+	else if (fps > 0)
+	{
+		m_limitTime = (int)(1000 / fps);
+		m_direction = 1;
+	}
+	else // if (fps < 0)
+	{
+		m_limitTime = (int)(-1000 / fps);
+		m_direction = -1;
+	}
+}
+
 
 bool SpriteSheet::stopAnimation()
 {
@@ -199,6 +220,7 @@ bool SpriteSheet::stopAnimation()
 	}
 	return false;
 }
+
 
 void SpriteSheet::resetCachedFields()
 {

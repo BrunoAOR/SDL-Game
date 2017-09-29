@@ -10,24 +10,11 @@ class Renderer :
 	public Component
 {
 	friend class RenderersManager;
-
 public:
 	Renderer();
 	virtual ~Renderer() = 0;
 
 	virtual void render() = 0;
-
-	bool loadImage(std::string path);
-	bool loadImage(std::string path, Uint32 colorKey);
-
-	// Set color modulation
-	void setColor(Uint8 r, Uint8 g, Uint8 b);
-
-	// Set Blend Mode
-	void setBlendMode(SDL_BlendMode blendMode);
-
-	// Set alpha modulation
-	void setAlpha(Uint8 a);
 
 	// Get dimensions
 	int getWidth();
@@ -46,10 +33,6 @@ public:
 	void setAllPivots(const Vector2& pivot);
 
 protected:
-	// Renders texture at given point
-	void renderMain(SDL_Rect* clip = nullptr, SDL_RendererFlip flip = SDL_FLIP_NONE);
-
-private:
 	// The renderer associated with this texture
 	SDL_Renderer* m_renderer;
 
@@ -60,9 +43,12 @@ private:
 	int m_width;
 	int m_height;
 
-	void free();
-	bool loadImage(std::string path, bool shouldColorKey, Uint32 colorKey);
+	// Renders texture at given point
+	void renderMain(SDL_Rect* clip = nullptr, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
+	void free();
+
+private:
 	// Pivots
 	Vector2 m_positionPivot;
 	Vector2 m_rotationPivot;

@@ -1,5 +1,6 @@
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 
 #include "Engine/constants.h"
 #include "Engine/Input.h"
@@ -64,6 +65,14 @@ bool init()
 			printf("Error: SDL_Image could not initialize! SDL_image Error: %s\n", IMG_GetError());
 			success = false;
 		}
+
+		//Initialize SDL_ttf
+		if (TTF_Init() == -1)
+		{
+			printf("SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
+			success = false;
+		}
+
 		// Initialize the ComponentsManager
 		success &= ComponentsManager::init();
 
@@ -157,5 +166,6 @@ void close()
 
 	// Quit SDL subsystems
 	IMG_Quit();
+	TTF_Quit();
 	SDL_Quit();
 }

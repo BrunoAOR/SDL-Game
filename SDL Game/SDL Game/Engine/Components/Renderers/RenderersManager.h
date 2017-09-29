@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SDL.h>
+#include <SDL_ttf.h>
 #include "Engine/Components/ComponentManager.h"
 
 class Component;
@@ -25,6 +26,8 @@ private:
 	RenderersManager();
 	SDL_Window * m_window;
 	SDL_Renderer * m_renderer;
+	TTF_Font * m_font;
+	int m_fontSize;
 
 	SDL_Renderer * getRenderer();
 };

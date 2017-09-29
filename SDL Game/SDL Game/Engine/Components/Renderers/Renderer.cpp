@@ -1,6 +1,5 @@
 #include "Renderer.h"
 
-#include <SDL_image.h>
 #include "Engine/constants.h"
 #include "Engine/Components/Renderers/RenderersManager.h"
 #include "Engine/GameObjects/GameObject.h"
@@ -38,87 +37,6 @@ void Renderer::free()
 }
 
 
-bool Renderer::loadImage(std::string path)
-{
-	return loadImage(path, false, 0);
-}
-
-bool Renderer::loadImage(std::string path, Uint32 colorKey)
-{
-	return loadImage(path, true, colorKey);
-}
-
-
-bool Renderer::loadImage(std::string path, bool shouldColorKey, Uint32 colorKey)
-{
-	// Get rid of previous texture
-	free();
-
-	// Load image at specified path as surface
-	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
-	if (loadedSurface == nullptr)
-	{
-		printf("Error: Unable to load image at path %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError());
-	}
-	else
-	{
-		//Color key image if required
-		if (shouldColorKey)
-		{
-			if (SDL_SetColorKey(loadedSurface, SDL_TRUE, colorKey) != 0)
-			{
-				printf("Warning: Unable to color key the loaded image at path %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
-			}
-		}
-
-		// Create texture from surface
-		m_texture = SDL_CreateTextureFromSurface(m_renderer, loadedSurface);
-		if (m_texture == nullptr)
-		{
-			printf("Error: Unable to create texture for image at path %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
-		}
-		else
-		{
-			// Store image dimension
-			m_width = loadedSurface->w;
-			m_height = loadedSurface->h;
-		}
-
-		// Free the loaded surface
-		SDL_FreeSurface(loadedSurface);
-	}
-
-	return m_texture != nullptr;
-}
-
-
-void Renderer::setColor(Uint8 r, Uint8 g, Uint8 b)
-{
-	// Modulate texture color
-	if (m_texture != nullptr) {
-		SDL_SetTextureColorMod(m_texture, r, g, b);
-	}
-}
-
-
-void Renderer::setBlendMode(SDL_BlendMode blendMode)
-{
-	// Set blending function
-	if (m_texture != nullptr) {
-		SDL_SetTextureBlendMode(m_texture, blendMode);
-	}
-}
-
-
-void Renderer::setAlpha(Uint8 alpha)
-{
-	// Modulate texture alpha
-	if (m_texture != nullptr) {
-		SDL_SetTextureAlphaMod(m_texture, alpha);
-	}
-}
-
-
 int Renderer::getWidth()
 {
 	return m_width;
@@ -133,13 +51,21 @@ int Renderer::getHeight()
 
 void Renderer::renderMain(SDL_Rect* clip, SDL_RendererFlip flip)
 {
-	// Note: All transform pivots are transformed to "(1 - pivot) for the y axis so that the zero refers to the bottom of the RenderQuad"
-	Transform* transform = gameObject()->transform.lock().get();
+	if (m_renderer == nullptr || m_texture == nullptr)
+	{
+		return;
+	}
+
+	auto sharedTransform = gameObject()->transform.lock();
+	if (!sharedTransform)
+	{
+		return;
+	}
 
 	// Extract info from the transform
-	Vector2 pos = transform->getWorldPosition();
-	double rot = transform->getWorldRotation();
-	Vector2 sca = transform->getWorldScale();
+	Vector2 pos = sharedTransform->getWorldPosition();
+	double rot = sharedTransform->getWorldRotation();
+	Vector2 sca = sharedTransform->getWorldScale();
 
 	// Correct the position and rotations to simulate a reference system with 0 in the bottom-left,
 	// x increasing to the right (same as SDL) and Y increasing up (opposite of SDL)

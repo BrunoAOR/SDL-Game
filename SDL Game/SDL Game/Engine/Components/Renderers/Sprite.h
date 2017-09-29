@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Engine/Components/Renderers/Renderer.h"
+#include "Engine/Components/Renderers/SpriteRenderer.h"
 
 
-class Sprite :
-	public Renderer
+class Sprite final:
+	public SpriteRenderer
 {
 public:
 	Sprite();

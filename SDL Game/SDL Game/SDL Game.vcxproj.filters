@@ -159,6 +159,15 @@
     <ClCompile Include="Behaviours\SpriteSheetController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Behaviours\MegamanController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Components\Renderers\TextRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Components\Renderers\SpriteRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\constants.h">
@@ -296,6 +305,15 @@
     <ClInclude Include="Behaviours\SpriteSheetController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Behaviours\MegamanController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Components\Renderers\TextRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Components\Renderers\SpriteRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\Crosshair.png">
@@ -310,10 +328,16 @@
     <Image Include="assets\Spritesheet.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="assets\MegamanSpriteSheet.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="assets\ToDoList.txt">
       <Filter>Resource Files</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="assets\lazy.ttf" />
   </ItemGroup>
 </Project>

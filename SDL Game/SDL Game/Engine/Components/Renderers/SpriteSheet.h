@@ -4,11 +4,11 @@
 #include <unordered_map>
 #include <vector>
 #include <string>
-#include "Engine/Components/Renderers/Renderer.h"
+#include "Engine/Components/Renderers/SpriteRenderer.h"
 
 
-class SpriteSheet :
-	public Renderer
+class SpriteSheet final :
+	public SpriteRenderer
 {
 public:
 	SpriteSheet();
@@ -31,7 +31,9 @@ public:
 	bool nextAnimationFrame();
 
 	// Play animations
-	bool playAnimation(std::string animationName, double fps = 0.25);
+	bool playAnimation(std::string animationName);
+	bool playAnimation(std::string animationName, double fps);
+	void setAnimationSpeed(double fps);
 	bool stopAnimation();
 
 private:

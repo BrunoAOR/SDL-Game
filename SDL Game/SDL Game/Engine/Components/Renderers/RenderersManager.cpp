@@ -3,10 +3,15 @@
 #include <SDL_image.h>
 #include "Engine/constants.h"
 #include "Engine/Components/Renderers/Renderer.h"
+#include "Engine/Components/Renderers/TextRenderer.h"
 #include "Engine/GameObjects/GameObject.h"
 
 
 RenderersManager::RenderersManager()
+	: m_window(nullptr)
+	, m_renderer(nullptr)
+	, m_font(nullptr)
+	, m_fontSize(28)
 {
 }
 
@@ -44,6 +49,16 @@ bool RenderersManager::init()
 			printf("Error: Renderer could not be created! SDL Error: %s\n", SDL_GetError());
 			success = false;
 		}
+		else
+		{
+			// Create the font
+			m_font = TTF_OpenFont("assets/lazy.ttf", m_fontSize);
+			if (m_font == nullptr)
+			{
+				printf("Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError());
+				success = false;
+			}
+		}
 	}
 
 	return success;
@@ -56,6 +71,8 @@ void RenderersManager::close()
 	m_renderer = nullptr;
 	SDL_DestroyWindow(m_window);
 	m_window = nullptr;
+	TTF_CloseFont(m_font);
+	m_font = nullptr;
 }
 
 
@@ -104,6 +121,10 @@ bool RenderersManager::initializeComponent(std::weak_ptr<Component> component)
 {
 	if (auto sharedComponent = component.lock())
 	{
+		if (auto textRenderer = std::dynamic_pointer_cast<TextRenderer>(sharedComponent))
+		{
+			textRenderer->m_font = m_font;
+		}
 		if (auto renderer = std::dynamic_pointer_cast<Renderer>(sharedComponent))
 		{
 			renderer->m_renderer = m_renderer;
