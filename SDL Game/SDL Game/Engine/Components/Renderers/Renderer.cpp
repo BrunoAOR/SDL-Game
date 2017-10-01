@@ -4,6 +4,8 @@
 #include "Engine/Components/Renderers/RenderersManager.h"
 #include "Engine/GameObjects/GameObject.h"
 #include "Engine/Components/Transforms/Transform.h"
+#include "Engine/Components/ComponentType.h"
+
 
 Renderer::Renderer()
 	: m_renderer(nullptr)
@@ -14,6 +16,7 @@ Renderer::Renderer()
 	, m_rotationPivot(Vector2(0.5, 0.5))
 	, m_scalePivot(Vector2(0.5, 0.5))
 {
+	type = ComponentType::Renderer;
 }
 
 

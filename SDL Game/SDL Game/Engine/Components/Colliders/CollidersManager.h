@@ -12,17 +12,18 @@ class CollidersManager final :
 
 public:
 	~CollidersManager();
-	// Inherited via ComponentManager
-	virtual bool canManage(std::weak_ptr<Component> component) override;
-	virtual void update() override;
-	virtual bool init() override;
-	virtual void close() override;
-	virtual bool initializeComponent(std::weak_ptr<Component> component) override;
 
 private:
 	CollidersManager();
 
 	static const double MinPenetration;
+
+	// Inherited via ComponentManager
+	virtual ComponentType managedComponentType() override;
+	virtual void update() override;
+	virtual bool init() override;
+	virtual void close() override;
+	virtual bool initializeComponent(std::weak_ptr<Component> component) override;
 
 	bool hasCollision(Collider* coll1, Collider* coll2);
 	bool hasCollision(CircleCollider& circColl1, CircleCollider& circColl2);

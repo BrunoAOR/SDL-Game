@@ -1,5 +1,6 @@
 #include "CollidersManager.h"
 
+#include "Engine/Components/ComponentType.h"
 #include <cmath>
 #include "Engine/EngineUtils.h"
 #include "Engine/Vector2.h"
@@ -20,16 +21,9 @@ CollidersManager::~CollidersManager()
 }
 
 
-bool CollidersManager::canManage(std::weak_ptr<Component> component)
+ComponentType CollidersManager::managedComponentType()
 {
-	if (std::dynamic_pointer_cast<Collider>(component.lock()))
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+	return ComponentType::Collider;
 }
 
 
@@ -158,9 +152,6 @@ bool CollidersManager::hasCollision(RectangleCollider & rectColl1, RectangleColl
 	// First, we get the normals from the rectColls.
 	// Only the first 2 normals are needed for each rect, since the other two are the same but in opposite direction
 	// Special case: if the rotation of both rectangle is the same, then only the first 2 normals of either rectColl are required
-	if (rectColl1.gameObject()->m_id == 1 || rectColl2.gameObject()->m_id == 1) {
-		rectColl1.size = rectColl1.size;
-	}
 	std::vector<Vector2> selectedNormals;
 	if (rectColl1.getWorldRotation() == rectColl2.getWorldRotation())
 	{

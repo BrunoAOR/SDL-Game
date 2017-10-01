@@ -1,6 +1,7 @@
 #include "RenderersManager.h"
 
 #include <SDL_image.h>
+#include "Engine/Components/ComponentType.h"
 #include "Engine/constants.h"
 #include "Engine/Components/Renderers/Renderer.h"
 #include "Engine/Components/Renderers/TextRenderer.h"
@@ -24,6 +25,40 @@ RenderersManager::~RenderersManager()
 SDL_Renderer * RenderersManager::getRenderer()
 {
 	return m_renderer;
+}
+
+
+ComponentType RenderersManager::managedComponentType()
+{
+	return ComponentType::Renderer;
+}
+
+
+void RenderersManager::update()
+{
+	// Note: refreshComponents ensures that all weak_ptr in m_components are valid, so locking them is guaranteed to produce a valid shared_ptr
+	refreshComponents();
+
+	// Set Render Color to white
+	SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 0xFF);
+
+	// Clear screen
+	SDL_RenderClear(m_renderer);
+
+	for (auto weakRenderer : m_components)
+	{
+		if (auto renderer = std::static_pointer_cast<Renderer>(weakRenderer.lock()))
+		{
+			// Actual update
+			if (renderer->isActive())
+			{
+				renderer->render();
+			}
+		}
+	}
+
+	// Update screen
+	SDL_RenderPresent(m_renderer);
 }
 
 
@@ -76,59 +111,17 @@ void RenderersManager::close()
 }
 
 
-bool RenderersManager::canManage(std::weak_ptr<Component> component)
-{
-	if (std::dynamic_pointer_cast<Renderer>(component.lock()))
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
-
-
-void RenderersManager::update()
-{
-	// Note: refreshComponents ensures that all weak_ptr in m_components are valid, so locking them is guaranteed to produce a valid shared_ptr
-	refreshComponents();
-	
-	// Set Render Color to white
-	SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 0xFF);
-
-	// Clear screen
-	SDL_RenderClear(m_renderer);
-	
-	for (auto weakRenderer : m_components)
-	{
-		if (auto renderer = std::static_pointer_cast<Renderer>(weakRenderer.lock()))
-		{
-			// Actual update
-			if (renderer->isActive())
-			{
-				renderer->render();
-			}
-		}
-	}
-
-	// Update screen
-	SDL_RenderPresent(m_renderer);
-}
-
-
 bool RenderersManager::initializeComponent(std::weak_ptr<Component> component)
 {
+	// At this point, we know that component is a Renderer (or a sub-class there-of)
 	if (auto sharedComponent = component.lock())
 	{
+		auto renderer = std::static_pointer_cast<Renderer>(sharedComponent);
+		renderer->m_renderer = m_renderer;
+
 		if (auto textRenderer = std::dynamic_pointer_cast<TextRenderer>(sharedComponent))
 		{
 			textRenderer->m_font = m_font;
-		}
-		if (auto renderer = std::dynamic_pointer_cast<Renderer>(sharedComponent))
-		{
-			renderer->m_renderer = m_renderer;
-			return true;
 		}
 	}
 	return false;

@@ -13,14 +13,6 @@ class RenderersManager final :
 	friend class ComponentsManager;
 public:
 	~RenderersManager();
-	
-	// Inherited via ComponentManager
-	virtual bool canManage(std::weak_ptr<Component> component) override;
-	virtual void update() override;
-	virtual bool init() override;
-	virtual void close() override;
-	virtual bool initializeComponent(std::weak_ptr<Component> component) override;
-
 
 private:
 	RenderersManager();
@@ -30,4 +22,11 @@ private:
 	int m_fontSize;
 
 	SDL_Renderer * getRenderer();
+
+	// Inherited via ComponentManager
+	virtual ComponentType managedComponentType() override;
+	virtual void update() override;
+	virtual bool init() override;
+	virtual void close() override;
+	virtual bool initializeComponent(std::weak_ptr<Component> component) override;
 };

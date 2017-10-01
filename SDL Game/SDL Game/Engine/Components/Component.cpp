@@ -1,5 +1,7 @@
 #include "Component.h"
 
+#include "Engine/Components/ComponentType.h"
+
 
 // TESTING START
 int Component::s_alive = 0;
@@ -7,7 +9,7 @@ int Component::s_nextId = 0;
 // TESTING END
 
 
-Component::Component() : m_isActive(true)
+Component::Component() : m_isActive(true), type(ComponentType::UNDEFINED)
 {
 	// TESTING START
 	m_id = s_nextId++;

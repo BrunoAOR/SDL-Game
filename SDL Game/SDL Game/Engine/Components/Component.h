@@ -1,13 +1,15 @@
 #pragma once
 
-#include<memory>
+#include <memory>
 
 class GameObject;
+enum class ComponentType;
 
 
 class Component
 {
 	friend class ComponentsManager;
+	friend class ComponentManager;
 public:
 	Component();
 	virtual ~Component() = 0;
@@ -15,6 +17,9 @@ public:
 	std::shared_ptr<GameObject> gameObject();
 	void setActive(bool activeState);
 	bool isActive();
+
+protected:
+	ComponentType type;
 
 private:
 	// TESTING FIELDS START

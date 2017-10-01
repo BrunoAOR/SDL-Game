@@ -73,6 +73,7 @@
     <ClInclude Include="Engine\Components\Colliders\CircleCollider.h" />
     <ClInclude Include="Engine\Components\Colliders\Collider.h" />
     <ClInclude Include="Engine\Components\Colliders\CollidersManager.h" />
+    <ClInclude Include="Engine\Components\ComponentType.h" />
     <ClInclude Include="Engine\EngineUtils.h" />
     <ClInclude Include="Engine\Components\ComponentsManager.h" />
     <ClInclude Include="Engine\Components\Behaviours\BehavioursManager.h" />

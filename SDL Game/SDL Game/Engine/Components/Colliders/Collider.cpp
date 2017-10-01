@@ -2,10 +2,12 @@
 
 #include "Engine/GameObjects/GameObject.h"
 #include "Engine/Components/Transforms/Transform.h"
+#include "Engine/Components/ComponentType.h"
 
 
 Collider::Collider() : offset(0, 0), isStatic(false), isTrigger(false)
 {
+	type = ComponentType::Collider;
 }
 
 

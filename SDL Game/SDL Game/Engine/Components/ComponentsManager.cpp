@@ -17,7 +17,7 @@ bool ComponentsManager::sendToManager(std::weak_ptr<Component> component)
 {
 	for (auto compManager : componentManagers)
 	{
-		if (compManager->subscribeComponent(component) && compManager->initializeComponent(component))
+		if (compManager->subscribeComponent(component))
 		{
 			return true;
 		}

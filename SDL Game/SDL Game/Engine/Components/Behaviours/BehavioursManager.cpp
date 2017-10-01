@@ -1,6 +1,7 @@
 #include "BehavioursManager.h"
 
 #include "Engine/Components/Behaviours/Behaviour.h"
+#include "Engine/Components/ComponentType.h"
 #include "Engine/GameObjects/GameObject.h"
 
 
@@ -14,16 +15,9 @@ BehavioursManager::~BehavioursManager()
 }
 
 
-bool BehavioursManager::canManage(std::weak_ptr<Component> component)
+ComponentType BehavioursManager::managedComponentType()
 {
-	if (std::dynamic_pointer_cast<Behaviour>(component.lock()))
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+	return ComponentType::Behaviour;
 }
 
 

@@ -5,6 +5,7 @@
 
 #include "Engine/constants.h"
 #include "Engine/EngineUtils.h"
+#include "Engine/Components/ComponentType.h"
 
 
 Transform::Transform()
@@ -16,6 +17,7 @@ Transform::Transform()
 	, m_worldScale(Vector2(1, 1))
 	, m_parentTransform(nullptr)
 {
+	type = ComponentType::Transform;
 }
 
 

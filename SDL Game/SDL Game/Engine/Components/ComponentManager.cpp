@@ -1,6 +1,7 @@
 #include "ComponentManager.h"
 
 #include "Engine/EngineUtils.h"
+#include "Engine/Components/Component.h"
 
 
 ComponentManager::ComponentManager()
@@ -16,9 +17,10 @@ ComponentManager::~ComponentManager()
 bool ComponentManager::subscribeComponent(std::weak_ptr<Component> component)
 {
 	// If component is not already in the components-to-subscribe list, add it
-	if (canManage(component) && EngineUtils::indexOf(m_componentsToSubscribe, component) == -1)
+	if (managedComponentType() == component.lock()->type && EngineUtils::indexOf(m_componentsToSubscribe, component) == -1)
 	{
 		m_componentsToSubscribe.push_back(component);
+		initializeComponent(component);
 		return true;
 	}
 	return false;

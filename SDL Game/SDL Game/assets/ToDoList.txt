@@ -1,8 +1,6 @@
 
 Stuff to do:
 
-* Implement a TextComponent to draw text on the screen. It could inherit from Texture since it will require rendering and the generation of the text terture on every change.
-
 * Implement callbacks to behaviours when a collision has occurred. (OnCollision, OnTriggerEnter, OnTriggerStay, OnTriggerExit)
 	Also review whether the isTrigger property is being taken into account (besides the isStatic) to define which object must move
 
