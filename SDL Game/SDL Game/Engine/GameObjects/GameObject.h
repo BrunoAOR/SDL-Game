@@ -25,6 +25,8 @@ public:
 	void removeComponent(std::weak_ptr<Component> component);
 	template<typename T>
 	std::weak_ptr<T> getComponent();
+	template<typename T>
+	std::vector<std::weak_ptr<T>> getComponents();
 
 	// On/Off switch
 	void setActive(bool activeState);
@@ -74,7 +76,7 @@ inline std::weak_ptr<T> GameObject::addComponent()
 	}
 	else
 	{
-		printf("Error, can't attach selected class as a component!");
+		printf("Error, can't attach selected class as a component!\n");
 	}
 	return weakComponent;
 }
@@ -83,19 +85,42 @@ template<typename T>
 inline std::weak_ptr<T> GameObject::getComponent()
 {
 	std::weak_ptr<T> weakPtr;
-	if (!std::is_base_of<Component, T>::value || std::is_abstract<T>::value)
+	if (!std::is_base_of<Component, T>::value)
 	{
-		printf("Error, selected class is not allowed!");
+		printf("Error, selected class is not allowed!\n");
 	}
 	else
 	{
 		for (auto componentSharedPtr : m_components)
 		{
-			if (typeid(T) == typeid(*componentSharedPtr))
+			if (std::dynamic_pointer_cast<T>(componentSharedPtr))
 			{
 				weakPtr = std::static_pointer_cast<T>(componentSharedPtr);
 			}
 		}
 	}
 	return weakPtr;
+}
+
+
+template<typename T>
+inline std::vector<std::weak_ptr<T>> GameObject::getComponents()
+{
+	std::vector<std::weak_ptr<T>> weakPtrVector;
+	if (!std::is_base_of<Component, T>::value)
+	{
+		printf("Error, selected class is not allowed!\n");
+	}
+	else
+	{
+		for (auto componentSharedPtr : m_components)
+		{
+			if (std::dynamic_pointer_cast<T>(componentSharedPtr))
+			{
+				std::weak_ptr<T> weakPtr = std::static_pointer_cast<T>(componentSharedPtr);
+				weakPtrVector.push_back(weakPtr);
+			}
+		}
+	}
+	return weakPtrVector;
 }

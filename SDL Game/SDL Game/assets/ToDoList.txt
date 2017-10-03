@@ -1,9 +1,6 @@
 
 Stuff to do:
 
-* Implement callbacks to behaviours when a collision has occurred. (OnCollision, OnTriggerEnter, OnTriggerStay, OnTriggerExit)
-	Also review whether the isTrigger property is being taken into account (besides the isStatic) to define which object must move
-
 * Implement a Prefabs system. It could work through factory methods that could be written to create
 	and setup a certain GameObject and then return a std::weak_ptr<GameObject> just like the usual GameOBject::createNew() function does.
 
@@ -17,4 +14,4 @@ Stuff to do:
 
 * Review all engine classes and implement (or delete) copy constructors/assignments and move constructors/assignments
 
-
+* Define Layers and z-index for Renderers

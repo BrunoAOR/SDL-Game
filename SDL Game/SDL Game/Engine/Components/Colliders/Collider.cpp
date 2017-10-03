@@ -2,7 +2,9 @@
 
 #include "Engine/GameObjects/GameObject.h"
 #include "Engine/Components/Transforms/Transform.h"
+#include "Engine/Components/Behaviours/Behaviour.h"
 #include "Engine/Components/ComponentType.h"
+#include "Engine/Components/Colliders/CollisionInfo.h"
 
 
 Collider::Collider() : offset(0, 0), isStatic(false), isTrigger(false)
@@ -36,4 +38,56 @@ Vector2 Collider::getWorldPosition()
 double Collider::getWorldRotation()
 {
 	return gameObject()->transform.lock()->getWorldRotation();
+}
+
+
+void Collider::onCollision(std::shared_ptr<CollisionInfo> info)
+{
+	auto behaviours = gameObject()->getComponents<Behaviour>();
+	for (auto weakBehaviour : behaviours)
+	{
+		if (auto behaviour = weakBehaviour.lock())
+		{
+			behaviour->onCollision(info);
+		}
+	}
+}
+
+
+void Collider::onTriggerEnter(std::weak_ptr<Collider> other)
+{
+	auto behaviours = gameObject()->getComponents<Behaviour>();
+	for (auto weakBehaviour : behaviours)
+	{
+		if (auto behaviour = weakBehaviour.lock())
+		{
+			behaviour->onTriggerEnter(other);
+		}
+	}
+}
+
+
+void Collider::onTriggerStay(std::weak_ptr<Collider> other)
+{
+	auto behaviours = gameObject()->getComponents<Behaviour>();
+	for (auto weakBehaviour : behaviours)
+	{
+		if (auto behaviour = weakBehaviour.lock())
+		{
+			behaviour->onTriggerStay(other);
+		}
+	}
+}
+
+
+void Collider::onTriggerExit(std::weak_ptr<Collider> other)
+{
+	auto behaviours = gameObject()->getComponents<Behaviour>();
+	for (auto weakBehaviour : behaviours)
+	{
+		if (auto behaviour = weakBehaviour.lock())
+		{
+			behaviour->onTriggerExit(other);
+		}
+	}
 }

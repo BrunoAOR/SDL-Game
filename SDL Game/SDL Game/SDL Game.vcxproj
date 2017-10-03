@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Behaviours\TimeLogger.cpp" />
+    <ClCompile Include="Behaviours\CollisionCallbackTester.cpp" />
     <ClCompile Include="Engine\Components\Colliders\CircleCollider.cpp" />
     <ClCompile Include="Engine\Components\Colliders\Collider.cpp" />
     <ClCompile Include="Engine\Components\Colliders\CollidersManager.cpp" />
@@ -67,12 +68,15 @@
     <ClCompile Include="Behaviours\SpriteSheetController.cpp" />
     <ClCompile Include="Engine\Components\Renderers\TextRenderer.cpp" />
     <ClCompile Include="Engine\Components\Renderers\SpriteRenderer.cpp" />
+    <ClCompile Include="Engine\Components\Colliders\TriggerCollisionCache.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Behaviours\TimeLogger.h" />
+    <ClInclude Include="Behaviours\CollisionCallbackTester.h" />
     <ClInclude Include="Engine\Components\Colliders\CircleCollider.h" />
     <ClInclude Include="Engine\Components\Colliders\Collider.h" />
     <ClInclude Include="Engine\Components\Colliders\CollidersManager.h" />
+    <ClInclude Include="Engine\Components\Colliders\CollisionInfo.h" />
     <ClInclude Include="Engine\Components\ComponentType.h" />
     <ClInclude Include="Engine\EngineUtils.h" />
     <ClInclude Include="Engine\Components\ComponentsManager.h" />
@@ -118,6 +122,7 @@
     <ClInclude Include="Behaviours\SpriteSheetController.h" />
     <ClInclude Include="Engine\Components\Renderers\TextRenderer.h" />
     <ClInclude Include="Engine\Components\Renderers\SpriteRenderer.h" />
+    <ClInclude Include="Engine\Components\Colliders\TriggerCollisionCache.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\Crosshair.png" />

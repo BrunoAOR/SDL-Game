@@ -1,11 +1,14 @@
 #include "CollidersManager.h"
 
-#include "Engine/Components/ComponentType.h"
 #include <cmath>
+#include "Engine/Components/ComponentType.h"
 #include "Engine/EngineUtils.h"
 #include "Engine/Vector2.h"
 #include "Engine/GameObjects/GameObject.h"
 #include "Engine/Components/Transforms/Transform.h"
+#include "Engine/Components/Colliders/CollisionInfo.h"
+#include "Engine/Components/Colliders/CircleCollider.h"
+#include "Engine/Components/Colliders/RectangleCollider.h"
 
 
 const double CollidersManager::MinPenetration = 0.01;
@@ -29,8 +32,6 @@ ComponentType CollidersManager::managedComponentType()
 
 void CollidersManager::update()
 {
-	static int prevCount = -1;
-	int count = 0;
 	// Note: refreshComponents ensures that all weak_ptr in m_components are valid, so locking them is guaranteed to produce a valid shared_ptr
 	refreshComponents();
 	// Ensure we have at least 2 components to handle (needed to avoid the for-loops to attempt to access out of range)
@@ -48,23 +49,19 @@ void CollidersManager::update()
 				auto weakCollider2 = m_components[j];
 				if (auto collider2 = std::static_pointer_cast<Collider>(weakCollider2.lock()))
 				{
-					if (!EngineUtils::ptr_owner_equality(collider1, collider2) && (!collider1->isStatic || !collider2->isStatic) && (!collider1->isTrigger || !collider2->isTrigger) )
+					if (!EngineUtils::ptr_owner_equality(collider1, collider2))
 					{
 						// Actual collider on collider check
-						if (hasCollision(collider1.get(), collider2.get())) {
-							++count;
-						}
+						bool shouldResolve = shouldResolveCollision(collider1, collider2);
+						checkAndResolveCollision(collider1, collider2, shouldResolve);
 					}
 				}
 			}
 		}
 	}
 
-	if (prevCount != count)
-	{
-		prevCount = count;
-		//printf("Colliders found: %i\n", count);
-	}
+	// Refresh the triggerCollisionCache to call any onTriggerExit methods required
+	triggerCollisionCache.refresh();
 }
 
 
@@ -85,50 +82,58 @@ bool CollidersManager::initializeComponent(std::weak_ptr<Component> component)
 }
 
 
-bool CollidersManager::hasCollision(Collider* coll1, Collider* coll2)
+bool CollidersManager::checkAndResolveCollision(std::shared_ptr<Collider> coll1, std::shared_ptr<Collider> coll2, bool shouldResolve)
 {
-	bool collisionOccured = false;
-	// Cast down the first collider
-	if (typeid(CircleCollider) == typeid(*coll1))
+	if (coll1->isStatic && !coll2->isStatic)
 	{
-		auto castedColl1 = static_cast<CircleCollider*>(coll1);
+		return false;
+	}
 
-		if (typeid(CircleCollider) == typeid(*coll2))
+	Collider* coll1_rawPtr = coll1.get();
+	Collider* coll2_rawPtr = coll2.get();
+
+	bool collisionOccured = false;
+	
+	if (typeid(CircleCollider) == typeid(*coll1_rawPtr))
+	{
+		auto castedColl1 = static_cast<CircleCollider*>(coll1_rawPtr);
+
+		if (typeid(CircleCollider) == typeid(*coll2_rawPtr))
 		{
-			auto castedColl2 = static_cast<CircleCollider*>(coll2);
-			collisionOccured = hasCollision(*castedColl1, *castedColl2);
+			auto castedColl2 = static_cast<CircleCollider*>(coll2_rawPtr);
+			collisionOccured = checkAndResolveCollision(*castedColl1, *castedColl2, shouldResolve);
 		}
-		else if (typeid(RectangleCollider) == typeid(*coll2))
+		else if (typeid(RectangleCollider) == typeid(*coll2_rawPtr))
 		{
-			auto castedColl2 = static_cast<RectangleCollider*>(coll2);
-			collisionOccured = hasCollision(*castedColl1, *castedColl2);
+			auto castedColl2 = static_cast<RectangleCollider*>(coll2_rawPtr);
+			collisionOccured = checkAndResolveCollision(*castedColl1, *castedColl2, shouldResolve);
 		}
 	}
-	else if (typeid(RectangleCollider) == typeid(*coll1))
+	else if (typeid(RectangleCollider) == typeid(*coll1_rawPtr))
 	{
-		auto castedColl1 = static_cast<RectangleCollider*>(coll1);
+		auto castedColl1 = static_cast<RectangleCollider*>(coll1_rawPtr);
 
-		if (typeid(CircleCollider) == typeid(*coll2))
+		if (typeid(CircleCollider) == typeid(*coll2_rawPtr))
 		{
-			auto castedColl2 = static_cast<CircleCollider*>(coll2);
-			collisionOccured = hasCollision(*castedColl1, *castedColl2);
+			auto castedColl2 = static_cast<CircleCollider*>(coll2_rawPtr);
+			collisionOccured = checkAndResolveCollision(*castedColl1, *castedColl2, shouldResolve);
 		}
-		else if (typeid(RectangleCollider) == typeid(*coll2))
+		else if (typeid(RectangleCollider) == typeid(*coll2_rawPtr))
 		{
-			auto castedColl2 = static_cast<RectangleCollider*>(coll2);
-			collisionOccured = hasCollision(*castedColl1, *castedColl2);
+			auto castedColl2 = static_cast<RectangleCollider*>(coll2_rawPtr);
+			collisionOccured = checkAndResolveCollision(*castedColl1, *castedColl2, shouldResolve);
 		}
 	}
 
 	if (collisionOccured)
 	{
-		//informCollision(coll1, coll2);
+		informCollision(coll1, coll2);
 	}
 	return collisionOccured;
 }
 
 
-bool CollidersManager::hasCollision(CircleCollider & circColl1, CircleCollider & circColl2)
+bool CollidersManager::checkAndResolveCollision(CircleCollider & circColl1, CircleCollider & circColl2, bool shouldResolve)
 {
 	Vector2 pos1 = circColl1.getWorldPosition();
 
@@ -138,8 +143,11 @@ bool CollidersManager::hasCollision(CircleCollider & circColl1, CircleCollider &
 
 	if (penetrationDistance > MinPenetration)
 	{
-		printf("Circ on Circ: contact: %f\n", penetrationDistance);
-		resolveCollision(circColl1, pos1, circColl2, pos2, penetrationDistance);
+		//printf("Circ on Circ: contact: %f\n", penetrationDistance);
+		if (shouldResolve)
+		{
+			resolveCollision(circColl1, pos1, circColl2, pos2, penetrationDistance);
+		}
 		return true;
 	}
 
@@ -147,7 +155,7 @@ bool CollidersManager::hasCollision(CircleCollider & circColl1, CircleCollider &
 }
 
 
-bool CollidersManager::hasCollision(RectangleCollider & rectColl1, RectangleCollider & rectColl2)
+bool CollidersManager::checkAndResolveCollision(RectangleCollider & rectColl1, RectangleCollider & rectColl2, bool shouldResolve)
 {
 	// First, we get the normals from the rectColls.
 	// Only the first 2 normals are needed for each rect, since the other two are the same but in opposite direction
@@ -232,13 +240,16 @@ bool CollidersManager::hasCollision(RectangleCollider & rectColl1, RectangleColl
 	}
 
 	// If we got here, we have a minOverlapLength and Direction that can be used to resolve the collision
-	printf("Rect on Rect: contanct: %f\n", minOverlapLength);
-	resolveCollision(rectColl1, rectColl2, minOverlapLength * minOverlapDirection);
+	//printf("Rect on Rect: contanct: %f\n", minOverlapLength);
+	if (shouldResolve)
+	{
+		resolveCollision(rectColl1, rectColl2, minOverlapLength * minOverlapDirection);
+	}
 	return true;
 }
 
 
-bool CollidersManager::hasCollision(CircleCollider & circColl, RectangleCollider & rectColl)
+bool CollidersManager::checkAndResolveCollision(CircleCollider & circColl, RectangleCollider & rectColl, bool shouldResolve)
 {
 	// To solve this collision with rotated rectangles, we'll temporarily place the circle as a child of the rectangle.
 	// In this way, the rectColl will be axis aligned in the reference system for the circle
@@ -280,8 +291,11 @@ bool CollidersManager::hasCollision(CircleCollider & circColl, RectangleCollider
 
 	if (penetrationDistance > MinPenetration)
 	{
-		printf("Circ on Rect: contact: %f\n", penetrationDistance);		
-		resolveCollision(circColl, rectColl, penetrationVector);
+		//printf("Circ on Rect: contact: %f\n", penetrationDistance);
+		if (shouldResolve)
+		{
+			resolveCollision(circColl, rectColl, penetrationVector);
+		}
 		return true;
 	}
 
@@ -289,11 +303,16 @@ bool CollidersManager::hasCollision(CircleCollider & circColl, RectangleCollider
 }
 
 
-bool CollidersManager::hasCollision(RectangleCollider & rectColl, CircleCollider & circColl)
+bool CollidersManager::checkAndResolveCollision(RectangleCollider & rectColl, CircleCollider & circColl, bool shouldResolve)
 {
-	return hasCollision(circColl, rectColl);
+	return checkAndResolveCollision(circColl, rectColl, shouldResolve);
 }
 
+
+bool CollidersManager::shouldResolveCollision(std::shared_ptr<Collider> coll1, std::shared_ptr<Collider> coll2)
+{
+	return !(coll1->isTrigger || coll2->isTrigger);
+}
 
 void CollidersManager::resolveCollision(CircleCollider& circColl1, const Vector2& pos1, CircleCollider& circColl2, const Vector2& pos2, double penetrationDistance)
 {
@@ -404,7 +423,44 @@ void CollidersManager::resolveCollision(CircleCollider & circColl, RectangleColl
 }
 
 
-void CollidersManager::informCollision(Collider * coll1, Collider * coll2)
+void CollidersManager::informCollision(std::shared_ptr<Collider> coll1, std::shared_ptr<Collider> coll2)
 {
-	printf("GO_%i and GO_%i have collided!\n", coll1->gameObject()->m_id, coll2->gameObject()->m_id);
+	// If non of the colliders are triggers, then the onCollision method should be called
+	if (!coll1->isTrigger && !coll2->isTrigger)
+	{
+		auto go1 = coll1->gameObject();
+		auto go2 = coll2->gameObject();
+		// Info about cool2 that will be sent to coll1
+		{
+			auto infoForColl1 = std::make_shared<CollisionInfo>();
+			infoForColl1->otherCollider = coll2;
+			infoForColl1->otherGameObject = go2;
+			coll1->onCollision(infoForColl1);
+		}
+		// Info about coll1 that will be sent to coll2
+		{
+			auto infoForColl2 = std::make_shared<CollisionInfo>();
+			infoForColl2->otherCollider = coll1;
+			infoForColl2->otherGameObject = go1;
+			coll2->onCollision(infoForColl2);
+		}
+	}
+	// If either of the colliders (or both) are triggers, then the onTrigger family of methods should be called
+	else
+	{
+		CollidersPair pair = std::make_pair(coll1, coll2);
+		if (triggerCollisionCache.cache(pair))
+		{
+			// If the pair is new, call OnTriggerEnter
+			coll1->onTriggerEnter(coll2);
+			coll2->onTriggerEnter(coll1);
+		}
+		else
+		{
+			// So the pair was already in the cache
+			coll1->onTriggerStay(coll2);
+			coll2->onTriggerStay(coll1);
+		}
+	}
+	
 }

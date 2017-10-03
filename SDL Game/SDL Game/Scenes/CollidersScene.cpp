@@ -10,6 +10,7 @@
 #include "Behaviours/SceneChanger.h"
 #include "Behaviours/TimeLogger.h"
 #include "Behaviours/Rotator.h"
+#include "Behaviours/CollisionCallbackTester.h"
 
 
 bool CollidersScene::load()
@@ -24,6 +25,8 @@ bool CollidersScene::load()
 		{
 			go->addComponent<SceneChanger>();
 			//go->addComponent<TimeLogger>();
+
+			go->addComponent<CollisionCallbackTester>();
 
 			auto sprite = go->addComponent<Sprite>().lock();
 			sprite->loadImage("assets/Target.png");
@@ -57,6 +60,8 @@ bool CollidersScene::load()
 		auto weakGO = GameObject::createNew();
 		if (auto go = weakGO.lock())
 		{
+			go->addComponent<CollisionCallbackTester>();
+
 			auto sprite = go->addComponent<Sprite>().lock();
 			sprite->loadImage("assets/Square.png");
 			
@@ -66,6 +71,7 @@ bool CollidersScene::load()
 			auto weakColl = go->addComponent<RectangleCollider>();
 			if (auto coll = weakColl.lock())
 			{
+				coll->isTrigger = true;
 				coll->size = Vector2(100, 100);
 				//coll->offset = Vector2(0, 50);
 			}

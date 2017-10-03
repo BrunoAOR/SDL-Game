@@ -37,7 +37,7 @@ int main(int argc, char* args[])
 	}
 
 	close();
-	return 0;
+ 	return 0;
 }
 
 
@@ -102,7 +102,7 @@ bool setupScenes()
 	success &= SceneManager::addScene<CollidersScene>();
 	success &= SceneManager::addScene<ParentSwitchScene>();
 	success &= SceneManager::addScene<SpriteSheetScene>();
-	SceneManager::loadScene(7);
+	SceneManager::loadScene(5);
 
 	return success;
 }

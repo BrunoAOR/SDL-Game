@@ -1,8 +1,10 @@
 #pragma once
 
 #include "Engine/Components/ComponentManager.h"
-#include "Engine/Components/Colliders/CircleCollider.h"
-#include "Engine/Components/Colliders/RectangleCollider.h"
+#include "Engine/Components/Colliders/TriggerCollisionCache.h"
+class Vector2;
+class CircleCollider;
+class RectangleCollider;
 
 
 class CollidersManager final :
@@ -18,6 +20,8 @@ private:
 
 	static const double MinPenetration;
 
+	TriggerCollisionCache triggerCollisionCache;
+
 	// Inherited via ComponentManager
 	virtual ComponentType managedComponentType() override;
 	virtual void update() override;
@@ -25,15 +29,16 @@ private:
 	virtual void close() override;
 	virtual bool initializeComponent(std::weak_ptr<Component> component) override;
 
-	bool hasCollision(Collider* coll1, Collider* coll2);
-	bool hasCollision(CircleCollider& circColl1, CircleCollider& circColl2);
-	bool hasCollision(RectangleCollider& rectColl1, RectangleCollider& rectColl2);
-	bool hasCollision(CircleCollider& circColl, RectangleCollider& rectColl);
-	bool hasCollision(RectangleCollider& rectColl, CircleCollider& circColl);
+	bool checkAndResolveCollision(std::shared_ptr<Collider> coll1, std::shared_ptr<Collider> coll2, bool shouldResolve);
+	bool checkAndResolveCollision(CircleCollider& circColl1, CircleCollider& circColl2, bool shouldResolve);
+	bool checkAndResolveCollision(RectangleCollider& rectColl1, RectangleCollider& rectColl2, bool shouldResolve);
+	bool checkAndResolveCollision(CircleCollider& circColl, RectangleCollider& rectColl, bool shouldResolve);
+	bool checkAndResolveCollision(RectangleCollider& rectColl, CircleCollider& circColl, bool shouldResolve);
 
+	bool shouldResolveCollision(std::shared_ptr<Collider> coll1, std::shared_ptr<Collider> coll2);
 	void resolveCollision(CircleCollider& circColl1, const Vector2& pos1, CircleCollider& circColl2, const Vector2& pos2, double penetrationDistance);
 	void resolveCollision(RectangleCollider& rectColl1, RectangleCollider& rectColl2, Vector2& penetrationVector);
 	void resolveCollision(CircleCollider& circColl, RectangleCollider& rectColl, const Vector2& penetrationVector);
 
-	void informCollision(Collider* coll1, Collider* coll2);
+	void informCollision(std::shared_ptr<Collider> coll1, std::shared_ptr<Collider> coll2);
 };
