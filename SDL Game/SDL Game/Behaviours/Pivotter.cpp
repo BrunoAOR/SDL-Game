@@ -1,11 +1,10 @@
 #include "Pivotter.h"
 
+#include "Engine/API/API.h"
 #include "Engine/Vector2.h"
 #include "Engine/GameObjects/GameObject.h"
 #include "Engine/Components/Renderers/Sprite.h"
 #include "Engine/Components/Transforms/Transform.h"
-#include "Engine/Input.h"
-
 
 
 void Pivotter::start()
@@ -37,25 +36,25 @@ void Pivotter::start()
 void Pivotter::update()
 {
 	// Mode change
-	if (Input::getKeyDown(SDL_SCANCODE_P))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_P))
 	{
 		selectedStep = positionStep;
 		mode = MoveMode::POSITION;
 		printf("Entered MoveMode POSITION\n");
 	}
-	if (Input::getKeyDown(SDL_SCANCODE_O))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_O))
 	{
 		selectedStep = pivotStep;
 		mode = MoveMode::POS_PIVOT;
 		printf("Entered MoveMode POS_PIVOT\n");
 	}
-	if (Input::getKeyDown(SDL_SCANCODE_I))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_I))
 	{
 		selectedStep = pivotStep;
 		mode = MoveMode::ROT_PIVOT;
 		printf("Entered MoveMode ROT_PIVOT\n");
 	}
-	if (Input::getKeyDown(SDL_SCANCODE_U))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_U))
 	{
 		selectedStep = pivotStep;
 		mode = MoveMode::SCA_PIVOT;
@@ -63,56 +62,56 @@ void Pivotter::update()
 	}
 
 	// Pivot moving
-	if (Input::getKeyDown(SDL_SCANCODE_UP))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_UP))
 	{
 		movePivot(getActivePivot(), Direction::UP);
 		printPivotInfo();
 	}
-	if (Input::getKeyDown(SDL_SCANCODE_DOWN))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_DOWN))
 	{
 		movePivot(getActivePivot(), Direction::DOWN);
 		printPivotInfo();
 	}
-	if (Input::getKeyDown(SDL_SCANCODE_LEFT))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_LEFT))
 	{
 		movePivot(getActivePivot(), Direction::LEFT);
 		printPivotInfo();
 	}
-	if (Input::getKeyDown(SDL_SCANCODE_RIGHT))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_RIGHT))
 	{
 		movePivot(getActivePivot(), Direction::RIGHT);
 		printPivotInfo();
 	}
 
 	// Rotation
-	if (Input::getKeyDown(SDL_SCANCODE_Q))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_Q))
 	{
 		rotation += rotStep;
 		printf("Rotation: %2.0f\n", rotation);
 	}
-	if (Input::getKeyDown(SDL_SCANCODE_E))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_E))
 	{
 		rotation -= rotStep;
 		printf("Rotation: %2.0f\n", rotation);
 	}
 
 	// Scaling
-	if (Input::getKeyDown(SDL_SCANCODE_W))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_W))
 	{
 		scale.y += pivotStep;
 		printf("Scale: ( %2.1f , %2.1f )\n", scale.x, scale.y);
 	}
-	if (Input::getKeyDown(SDL_SCANCODE_S))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_S))
 	{
 		scale.y -= pivotStep;
 		printf("Scale: ( %2.1f , %2.1f )\n", scale.x, scale.y);
 	}
-	if (Input::getKeyDown(SDL_SCANCODE_D))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_D))
 	{
 		scale.x += pivotStep;
 		printf("Scale: ( %2.1f , %2.1f )\n", scale.x, scale.y);
 	}
-	if (Input::getKeyDown(SDL_SCANCODE_A))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_A))
 	{
 		scale.x -= pivotStep;
 		printf("Scale: ( %2.1f , %2.1f )\n", scale.x, scale.y);

@@ -10,20 +10,22 @@ class Transform;
 class GameObjectsManager
 {
 public:
-	static void update();
-	static void addGameObject(std::shared_ptr<GameObject> gameObject);
-	static void destroyGameObject(std::weak_ptr<GameObject> gameObject);
-	static void destroyAllGameObjects();
+	GameObjectsManager();
+	~GameObjectsManager();
+
+	void update();
+	void addGameObject(std::shared_ptr<GameObject> gameObject);
+	void destroyGameObject(std::weak_ptr<GameObject> gameObject);
+	void destroyAllGameObjects();
 	
 private:
-	GameObjectsManager();
-	static std::vector<std::shared_ptr<GameObject>> m_gameObjects;
-	static std::vector<std::shared_ptr<GameObject>> m_gosToAdd;
-	static std::vector<std::weak_ptr<GameObject>> m_gosToDestroy;
+	std::vector<std::shared_ptr<GameObject>> m_gameObjects;
+	std::vector<std::shared_ptr<GameObject>> m_gosToAdd;
+	std::vector<std::weak_ptr<GameObject>> m_gosToDestroy;
 
-	static void refreshGameObjects();
-	static void doAddGameObject(std::shared_ptr<GameObject> gameObject);
-	static void doDestroyGameObject(std::weak_ptr<GameObject> gameObject);
-	static void doDestroyChildren(Transform* transform);
+	void refreshGameObjects();
+	void doAddGameObject(std::shared_ptr<GameObject> gameObject);
+	void doDestroyGameObject(std::weak_ptr<GameObject> gameObject);
+	void doDestroyChildren(Transform* transform);
 };
 

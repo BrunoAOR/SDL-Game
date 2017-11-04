@@ -6,12 +6,12 @@
 #include "Engine/Components/Transforms/Transform.h"
 
 
-std::vector<std::shared_ptr<GameObject>> GameObjectsManager::m_gameObjects;
-std::vector<std::shared_ptr<GameObject>> GameObjectsManager::m_gosToAdd;
-std::vector<std::weak_ptr<GameObject>> GameObjectsManager::m_gosToDestroy;
-
-
 GameObjectsManager::GameObjectsManager()
+{
+}
+
+
+GameObjectsManager::~GameObjectsManager()
 {
 }
 
@@ -39,6 +39,7 @@ void GameObjectsManager::destroyGameObject(std::weak_ptr<GameObject> gameObject)
 		m_gosToDestroy.push_back(gameObject);
 	}
 }
+
 
 void GameObjectsManager::destroyAllGameObjects()
 {
@@ -98,6 +99,7 @@ void GameObjectsManager::doDestroyGameObject(std::weak_ptr<GameObject> gameObjec
 	}
 }
 
+
 void GameObjectsManager::doDestroyChildren(Transform* parentTransform)
 {
 	auto go = parentTransform->gameObject().get();
@@ -112,5 +114,3 @@ void GameObjectsManager::doDestroyChildren(Transform* parentTransform)
 	}
 
 }
-
-

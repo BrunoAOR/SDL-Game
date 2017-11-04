@@ -9,22 +9,24 @@ class Scene;
 class SceneManager
 {
 public:
-	static void refreshScenes();
-	static void loadScene(unsigned int index);
-	static void close();
+	SceneManager();
+	~SceneManager();
+
+	void refreshScenes();
+	void loadScene(unsigned int index);
+	void close();
 
 	template <typename T>
-	static bool addScene();
-	static bool hasActiveScene();
+	bool addScene();
+	bool hasActiveScene();
 
 private:
-	SceneManager();
-	static std::vector<std::shared_ptr<Scene>> m_scenes;
-	static std::weak_ptr<Scene> m_activeScene;
-	static std::weak_ptr<Scene> m_sceneToLoad;
+	std::vector<std::shared_ptr<Scene>> m_scenes;
+	std::weak_ptr<Scene> m_activeScene;
+	std::weak_ptr<Scene> m_sceneToLoad;
 
-	static void doLoadScene();
-	static void unloadScene(std::weak_ptr<Scene> sceneToUnload);
+	void doLoadScene();
+	void unloadScene(std::weak_ptr<Scene> sceneToUnload);
 };
 
 template<typename T>

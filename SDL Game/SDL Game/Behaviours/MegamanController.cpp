@@ -1,8 +1,9 @@
 #include "MegamanController.h"
 
+#include "Engine/API/API.h"
 #include "Engine/GameObjects/GameObject.h"
 #include "Engine/Components/Renderers/SpriteSheet.h"
-#include "Engine/Input.h"
+
 
 void MegamanController::start()
 {
@@ -23,25 +24,25 @@ void MegamanController::update()
 		return;
 	}
 
-	if (Input::getKeyDown(SDL_SCANCODE_KP_0))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_KP_0))
 	{
 		sprite->stopAnimation();
 	}
-	if (Input::getKeyDown(SDL_SCANCODE_KP_1))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_KP_1))
 	{
 		sprite->playAnimation("idle", animationSpeed);
 	}
-	if (Input::getKeyDown(SDL_SCANCODE_KP_2))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_KP_2))
 	{
 		sprite->playAnimation("run", animationSpeed);
 	}
 
-	if (Input::getKeyDown(SDL_SCANCODE_KP_PLUS))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_KP_PLUS))
 	{
 		sprite->setAnimationSpeed(++animationSpeed);
 		printf("Anim speed: %i\n", animationSpeed);
 	}
-	if (Input::getKeyDown(SDL_SCANCODE_KP_MINUS))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_KP_MINUS))
 	{
 		sprite->setAnimationSpeed(--animationSpeed);
 		printf("Anim speed: %i\n", animationSpeed);

@@ -1,7 +1,7 @@
 #include "Spawner.h"
 
+#include "Engine/API/API.h"
 #include "Engine/EngineUtils.h"
-#include "Engine/Input.h"
 #include "Engine/GameObjects/GameObject.h"
 #include "Engine/Components/Renderers/Sprite.h"
 #include "Engine/Components/Transforms/Transform.h"
@@ -17,11 +17,11 @@ void Spawner::start()
 
 void Spawner::update()
 {
-	if (Input::getKeyDown(SDL_SCANCODE_Q))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_Q))
 	{
 		createCrosshair();
 	}
-	if (Input::getKeyDown(SDL_SCANCODE_W))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_W))
 	{
 		if (m_spawned.size() != 0)
 		{

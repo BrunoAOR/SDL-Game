@@ -5,10 +5,12 @@
 #include "Engine/Components/Renderers/RenderersManager.h"
 
 
-std::vector<std::shared_ptr<ComponentManager>> ComponentsManager::componentManagers;
-
-
 ComponentsManager::ComponentsManager()
+{
+}
+
+
+ComponentsManager::~ComponentsManager()
 {
 }
 
@@ -23,11 +25,6 @@ bool ComponentsManager::sendToManager(std::weak_ptr<Component> component)
 		}
 	}
 	return false;
-}
-
-
-ComponentsManager::~ComponentsManager()
-{
 }
 
 

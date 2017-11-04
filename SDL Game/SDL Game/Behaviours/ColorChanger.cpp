@@ -1,6 +1,6 @@
 #include "ColorChanger.h"
 
-#include "Engine/Input.h"
+#include "Engine/API/API.h"
 #include "Engine/Components/Renderers/Sprite.h"
 #include "Engine/GameObjects/GameObject.h"
 #include "Engine/Components/Transforms/Transform.h"
@@ -32,7 +32,7 @@ void ColorChanger::start()
 
 void ColorChanger::update()
 {
-	if (Input::getKeyDown(SDL_SCANCODE_C))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_C))
 	{
 		if (color1active)
 		{
@@ -51,7 +51,7 @@ void ColorChanger::update()
 			}
 		}
 	}
-	if (Input::getKeyDown(SDL_SCANCODE_V))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_V))
 	{
 		if (hasCrosshair)
 		{

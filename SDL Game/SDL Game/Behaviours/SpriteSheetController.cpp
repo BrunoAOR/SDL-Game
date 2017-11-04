@@ -1,7 +1,7 @@
 #include "SpriteSheetController.h"
 
+#include "Engine/API/API.h"
 #include "Engine/GameObjects/GameObject.h"
-#include "Engine/Input.h"
 
 
 void SpriteSheetController::start()
@@ -17,40 +17,40 @@ void SpriteSheetController::update()
 		return;
 	}
 
-	if (Input::getKeyDown(SDL_SCANCODE_UP))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_UP))
 	{
 		sheet->selectAnimation("high");
 	}
-	if (Input::getKeyDown(SDL_SCANCODE_DOWN))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_DOWN))
 	{
 		sheet->selectAnimation("low");
 	}
-	if (Input::getKeyDown(SDL_SCANCODE_LEFT))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_LEFT))
 	{
 		sheet->previousAnimationFrame();
 	}
-	if (Input::getKeyDown(SDL_SCANCODE_RIGHT))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_RIGHT))
 	{
 		sheet->nextAnimationFrame();
 	}
 
-	if (Input::getKeyDown(SDL_SCANCODE_S))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_S))
 	{
 		sheet->stopAnimation();
 	}
-	if (Input::getKeyDown(SDL_SCANCODE_Q))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_Q))
 	{
 		sheet->playAnimation("high", -4);
 	}
-	if (Input::getKeyDown(SDL_SCANCODE_E))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_E))
 	{
 		sheet->playAnimation("high", 4);
 	}
-	if (Input::getKeyDown(SDL_SCANCODE_Z))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_Z))
 	{
 		sheet->playAnimation("low", -4);
 	}
-	if (Input::getKeyDown(SDL_SCANCODE_C))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_C))
 	{
 		sheet->playAnimation("low", 4);
 

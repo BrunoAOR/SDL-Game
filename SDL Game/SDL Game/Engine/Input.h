@@ -1,28 +1,30 @@
 #pragma once
 
 #include <map>
-#include <SDL.h>
+#include <SDL_stdinc.h>
+#include <SDL_scancode.h>
 
 
 class Input
 {
 public:
-	static bool getKey(SDL_Scancode scancode);
-	static bool getKeyUp(SDL_Scancode scancode);
-	static bool getKeyDown(SDL_Scancode scancode);
+	Input();
+	~Input();
 
-	static void clearStates();
-	static void setKeyUp(SDL_Scancode scancode);
-	static void setKeyDown(SDL_Scancode scancode);
+	bool getKey(SDL_Scancode scancode);
+	bool getKeyUp(SDL_Scancode scancode);
+	bool getKeyDown(SDL_Scancode scancode);
+
+	void clearStates();
+	void setKeyUp(SDL_Scancode scancode);
+	void setKeyDown(SDL_Scancode scancode);
 
 private:
-	Input();
-
 	enum class KeyState {
 		UP,
 		DOWN
 	};
 	
-	static const Uint8* currentKeyStates;
-	static std::map<SDL_Scancode, KeyState> keyUpDownStates;
+	const Uint8* currentKeyStates;
+	std::map<SDL_Scancode, KeyState> keyUpDownStates;
 };

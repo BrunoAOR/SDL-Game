@@ -1,20 +1,21 @@
 #pragma once
 
-#include <SDL.h>
+#include <SDL_stdinc.h>
 
 
 class Time
 {
 public:
-	static Uint32 time();
-	static Uint32 deltaTime();
+	Time();
+	~Time();
 
-	static void updateTime();
+	Uint32 time();
+	Uint32 deltaTime();
+
+	void updateTime();
 	
 private:
-	Time();
-
-	static Uint32 m_frameStartTime;
-	static Uint32 m_deltaTime;
+	Uint32 m_frameStartTime = 0;
+	Uint32 m_deltaTime = 0;
 };
 

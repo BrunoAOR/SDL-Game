@@ -1,6 +1,11 @@
 #pragma once
 
+class Time;
+class Input;
 class SceneManager;
+class GameObjectsManager;
+class ComponentsManager;
+
 
 class Engine
 {
@@ -13,10 +18,15 @@ public:
 	void loop();
 	void close();
 
-private:
-	SceneManager* sceneManager;
+	Time* time = nullptr;
+	Input* input = nullptr;
+	SceneManager* sceneManager = nullptr;
+	GameObjectsManager* gameObjectsManager = nullptr;
+	ComponentsManager* componentsManager = nullptr;
 
+private:
 	bool initSDL();
 	bool initEngine();
 };
 
+extern Engine* engine;

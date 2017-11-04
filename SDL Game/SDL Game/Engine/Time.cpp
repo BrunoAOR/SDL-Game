@@ -1,11 +1,12 @@
 #include "Time.h"
-
-
-Uint32 Time::m_frameStartTime = 0;
-Uint32 Time::m_deltaTime = 0;
-
+#include <SDL_timer.h>
 
 Time::Time()
+{
+}
+
+
+Time::~Time()
 {
 }
 

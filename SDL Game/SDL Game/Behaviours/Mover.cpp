@@ -1,9 +1,8 @@
 #include "Mover.h"
 
+#include "Engine/API/API.h"
 #include "Engine/GameObjects/GameObject.h"
 #include "Engine/Components/Transforms/Transform.h"
-#include "Engine/Input.h"
-#include "Engine/Time.h"
 #include "Engine/Vector2.h"
 
 Mover::Mover()
@@ -19,12 +18,12 @@ void Mover::update()
 	Vector2 motion(0, 0);
 	
 	// Check speed
-	if (Input::getKeyDown(SDL_SCANCODE_KP_PLUS))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_KP_PLUS))
 	{
 		speed += speedStep;
 		printf("Speed: %i\n", speed);
 	}
-	if (Input::getKeyDown(SDL_SCANCODE_KP_MINUS))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_KP_MINUS))
 	{
 		speed -= speedStep;
 		printf("Speed: %i\n", speed);
@@ -48,7 +47,7 @@ void Mover::update()
 			motion.y /= sqrt2;
 		}
 
-		double elapsedSeconds = Time::deltaTime() / 1000.0;
+		double elapsedSeconds = TimeAPI::deltaTime() / 1000.0;
 		motion.x *= speed * elapsedSeconds;
 		motion.y *= speed * elapsedSeconds;
 
@@ -63,19 +62,19 @@ void Mover::moveWithArrows(double& x, double& y)
 {
 	x = 0;
 	y = 0;
-	if (Input::getKey(SDL_SCANCODE_UP))
+	if (InputAPI::getKey(SDL_SCANCODE_UP))
 	{
 		y = +1;
 	}
-	if (Input::getKey(SDL_SCANCODE_DOWN))
+	if (InputAPI::getKey(SDL_SCANCODE_DOWN))
 	{
 		y = -1;
 	}
-	if (Input::getKey(SDL_SCANCODE_LEFT))
+	if (InputAPI::getKey(SDL_SCANCODE_LEFT))
 	{
 		x = -1;
 	}
-	if (Input::getKey(SDL_SCANCODE_RIGHT))
+	if (InputAPI::getKey(SDL_SCANCODE_RIGHT))
 	{
 		x = +1;
 	}
@@ -85,19 +84,19 @@ void Mover::moveWithWASD(double& x, double& y)
 {
 	x = 0;
 	y = 0;
-	if (Input::getKey(SDL_SCANCODE_W))
+	if (InputAPI::getKey(SDL_SCANCODE_W))
 	{
 		y = +1;
 	}
-	if (Input::getKey(SDL_SCANCODE_S))
+	if (InputAPI::getKey(SDL_SCANCODE_S))
 	{
 		y = -1;
 	}
-	if (Input::getKey(SDL_SCANCODE_A))
+	if (InputAPI::getKey(SDL_SCANCODE_A))
 	{
 		x = -1;
 	}
-	if (Input::getKey(SDL_SCANCODE_D))
+	if (InputAPI::getKey(SDL_SCANCODE_D))
 	{
 		x = +1;
 	}

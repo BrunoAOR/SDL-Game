@@ -4,7 +4,7 @@
 
 int main(int argc, char* args[])
 {
-	Engine* engine = new Engine();
+	engine = new Engine();
 
 	if (!engine->init())
 	{

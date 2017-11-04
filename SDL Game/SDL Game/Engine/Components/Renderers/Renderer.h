@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SDL.h>
+#include <SDL_render.h>
 #include <string>
 #include "Engine/Components/Component.h"
 #include "Engine/Vector2.h"

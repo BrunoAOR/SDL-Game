@@ -1,9 +1,9 @@
 #include "CollisionCallbackTester.h"
 
+#include "Engine/API/API.h"
 #include "Engine/GameObjects/GameObject.h"
 #include "Engine/Components/Colliders/Collider.h"
 #include "Engine/Components/Colliders/CollisionInfo.h"
-#include "Engine/Time.h"
 
 
 void CollisionCallbackTester::start()
@@ -14,7 +14,7 @@ void CollisionCallbackTester::start()
 
 void CollisionCallbackTester::update()
 {
-	m_elapsedTime += Time::deltaTime();
+	m_elapsedTime += TimeAPI::deltaTime();
 }
 
 void CollisionCallbackTester::onCollision(std::shared_ptr<CollisionInfo> info)

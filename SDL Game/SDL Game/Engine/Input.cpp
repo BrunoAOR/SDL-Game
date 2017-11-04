@@ -1,12 +1,16 @@
 #include "Input.h"
-
-
-const Uint8* Input::currentKeyStates = SDL_GetKeyboardState(NULL);
-std::map<SDL_Scancode, Input::KeyState> Input::keyUpDownStates;
+#include <SDL_keyboard.h>
 
 
 Input::Input()
 {
+	currentKeyStates = SDL_GetKeyboardState(NULL);
+}
+
+
+Input::~Input()
+{
+	currentKeyStates = nullptr;
 }
 
 

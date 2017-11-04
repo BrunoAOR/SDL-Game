@@ -1,5 +1,6 @@
 #include "GameObject.h"
 
+#include "Engine/Engine.h"
 #include "Engine/EngineUtils.h"
 #include "Engine/Components/Transforms/Transform.h"
 #include "Engine/Scenes/SceneManager.h"
@@ -96,10 +97,10 @@ bool GameObject::isActive()
 std::weak_ptr<GameObject> GameObject::createNew()
 {
 	std::weak_ptr<GameObject> weakGo;
-	if (SceneManager::hasActiveScene())
+	if (engine->sceneManager->hasActiveScene())
 	{
 		auto go = std::make_shared<GameObject>();
-		GameObjectsManager::addGameObject(go);
+		engine->gameObjectsManager->addGameObject(go);
 		go->m_self = go;
 		// Add and setup transform
 		go->transform = go->addComponent<Transform>();
@@ -111,5 +112,5 @@ std::weak_ptr<GameObject> GameObject::createNew()
 
 void GameObject::destroy(std::weak_ptr<GameObject> gameObject)
 {
-	GameObjectsManager::destroyGameObject(gameObject);
+	engine->gameObjectsManager->destroyGameObject(gameObject);
 }

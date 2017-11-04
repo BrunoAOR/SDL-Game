@@ -1,7 +1,8 @@
 #include "SpriteSheet.h"
 
-
+#include "Engine/Engine.h"
 #include "Engine/Time.h"
+
 
 SpriteSheet::SpriteSheet()
 	: m_currentAnimation(nullptr)
@@ -28,7 +29,7 @@ void SpriteSheet::render()
 		// Check if automatic animation playback is active
 		if (m_isPlaying && m_limitTime != 0)
 		{
-			m_elapsedTime += Time::deltaTime();
+			m_elapsedTime += engine->time->deltaTime();
 			if (m_elapsedTime >= m_limitTime)
 			{
 				m_elapsedTime -= m_limitTime;

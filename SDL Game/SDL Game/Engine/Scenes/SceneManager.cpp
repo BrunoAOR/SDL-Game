@@ -1,18 +1,18 @@
 #include "SceneManager.h"
 
+#include "Engine/Engine.h"
 #include "Engine/EngineUtils.h"
 #include "Engine/Scenes/Scene.h"
 #include "Engine/GameObjects/GameObjectsManager.h"
 
 
-std::vector<std::shared_ptr<Scene>> SceneManager::m_scenes;
-std::weak_ptr<Scene> SceneManager::m_activeScene;
-std::weak_ptr<Scene> SceneManager::m_sceneToLoad;
-
-
 SceneManager::SceneManager()
 {
+}
 
+
+SceneManager::~SceneManager()
+{
 }
 
 
@@ -76,6 +76,6 @@ void SceneManager::unloadScene(std::weak_ptr<Scene> sceneToUnload)
 	if (auto scene = sceneToUnload.lock())
 	{
 		scene->unload();
-		GameObjectsManager::destroyAllGameObjects();
+		engine->gameObjectsManager->destroyAllGameObjects();
 	}
 }

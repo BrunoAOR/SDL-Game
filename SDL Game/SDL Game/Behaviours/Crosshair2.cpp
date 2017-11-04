@@ -1,8 +1,8 @@
 #include "Crosshair2.h"
 
+#include "Engine/API/API.h"
 #include "Engine/GameObjects/GameObject.h"
 #include "Engine/Components/Transforms/Transform.h"
-#include "Engine/Input.h"
 
 
 void Crosshair2::start()
@@ -22,26 +22,26 @@ void Crosshair2::update()
 	
 	// Position
 	Vector2 currentPos = gameObject()->transform.lock()->getLocalPosition();
-	if (Input::getKeyDown(SDL_SCANCODE_UP))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_UP))
 	{
 		currentPos.y += stepSize;
 	}
-	if (Input::getKeyDown(SDL_SCANCODE_DOWN))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_DOWN))
 	{
 		currentPos.y -= stepSize;
 	}
-	if (Input::getKeyDown(SDL_SCANCODE_LEFT))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_LEFT))
 	{
 		currentPos.x -= stepSize;
 	}
-	if (Input::getKeyDown(SDL_SCANCODE_RIGHT))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_RIGHT))
 	{
 		currentPos.x += stepSize;
 	}
 	gameObject()->transform.lock()->setLocalPosition(currentPos);
 
 	// On/off
-	if (Input::getKeyDown(SDL_SCANCODE_0))
+	if (InputAPI::getKeyDown(SDL_SCANCODE_0))
 	{
 		if (gameObject()->isActive())
 		{

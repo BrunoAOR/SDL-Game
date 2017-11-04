@@ -4,20 +4,37 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include "Engine/constants.h"
-#include "Engine/Input.h"
 #include "Engine/Time.h"
+#include "Engine/Input.h"
 #include "Engine/Scenes/SceneManager.h"
 #include "Engine/GameObjects/GameObjectsManager.h"
 #include "Engine/Components/ComponentsManager.h"
 #include "Engine/config/scenesConfig.h"
 
+Engine* engine = nullptr;
+
 Engine::Engine()
 {
+	time = new Time();
+	input = new Input();
+	sceneManager = new SceneManager();
+	gameObjectsManager = new GameObjectsManager();
+	componentsManager = new ComponentsManager();
 }
 
 
 Engine::~Engine()
 {
+	delete componentsManager;
+	componentsManager = nullptr;
+	delete gameObjectsManager;
+	gameObjectsManager = nullptr;
+	delete sceneManager;
+	sceneManager = nullptr;	
+	delete input;
+	input = nullptr;
+	delete time;
+	time = nullptr;
 }
 
 
@@ -42,7 +59,7 @@ void Engine::handleEvents(bool& shouldQuit)
 	SDL_Event e;
 
 	// Clear Input states
-	Input::clearStates();
+	input->clearStates();
 
 	while (SDL_PollEvent(&e))
 	{
@@ -53,11 +70,11 @@ void Engine::handleEvents(bool& shouldQuit)
 		}
 		else if (e.type == SDL_KEYDOWN && e.key.repeat == 0)
 		{
-			Input::setKeyDown(e.key.keysym.scancode);
+			input->setKeyDown(e.key.keysym.scancode);
 		}
 		else if (e.type == SDL_KEYUP && e.key.repeat == 0)
 		{
-			Input::setKeyUp(e.key.keysym.scancode);
+			input->setKeyUp(e.key.keysym.scancode);
 		}
 	}
 }
@@ -71,15 +88,15 @@ void Engine::loop()
 	// While application is running
 	while (!quit)
 	{
-		Time::updateTime();
+		time->updateTime();
 
 		handleEvents(quit);
 
-		SceneManager::refreshScenes();
+		sceneManager->refreshScenes();
 
-		GameObjectsManager::update();
+		gameObjectsManager->update();
 
-		ComponentsManager::update();
+		componentsManager->update();
 	}
 }
 
@@ -87,10 +104,10 @@ void Engine::loop()
 void Engine::close()
 {
 	// Delete all ComponentManagers
-	ComponentsManager::close();
+	componentsManager->close();
 
 	// Unload scene
-	SceneManager::close();
+	sceneManager->close();
 
 	// Quit SDL subsystems
 	IMG_Quit();
@@ -148,7 +165,7 @@ bool Engine::initEngine()
 	else
 	{
 		// Initialize the ComponentsManager
-		success &= ComponentsManager::init();
+		success &= componentsManager->init();
 	}
 
 	return success;

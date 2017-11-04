@@ -11,20 +11,20 @@ class ComponentManager;
 class ComponentsManager final
 {
 public:
-	virtual ~ComponentsManager() = 0;
+	ComponentsManager();
+	~ComponentsManager();
 	
-	static bool init();
-	static void close();
+	bool init();
+	void close();
 
-	static void update();
+	void update();
 
 	template <class T>
-	static std::shared_ptr<T> createNew(std::weak_ptr<GameObject> goWeakPtr);
+	std::shared_ptr<T> createNew(std::weak_ptr<GameObject> goWeakPtr);
 
 private:
-	ComponentsManager();
-	static std::vector<std::shared_ptr<ComponentManager>> componentManagers;
-	static bool sendToManager(std::weak_ptr<Component> component);
+	std::vector<std::shared_ptr<ComponentManager>> componentManagers;
+	bool sendToManager(std::weak_ptr<Component> component);
 };
 
 template<class T>

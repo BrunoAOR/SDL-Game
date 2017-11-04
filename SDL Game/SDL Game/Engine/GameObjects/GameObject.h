@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 
+#include "Engine/Engine.h"
 #include "Engine/Components/ComponentsManager.h"
 
 class Component;
@@ -68,7 +69,7 @@ template<typename T>
 inline std::weak_ptr<T> GameObject::addComponent()
 {
 	std::weak_ptr<T> weakComponent;
-	auto component = ComponentsManager::createNew<T>(m_self);
+	auto component = engine->componentsManager->createNew<T>(m_self);
 	if (component)
 	{
 		m_componentsToAdd.push_back(component);

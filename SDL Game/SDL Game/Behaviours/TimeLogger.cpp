@@ -1,6 +1,6 @@
 #include "TimeLogger.h"
 
-#include "Engine/Time.h"
+#include "Engine/API/API.h"
 
 void TimeLogger::start()
 {
@@ -10,7 +10,7 @@ void TimeLogger::start()
 
 void TimeLogger::update()
 {
-	int elapsedTime = Time::deltaTime();
+	int elapsedTime = TimeAPI::deltaTime();
 	m_elapsedInterval += elapsedTime;
 	if (elapsedTime == 0)
 	{

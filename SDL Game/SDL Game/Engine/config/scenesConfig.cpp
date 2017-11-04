@@ -1,5 +1,6 @@
 #include "scenesConfig.h"
 
+#include "Engine/Engine.h"
 #include "Engine/Scenes/SceneManager.h"
 #include "Scenes/TestScene.h"
 #include "Scenes/TestScene2.h"
@@ -16,15 +17,15 @@ bool scenesConfig()
 	// Success flag
 	bool success = true;
 
-	success &= SceneManager::addScene<TestScene>();
-	success &= SceneManager::addScene<TestScene2>();
-	success &= SceneManager::addScene<TestScene3>();
-	success &= SceneManager::addScene<TransformPivotScene>();
-	success &= SceneManager::addScene<TimeTesterScene>();
-	success &= SceneManager::addScene<CollidersScene>();
-	success &= SceneManager::addScene<ParentSwitchScene>();
-	success &= SceneManager::addScene<SpriteSheetScene>();
-	SceneManager::loadScene(5);
+	success &= engine->sceneManager->addScene<TestScene>();
+	success &= engine->sceneManager->addScene<TestScene2>();
+	success &= engine->sceneManager->addScene<TestScene3>();
+	success &= engine->sceneManager->addScene<TransformPivotScene>();
+	success &= engine->sceneManager->addScene<TimeTesterScene>();
+	success &= engine->sceneManager->addScene<CollidersScene>();
+	success &= engine->sceneManager->addScene<ParentSwitchScene>();
+	success &= engine->sceneManager->addScene<SpriteSheetScene>();
+	engine->sceneManager->loadScene(5);
 
 	return success;
 }
