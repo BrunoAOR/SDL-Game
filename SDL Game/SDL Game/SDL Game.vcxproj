@@ -21,6 +21,8 @@
   <ItemGroup>
     <ClCompile Include="Behaviours\TimeLogger.cpp" />
     <ClCompile Include="Behaviours\CollisionCallbackTester.cpp" />
+    <ClCompile Include="Engine\config\scenesConfig.cpp" />
+    <ClCompile Include="Engine\Engine.cpp" />
     <ClCompile Include="Engine\Components\Colliders\CircleCollider.cpp" />
     <ClCompile Include="Engine\Components\Colliders\Collider.cpp" />
     <ClCompile Include="Engine\Components\Colliders\CollidersManager.cpp" />
@@ -73,6 +75,8 @@
   <ItemGroup>
     <ClInclude Include="Behaviours\TimeLogger.h" />
     <ClInclude Include="Behaviours\CollisionCallbackTester.h" />
+    <ClInclude Include="Engine\config\scenesConfig.h" />
+    <ClInclude Include="Engine\Engine.h" />
     <ClInclude Include="Engine\Components\Colliders\CircleCollider.h" />
     <ClInclude Include="Engine\Components\Colliders\Collider.h" />
     <ClInclude Include="Engine\Components\Colliders\CollidersManager.h" />
