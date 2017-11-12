@@ -183,11 +183,11 @@
     <ClCompile Include="Engine\API\API.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\globals.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine\constants.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Input.h">
       <Filter>Engine</Filter>
     </ClInclude>
@@ -348,6 +348,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\API\API.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\globals.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -2,7 +2,7 @@
 
 #include <SDL_image.h>
 #include "Engine/Components/ComponentType.h"
-#include "Engine/constants.h"
+#include "Engine/globals.h"
 #include "Engine/Components/Renderers/Renderer.h"
 #include "Engine/Components/Renderers/TextRenderer.h"
 #include "Engine/GameObjects/GameObject.h"
@@ -68,7 +68,7 @@ bool RenderersManager::init()
 	bool success = true;
 
 	// Create window
-	m_window = SDL_CreateWindow("SDL Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, constants::SCREEN_WIDTH, constants::SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+	m_window = SDL_CreateWindow("SDL Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 	if (m_window == nullptr)
 	{
 		printf("Error: Window could not be created! SDL Error: %s\n", SDL_GetError());

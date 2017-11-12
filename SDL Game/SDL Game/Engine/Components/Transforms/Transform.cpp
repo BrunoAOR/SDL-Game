@@ -2,8 +2,6 @@
 
 #define _USE_MATH_DEFINES
 #include <math.h>
-
-#include "Engine/constants.h"
 #include "Engine/EngineUtils.h"
 #include "Engine/Components/ComponentType.h"
 

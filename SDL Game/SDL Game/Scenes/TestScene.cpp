@@ -5,7 +5,7 @@
 #include "Engine/GameObjects/GameObject.h"
 #include "Engine/Components/Renderers/Sprite.h"
 #include "Engine/Components/Transforms/Transform.h"
-#include "Engine/constants.h"
+#include "Engine/globals.h"
 
 #include "Behaviours/Crosshair.h"
 #include "Behaviours/Crosshair2.h"
@@ -65,7 +65,7 @@ bool TestScene::load()
 	auto crosshair2GO = weakCrosshair2GO.lock();
 	if (crosshair2GO)
 	{
-		crosshair2GO->transform.lock()->setWorldPosition({ constants::SCREEN_WIDTH - 200, 200 });
+		crosshair2GO->transform.lock()->setWorldPosition({ (double)SCREEN_WIDTH - 200, 200 });
 		success &= !(crosshair2GO->addComponent<Crosshair2>().expired());
 		
 		if (auto sprite = crosshair2GO->addComponent<Sprite>().lock())
@@ -93,8 +93,8 @@ bool TestScene::load()
 			sprite->loadImage("assets/Crosshair.png");
 			coloredGO->transform.lock()->setWorldPosition(
 			{
-				(float)(constants::SCREEN_WIDTH - sprite->getWidth()) / 2,
-				(float)(constants::SCREEN_HEIGHT - sprite->getHeight())
+				(float)(SCREEN_WIDTH - sprite->getWidth()) / 2,
+				(float)(SCREEN_HEIGHT - sprite->getHeight())
 			});
 		}
 		else

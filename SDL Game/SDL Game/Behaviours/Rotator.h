@@ -9,5 +9,8 @@ class Rotator :
 public:
 	// Inherited via Behaviour
 	virtual void update() override;
+
+private:
+	double rotStep = 5;
 };
 

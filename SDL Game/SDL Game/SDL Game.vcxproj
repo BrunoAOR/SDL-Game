@@ -38,6 +38,7 @@
     <ClCompile Include="Behaviours\Crosshair.cpp" />
     <ClCompile Include="Behaviours\Crosshair2.cpp" />
     <ClCompile Include="Engine\GameObjects\GameObject.cpp" />
+    <ClCompile Include="Engine\globals.cpp" />
     <ClCompile Include="Engine\Input.cpp" />
     <ClCompile Include="Engine\main.cpp" />
     <ClCompile Include="Engine\Components\Colliders\RectangleCollider.cpp" />
@@ -92,10 +93,10 @@
     <ClInclude Include="Engine\Components\Component.h" />
     <ClInclude Include="Engine\Components\Behaviours\Behaviour.h" />
     <ClInclude Include="Engine\Components\ComponentManager.h" />
-    <ClInclude Include="Engine\constants.h" />
     <ClInclude Include="Behaviours\Crosshair.h" />
     <ClInclude Include="Behaviours\Crosshair2.h" />
     <ClInclude Include="Engine\GameObjects\GameObject.h" />
+    <ClInclude Include="Engine\globals.h" />
     <ClInclude Include="Engine\Input.h" />
     <ClInclude Include="Engine\Components\Colliders\RectangleCollider.h" />
     <ClInclude Include="Engine\Components\Transforms\Transform.h" />

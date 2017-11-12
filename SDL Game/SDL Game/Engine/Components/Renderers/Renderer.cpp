@@ -1,6 +1,6 @@
 #include "Renderer.h"
 
-#include "Engine/constants.h"
+#include "Engine/globals.h"
 #include "Engine/Components/Renderers/RenderersManager.h"
 #include "Engine/GameObjects/GameObject.h"
 #include "Engine/Components/Transforms/Transform.h"
@@ -72,10 +72,10 @@ void Renderer::renderMain(SDL_Rect* clip, SDL_RendererFlip flip)
 
 	// Correct the position and rotations to simulate a reference system with 0 in the bottom-left,
 	// x increasing to the right (same as SDL) and Y increasing up (opposite of SDL)
-	pos.y = constants::SCREEN_HEIGHT - pos.y;
+	pos.y = SCREEN_HEIGHT - pos.y;
 	rot *= -1;
 
-	// Calculate the texture size, clipped if required
+	// Calculate the raw size, clipped if required
 	Vector2 rawSize;
 	if (clip)
 	{
@@ -87,26 +87,25 @@ void Renderer::renderMain(SDL_Rect* clip, SDL_RendererFlip flip)
 	}
 
 	// Set the rendering space based on the position and positionPivot
-	SDL_Rect renderQuad =
+	double renderQuadX = pos.x - m_positionPivot.x * rawSize.x;
+	double renderQuadY = pos.y - (1 - m_positionPivot.y) * rawSize.y;
+	double renderQuadW = rawSize.x;
+	double renderQuadH = rawSize.y;
+
+	// Modify for the gameObject scale and scalePivot
+	SDL_Rect renderQuad = 
 	{
-		(int)(pos.x - m_positionPivot.x * rawSize.x),
-		(int)(pos.y - (1 - m_positionPivot.y) * rawSize.y),
-		(int)rawSize.x,
-		(int)rawSize.y
+	(int)round(renderQuadX - m_scalePivot.x * (sca.x - 1) * rawSize.x),
+	(int)round(renderQuadY - (1 - m_scalePivot.y) * (sca.y - 1) * rawSize.y),
+	(int)round(renderQuadW * sca.x),
+	(int)round(renderQuadH * sca.y)
 	};
-
-	// Modify for the scale and scalePivot
-	renderQuad.x = (int)(renderQuad.x - m_scalePivot.x * (sca.x - 1) * rawSize.x);
-	renderQuad.y = (int)(renderQuad.y - (1 - m_scalePivot.y) * (sca.y - 1) * rawSize.y);
-	renderQuad.w = (int)(renderQuad.w * sca.x);
-	renderQuad.h = (int)(renderQuad.h * sca.y);
-
 	// Calculate the center of rotation based on the rotationPivot
 	Vector2 scaledSize = { rawSize.x * sca.x , rawSize.y * sca.y };
 	SDL_Point center =
 	{
-		(int)(m_rotationPivot.x * scaledSize.x),
-		(int)((1 - m_rotationPivot.y) * scaledSize.y)
+		(int)round(m_rotationPivot.x * scaledSize.x),
+		(int)round((1 - m_rotationPivot.y) * scaledSize.y)
 	};
 
 	// Correct issue with texture not being rendered if the renderQuad has negative width or height and there is no rotation

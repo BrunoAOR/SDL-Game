@@ -12,5 +12,13 @@ public:
 
 	// Inherited via Renderer
 	virtual void render() override;
+
+	void setClipRect(SDL_Rect rect);
+	SDL_Rect getClipRect();
+	void resetClipRect();
+
+private:
+	bool m_hasClipRect = false;
+	SDL_Rect m_clipRect;
 };
 

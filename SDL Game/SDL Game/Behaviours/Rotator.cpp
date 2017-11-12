@@ -8,7 +8,16 @@
 void Rotator::update()
 {
 	double rotation = gameObject()->transform.lock()->getLocalRotation();
-	double rotStep = 15;
+	
+	if (InputAPI::getKeyDown(SDL_SCANCODE_KP_PLUS))
+	{
+		rotStep += 1;
+	}
+	if (InputAPI::getKeyDown(SDL_SCANCODE_KP_MINUS))
+	{
+		rotStep -= 1;
+	}
+
 	if (InputAPI::getKeyDown(SDL_SCANCODE_R))
 	{
 		rotation += rotStep;
